@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           style="-fx-background-color: #0a0e27;">
+
+    <!-- IMAGE DE FOND -->
+    <ImageView preserveRatio="false" fitWidth="1920" fitHeight="1080" opacity="0.4">
+        <image>
+            <Image url="@../images/wp7860573.jpg"/>
+        </image>
+    </ImageView>
+    
+    <!-- OVERLAY -->
+    <Pane style="-fx-background-color: rgba(10, 14, 39, 0.6);"/>
+
+    <BorderPane fx:controller="com.example.gestionmatch.controller.EquipeController"
+                style="-fx-background-color: transparent;">
+
+        <top>
+            <VBox spacing="15" style="-fx-background-color: rgba(26, 31, 58, 0.95); -fx-padding: 20;">
+                <Label text="⚽ GESTION DES ÉQUIPES" style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;"/>
+
+                <HBox spacing="15" alignment="CENTER_LEFT">
+                    <TextField fx:id="champRecherche" promptText="Rechercher une équipe..." prefWidth="300"
+                               style="-fx-background-color: #0f1429; -fx-text-fill: white; -fx-prompt-text-fill: #666666; -fx-background-radius: 8;"/>
+                    <Button text="🔍 Rechercher" onAction="#rechercherEquipe"
+                            style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 6;"/>
+                    <Button text="🔄 Actualiser" onAction="#actualiser"
+                            style="-fx-background-color: #006233; -fx-text-fill: white; -fx-background-radius: 6;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="labelNombreEquipes" style="-fx-text-fill: #FFD700; -fx-font-size: 14px;"/>
+                </HBox>
+            </VBox>
+        </top>
+
+        <center>
+            <HBox spacing="20" style="-fx-padding: 20;">
+                <!-- FORMULAIRE -->
+                <VBox spacing="15" style="-fx-background-color: rgba(26, 31, 58, 0.95); -fx-padding: 25; -fx-background-radius: 12; -fx-min-width: 350;">
+                    <Label text="📝 FORMULAIRE" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px;"/>
+
+                    <VBox spacing="8">
+                        <Label text="Nom de l'équipe *" style="-fx-text-fill: #cccccc;"/>
+                        <TextField fx:id="champNom" promptText="Ex: Maroc" prefHeight="40"
+                                   style="-fx-background-color: #0f1429; -fx-text-fill: white; -fx-background-radius: 8;"/>
+                    </VBox>
+
+                    <VBox spacing="8">
+                        <Label text="Pays *" style="-fx-text-fill: #cccccc;"/>
+                        <TextField fx:id="champPays" promptText="Ex: Maroc" prefHeight="40"
+                                   style="-fx-background-color: #0f1429; -fx-text-fill: white; -fx-background-radius: 8;"/>
+                    </VBox>
+
+                    <VBox spacing="8">
+                        <Label text="Entraîneur *" style="-fx-text-fill: #cccccc;"/>
+                        <TextField fx:id="champEntraineur" promptText="Ex: Walid Regragui" prefHeight="40"
+                                   style="-fx-background-color: #0f1429; -fx-text-fill: white; -fx-background-radius: 8;"/>
+                    </VBox>
+
+                    <VBox spacing="8">
+                        <Label text="Nombre de joueurs" style="-fx-text-fill: #cccccc;"/>
+                        <TextField fx:id="champNombreJoueurs" promptText="Ex: 23" prefHeight="40"
+                                   style="-fx-background-color: #0f1429; -fx-text-fill: white; -fx-background-radius: 8;"/>
+                    </VBox>
+
+                    <HBox spacing="10" style="-fx-padding: 15 0 0 0;">
+                        <Button fx:id="btnAjouter" text="➕ Ajouter" onAction="#ajouterEquipe"
+                                style="-fx-background-color: #006233; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-weight: bold;"/>
+                        <Button fx:id="btnModifier" text="✏️ Modifier" onAction="#modifierEquipe"
+                                style="-fx-background-color: #FFA500; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-weight: bold;"/>
+                        <Button fx:id="btnSupprimer" text="🗑️ Supprimer" onAction="#supprimerEquipe"
+                                style="-fx-background-color: #C1272D; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-weight: bold;"/>
+                    </HBox>
+                </VBox>
+
+                <!-- TABLE -->
+                <VBox spacing="10" HBox.hgrow="ALWAYS" style="-fx-background-color: rgba(26, 31, 58, 0.95); -fx-padding: 25; -fx-background-radius: 12;">
+                    <Label text="📋 LISTE DES ÉQUIPES" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px;"/>
+                    <TableView fx:id="tableEquipes" VBox.vgrow="ALWAYS" style="-fx-background-color: #0f1429;">
+                        <columns>
+                            <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+                            <TableColumn fx:id="colNom" text="Nom" prefWidth="150"/>
+                            <TableColumn fx:id="colPays" text="Pays" prefWidth="120"/>
+                            <TableColumn fx:id="colEntraineur" text="Entraîneur" prefWidth="150"/>
+                            <TableColumn fx:id="colNombreJoueurs" text="Joueurs" prefWidth="80"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </HBox>
+        </center>
+
+        <bottom>
+            <HBox alignment="CENTER" style="-fx-background-color: rgba(26, 31, 58, 0.95); -fx-padding: 15;">
+                <Label text="© 2030 FIFA World Cup - Gestion des Équipes" style="-fx-text-fill: #666666; -fx-font-size: 11px;"/>
+            </HBox>
+        </bottom>
+
+    </BorderPane>
+</StackPane>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.gestionmatch.controller.LoginController">
+
+    <HBox prefWidth="1600" prefHeight="900">
+
+        <!-- 🔵 PARTIE GAUCHE (IMAGE + TEXTE) -->
+        <StackPane prefWidth="960">
+            <ImageView fitWidth="960" fitHeight="900" preserveRatio="false">
+                <image>
+                    <Image url="@../images/mauro-lima-wfKiXwGRSgQ-unsplash.jpg"/>
+                </image>
+            </ImageView>
+
+            <Pane style="-fx-background-color: rgba(0,0,40,0.55);"/>
+
+            <VBox alignment="TOP_LEFT" spacing="25" style="-fx-padding: 60;">
+                <Label text="FIFA ID"
+                       style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;"/>
+
+                <Label text="Le football au bout des doigts."
+                       style="-fx-text-fill: white;
+                              -fx-font-size: 56px;
+                              -fx-font-weight: bold;
+                              -fx-line-spacing: -10;"/>
+
+                <Label wrapText="true"
+                       text="Inscrivez-vous pour accéder à la billetterie,
+jouer à des jeux et suivre les qualifications
+pour la Coupe du Monde de la FIFA 2030™ !"
+                       style="-fx-text-fill: white; -fx-font-size: 18px;"/>
+            </VBox>
+        </StackPane>
+
+        <!-- ⚪ PARTIE DROITE (FORMULAIRE) -->
+        <VBox prefWidth="640" alignment="CENTER_LEFT" spacing="25"
+              style="-fx-background-color: white; -fx-padding: 70;">
+
+            <Label text="Se connecter"
+                   style="-fx-font-size: 36; -fx-font-weight: bold;"/>
+
+            <VBox spacing="10">
+                <Label text="Adresse électronique"/>
+                <TextField fx:id="loginEmail"
+                           prefHeight="45"
+                           style="-fx-border-color: #cccccc; -fx-border-radius: 4;"/>
+            </VBox>
+
+            <VBox spacing="10">
+                <Label text="Mot de passe"/>
+                <PasswordField fx:id="loginPassword"
+                               prefHeight="45"
+                               style="-fx-border-color: #cccccc; -fx-border-radius: 4;"/>
+            </VBox>
+
+            <Button text="SE CONNECTER"
+                    onAction="#seConnecter"
+                    prefHeight="45"
+                    prefWidth="260"
+                    style="-fx-background-color: #0A66C2;
+                           -fx-text-fill: white;
+                           -fx-font-weight: bold;
+                           -fx-background-radius: 25;"/>
+
+            <Button text="Mot de passe oublié ?"
+                    style="-fx-background-color: transparent;
+                           -fx-text-fill: #0A66C2;
+                           -fx-underline: true;"/>
+
+            <Separator/>
+
+            <Button text="← Retour à l'accueil"
+                    onAction="#retourAccueil"
+                    style="-fx-background-color: transparent;
+                           -fx-text-fill: #666;"/>
+        </VBox>
+
+    </HBox>
+</StackPane>

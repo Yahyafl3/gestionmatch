@@ -1,0 +1,89 @@
+/* ========================================
+   STYLES PAGE CONNEXION - FIFA 2030
+   ======================================== */
+
+/* SCROLLPANE - Style transparent */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* SCROLLBAR VERTICAL - TOUJOURS VISIBLE */
+.scroll-bar:vertical {
+    -fx-background-color: rgba(30, 35, 60, 0.8);
+    -fx-pref-width: 12px;
+    -fx-padding: 3;
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: rgba(50, 55, 80, 0.6);
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #FFD700;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #FFC000;
+}
+
+.scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: #E6B800;
+}
+
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: rgba(50, 55, 80, 0.6);
+    -fx-padding: 5;
+}
+
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow {
+    -fx-background-color: #FFD700;
+    -fx-shape: "";
+    -fx-padding: 3;
+}
+
+/* BOUTONS */
+.button {
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-opacity: 0.85;
+}
+
+/* CHAMPS DE TEXTE */
+.text-field:focused,
+.password-field:focused {
+    -fx-border-color: #FFD700;
+    -fx-border-width: 2;
+}
+
+/* CHECKBOX */
+.check-box {
+    -fx-cursor: hand;
+}
+
+.check-box .box {
+    -fx-background-color: rgba(15, 20, 45, 0.9);
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #FFD700;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #0a0e27;
+}
