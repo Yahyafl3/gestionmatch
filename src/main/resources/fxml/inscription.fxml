@@ -1,66 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 
-<StackPane xmlns="http://javafx.com/javafx/21"
-           xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="com.example.gestionmatch.controller.InscriptionController">
+<StackPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.gestionmatch.controller.InscriptionController"
+           stylesheets="@../styles/style.css"
+           styleClass="root-stack">
 
-    <HBox prefWidth="1600" prefHeight="900">
+    <!-- Overlay semi-transparent -->
+    <Region styleClass="overlay-region" />
 
-        <!-- GAUCHE -->
-        <StackPane prefWidth="960">
-            <ImageView fitWidth="960" fitHeight="900" preserveRatio="false">
-                <image>
-                    <Image url="@../images/pexels-pixabay-47730.jpg"/>
-                </image>
-            </ImageView>
+    <!-- Formulaire centré - INSCRIPTION -->
+    <VBox fx:id="signupCard" styleClass="login-card" alignment="CENTER" spacing="2" prefWidth="320" maxWidth="320" prefHeight="420" maxHeight="420">
 
-            <Pane style="-fx-background-color: rgba(0,0,40,0.55);"/>
-
-            <VBox alignment="TOP_LEFT" spacing="25" style="-fx-padding: 60;">
-                <Label text="FIFA ID"
-                       style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;"/>
-
-                <Label text="Rejoignez l'aventure."
-                       style="-fx-text-fill: white;
-                              -fx-font-size: 56px;
-                              -fx-font-weight: bold;"/>
-
-                <Label text="Créez votre compte pour vivre la Coupe du Monde 2030."
-                       style="-fx-text-fill: white; -fx-font-size: 18px;"/>
-            </VBox>
-        </StackPane>
-
-        <!-- DROITE -->
-        <VBox prefWidth="640" alignment="CENTER_LEFT" spacing="18"
-              style="-fx-background-color: white; -fx-padding: 70;">
-
-            <Label text="Créer un compte"
-                   style="-fx-font-size: 36; -fx-font-weight: bold;"/>
-
-            <TextField promptText="Prénom"/>
-            <TextField promptText="Nom"/>
-            <TextField promptText="Email"/>
-            <PasswordField promptText="Mot de passe"/>
-            <PasswordField promptText="Confirmer le mot de passe"/>
-
-            <Button text="S'INSCRIRE"
-                    onAction="#sInscrire"
-                    prefHeight="45"
-                    prefWidth="260"
-                    style="-fx-background-color: #006233;
-                           -fx-text-fill: white;
-                           -fx-font-weight: bold;
-                           -fx-background-radius: 25;"/>
-
-            <Button text="← Retour à l'accueil"
-                    onAction="#retourAccueil"
-                    style="-fx-background-color: transparent;
-                           -fx-text-fill: #666;"/>
+        <VBox alignment="CENTER" spacing="0">
+            <Label text="Inscription" styleClass="form-title" />
         </VBox>
 
-    </HBox>
+        <VBox spacing="3" prefWidth="280">
+            <VBox spacing="1">
+                <Label text="Prénom" styleClass="label-bold" />
+                <TextField fx:id="registerPrenom" promptText="Votre prénom" styleClass="form-field" />
+            </VBox>
+
+            <VBox spacing="1">
+                <Label text="Nom" styleClass="label-bold" />
+                <TextField fx:id="registerNom" promptText="Votre nom" styleClass="form-field" />
+            </VBox>
+
+            <VBox spacing="1">
+                <Label text="Email" styleClass="label-bold" />
+                <TextField fx:id="registerEmail" promptText="votre@email.com" styleClass="form-field" />
+            </VBox>
+
+            <VBox spacing="1">
+                <Label text="Mot de passe" styleClass="label-bold" />
+                <PasswordField fx:id="registerPassword" promptText="Min. 6 caractères" styleClass="form-field" />
+            </VBox>
+
+            <VBox spacing="1">
+                <Label text="Confirmer" styleClass="label-bold" />
+                <PasswordField fx:id="registerPasswordConfirm" promptText="Confirmez le mot de passe" styleClass="form-field" />
+            </VBox>
+
+            <Button fx:id="signupButton" text="S'inscrire" onAction="#sInscrire" styleClass="btn-primary" prefWidth="280" maxWidth="280" />
+
+            <HBox alignment="CENTER" spacing="4">
+                <Label text="Déjà un compte ?" styleClass="signup-text" />
+                <Hyperlink text="Se connecter" onAction="#allerConnexion" styleClass="link-signup" />
+            </HBox>
+
+        </VBox>
+
+    </VBox>
+
 </StackPane>

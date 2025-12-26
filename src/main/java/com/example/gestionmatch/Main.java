@@ -2,6 +2,8 @@ package com.example.gestionmatch;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.DepthTest;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -23,23 +25,29 @@ public class Main extends Application {
             // Initialiser la base de données
             SetupDatabaseAuto.initializeDatabase();
 
-            // ⭐ CHARGER LA PAGE D'ACCUEIL EN PREMIER
-            System.out.println("🏠 Chargement de la page d'accueil...");
-            
+            // ⭐ CHARGER LA PAGE DE CONNEXION EN PREMIER
+            System.out.println("🔐 Chargement de la page de connexion...");
+
             // Utiliser FXMLLoader avec un chemin relatif pour éviter les problèmes d'espaces
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/accueil.fxml"));
+            loader.setLocation(getClass().getResource("/fxml/login.fxml"));
             Parent root = loader.load();
 
-            System.out.println("✅ Page d'accueil chargée avec succès\n");
+            // Workaround : désactiver le cache sur tous les nœuds (prévenir ClassCastException liée aux bounds)
+            disableCacheRecursively(root);
 
-            // Créer la scène
-            Scene scene = new Scene(root, 1600, 1000);
+            // Si utilisation d'éléments 3D, activer le DepthTest sur la racine
+            root.setDepthTest(DepthTest.ENABLE);
+
+            System.out.println("✅ Page de connexion chargée avec succès\n");
+
+            // Créer la scène avec une taille moyenne
+            Scene scene = new Scene(root, 1200, 800);
 
             // Configuration de la fenêtre
             primaryStage.setTitle("🏆 Coupe du Monde 2030 - Connexion");
             primaryStage.setScene(scene);
-            primaryStage.setMaximized(true);  // Plein écran
+            primaryStage.setResizable(true);
             primaryStage.centerOnScreen();
 
             // Afficher la fenêtre
@@ -66,11 +74,24 @@ public class Main extends Application {
             System.err.println("\n📋 Stack trace complet :");
             e.printStackTrace();
             System.err.println("\n🔧 Vérifications à faire :");
-            System.err.println("   1. Le fichier accueil.fxml existe dans resources/fxml/");
-            System.err.println("   2. Le fichier accueil-style.css existe dans resources/styles/");
-            System.err.println("   3. AccueilController existe dans le package controller");
-            System.err.println("   4. L'image 'le monde.jpg' existe dans resources/images/");
+            System.err.println("   1. Le fichier login.fxml existe dans resources/fxml/");
+            System.err.println("   2. Le fichier login-style.css existe dans resources/styles/");
+            System.err.println("   3. LoginController existe dans le package controller");
+            System.err.println("   4. L'image de fond existe dans resources/images/");
             System.err.println("========================================\n");
+        }
+    }
+
+    /**
+     * Désactive récursivement le cache sur tous les nœuds (workaround pour les bugs de bounds/transform)
+     */
+    private void disableCacheRecursively(Node node) {
+        if (node == null) return;
+        node.setCache(false);
+        if (node instanceof Parent parent) {
+            for (Node child : parent.getChildrenUnmodifiable()) {
+                disableCacheRecursively(child);
+            }
         }
     }
 
