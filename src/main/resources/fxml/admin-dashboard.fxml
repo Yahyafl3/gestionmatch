@@ -199,6 +199,18 @@
                             <Button text="✏️ Modifier" onAction="#modifierJoueur" styleClass="btn-edit"/>
                             <Button text="🗑️ Supprimer" onAction="#supprimerJoueur" styleClass="btn-delete"/>
                         </HBox>
+                        
+                        <!-- Barre de recherche -->
+                        <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 4);">
+                            <Label text="🔍" style="-fx-font-size: 20px;"/>
+                            <TextField fx:id="searchFieldJoueurs" promptText="Rechercher un joueur par nom..." 
+                                       style="-fx-pref-width: 400; -fx-pref-height: 40; -fx-font-size: 14px; -fx-border-color: #e2e8f0; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10;"/>
+                            <Button text="Rechercher" onAction="#rechercherJoueur" 
+                                    style="-fx-background-color: #2d5a3d; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-weight: 600;"/>
+                            <Button text="Réinitialiser" onAction="#reinitialiserRechercheJoueurs" 
+                                    style="-fx-background-color: #64748b; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-weight: 600;"/>
+                        </HBox>
+                        
                         <TableView fx:id="tableJoueurs" VBox.vgrow="ALWAYS"/>
                     </VBox>
 

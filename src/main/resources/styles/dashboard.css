@@ -1,0 +1,239 @@
+/* ===========================
+   MODERN DASHBOARD STYLES
+   =========================== */
+
+/* Sidebar Menu Buttons */
+.menu-btn {
+    
+    -fx-text-fill: rgba(54, 160, 59, 0.7);
+    -fx-font-size: 14px;
+    -fx-padding: 14 20;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER_LEFT;
+    -fx-pref-width: 250;
+    -fx-font-weight: 500;
+    -fx-transition: all 0.3s ease;
+}
+
+.menu-btn:hover {
+
+    -fx-text-fill: black;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.menu-btn-active {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 14 20;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER_LEFT;
+    -fx-pref-width: 250;
+    -fx-font-weight: 700;
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-border-width: 0 0 0 4;
+}
+
+/* Modern Action Buttons - Couleurs Marocaines */
+.btn-add {
+    -fx-background-color: #2d5a3d;
+    -fx-text-fill: greenwhite;
+    -fx-font-size: 14px;
+    -fx-padding: 14 28;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-font-weight: 600;
+    -fx-effect: dropshadow(gaussian, rgba(45, 90, 61, 0.4), 12, 0, 0, 4);
+}
+
+.btn-add:hover {
+    -fx-background-color: #54BF93;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.btn-edit {
+    -fx-background-color: #D4AF37;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 14 28;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-font-weight: 600;
+    -fx-effect: dropshadow(gaussian, rgba(212, 175, 55, 0.4), 12, 0, 0, 4);
+}
+
+.btn-edit:hover {
+    -fx-background-color: #F0C14B;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.btn-delete {
+    -fx-background-color: #C1272D;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 14 28;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-font-weight: 600;
+    -fx-effect: dropshadow(gaussian, rgba(193, 39, 45, 0.4), 12, 0, 0, 4);
+}
+
+.btn-delete:hover {
+    -fx-background-color: #E63946;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/* Modern Table Styles - Design Marocain */
+.table-view {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-border-color: transparent;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8);
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #2d5a3d;
+    -fx-background-radius: 16 16 0 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-font-size: 14px;
+    -fx-padding: 18px;
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-border-width: 0 1 0 0;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+}
+
+.table-view .table-cell {
+    -fx-text-fill: #1e293b;
+    -fx-font-size: 13px;
+    -fx-padding: 16px;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 0 0 1 0;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f8faf9;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgba(45, 90, 61, 0.15);
+    -fx-border-color: #2d5a3d;
+    -fx-border-width: 0 0 0 4;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: rgba(84, 191, 147, 0.1);
+    -fx-cursor: hand;
+}
+
+.table-view .filler {
+    -fx-background-color: transparent;
+}
+
+/* Scrollbar moderne */
+.table-view .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 10px;
+}
+
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: #2d5a3d;
+    -fx-background-radius: 5px;
+}
+
+.table-view .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #54BF93;
+}
+
+.table-view .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-pref-height: 10px;
+}
+
+.table-view .scroll-bar:horizontal .thumb {
+    -fx-background-color: #2d5a3d;
+    -fx-background-radius: 5px;
+}
+
+.table-view .scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: #54BF93;
+}
+
+/* Stat Cards with Gradients - JavaFX Syntax */
+.stat-card-purple {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #a8b5ff 0%, #c9b3ff 100%);
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(168, 181, 255, 0.4), 15, 0, 0, 8);
+}
+
+.stat-card-blue {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #4facfe 0%, #00f2fe 100%);
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(79, 172, 254, 0.4), 15, 0, 0, 8);
+}
+
+.stat-card-red {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #ff9a9e 0%, #fecfef 100%);
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(255, 154, 158, 0.4), 15, 0, 0, 8);
+}
+
+.stat-card-orange {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #ffecd2 0%, #fcb69f 100%);
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(252, 182, 159, 0.4), 15, 0, 0, 8);
+}
+
+/* ScrollPane */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 8px;
+}
+
+.scroll-pane .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-pref-height: 8px;
+}
+
+.scroll-pane .thumb {
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-background-radius: 4px;
+}
+
+.scroll-pane .thumb:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+}

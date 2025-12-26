@@ -31,6 +31,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
@@ -57,6 +58,8 @@ public class AdminDashboardController implements Initializable {
     @FXML private Label tauxRemplissage, matchsSemaine, equipesQualifiees;
     
     @FXML private Button btnDashboard, btnJoueurs, btnEquipes, btnStades, btnGroupes, btnMatchs;
+    
+    @FXML private TextField searchFieldJoueurs;
     
     @FXML private TableView<Joueur> tableJoueurs;
     @FXML private TableView<Equipe> tableEquipes;
@@ -415,6 +418,32 @@ public class AdminDashboardController implements Initializable {
                 showAlert("Erreur", "Erreur lors de la suppression", Alert.AlertType.ERROR);
             }
         }
+    }
+
+    @FXML
+    private void rechercherJoueur() {
+        String nomRecherche = searchFieldJoueurs.getText().trim();
+        
+        if (nomRecherche.isEmpty()) {
+            showAlert("Attention", "Veuillez entrer un nom à rechercher", Alert.AlertType.WARNING);
+            return;
+        }
+        
+        java.util.List<Joueur> resultats = joueurDAO.rechercherParNom(nomRecherche);
+        
+        if (resultats.isEmpty()) {
+            showAlert("Information", "Aucun joueur trouvé avec le nom : " + nomRecherche, Alert.AlertType.INFORMATION);
+            tableJoueurs.setItems(FXCollections.observableArrayList());
+        } else {
+            tableJoueurs.setItems(FXCollections.observableArrayList(resultats));
+            showAlert("Succès", resultats.size() + " joueur(s) trouvé(s)", Alert.AlertType.INFORMATION);
+        }
+    }
+
+    @FXML
+    private void reinitialiserRechercheJoueurs() {
+        searchFieldJoueurs.clear();
+        chargerJoueurs();
     }
 
     private void ouvrirFormulaireJoueur(Joueur joueur) {
