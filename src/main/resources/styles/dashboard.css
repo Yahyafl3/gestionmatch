@@ -2,6 +2,19 @@
    MODERN DASHBOARD STYLES
    =========================== */
 
+/* Root Background - Blanc sans image */
+.root {
+    -fx-background-color: white;
+}
+
+#rootPane {
+    -fx-background-color: white;
+}
+
+#contentPane {
+    -fx-background-color: white;
+}
+
 /* Sidebar Menu Buttons */
 .menu-btn {
     
@@ -89,16 +102,18 @@
     -fx-scale-y: 1.05;
 }
 
-/* Modern Table Styles - Design Marocain */
+/* Modern Table Styles - Design Rouge et Noir */
 .table-view {
     -fx-background-color: rgb(255, 255, 255);
-    -fx-border-color: transparent;
+    -fx-border-color: #1e293b;
+    -fx-border-width: 2;
     -fx-background-radius: 16;
+    -fx-border-radius: 16;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8);
 }
 
 .table-view .column-header-background {
-    -fx-background-color: #2d5a3d;
+    -fx-background-color: #C1272D;
     -fx-background-radius: 16 16 0 0;
 }
 
@@ -108,7 +123,7 @@
     -fx-font-weight: 700;
     -fx-font-size: 14px;
     -fx-padding: 18px;
-    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-border-color: rgba(30, 41, 59, 0.3);
     -fx-border-width: 0 1 0 0;
 }
 
@@ -121,7 +136,7 @@
     -fx-text-fill: #1e293b;
     -fx-font-size: 13px;
     -fx-padding: 16px;
-    -fx-border-color: #e2e8f0;
+    -fx-border-color: #1e293b;
     -fx-border-width: 0 0 1 0;
     -fx-alignment: CENTER_LEFT;
 }
@@ -132,17 +147,17 @@
 }
 
 .table-row-cell:odd {
-    -fx-background-color: #f8faf9;
+    -fx-background-color: #f8f9fa;
 }
 
 .table-row-cell:selected {
-    -fx-background-color: rgba(45, 90, 61, 0.15);
-    -fx-border-color: #2d5a3d;
+    -fx-background-color: rgba(193, 39, 45, 0.15);
+    -fx-border-color: #C1272D;
     -fx-border-width: 0 0 0 4;
 }
 
 .table-row-cell:hover {
-    -fx-background-color: rgba(84, 191, 147, 0.1);
+    -fx-background-color: rgba(193, 39, 45, 0.08);
     -fx-cursor: hand;
 }
 
@@ -157,12 +172,12 @@
 }
 
 .table-view .scroll-bar:vertical .thumb {
-    -fx-background-color: #2d5a3d;
+    -fx-background-color: #1e293b;
     -fx-background-radius: 5px;
 }
 
 .table-view .scroll-bar:vertical .thumb:hover {
-    -fx-background-color: #54BF93;
+    -fx-background-color: #0f172a;
 }
 
 .table-view .scroll-bar:horizontal {
@@ -171,12 +186,12 @@
 }
 
 .table-view .scroll-bar:horizontal .thumb {
-    -fx-background-color: #2d5a3d;
+    -fx-background-color: #1e293b;
     -fx-background-radius: 5px;
 }
 
 .table-view .scroll-bar:horizontal .thumb:hover {
-    -fx-background-color: #54BF93;
+    -fx-background-color: #0f172a;
 }
 
 /* Stat Cards with Gradients - JavaFX Syntax */

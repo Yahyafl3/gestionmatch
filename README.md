@@ -1,310 +1,151 @@
-# 🏆 FIFA 2030 - Plateforme de Gestion des Équipes et Matchs
+# ⚽ Gestion Coupe du Monde 2030
 
-## 📌 Vue d'Ensemble
+Application JavaFX moderne pour la gestion complète de la Coupe du Monde de Football 2030.
 
-**FIFA 2030** est une application JavaFX complète pour la gestion des équipes, joueurs, matchs et stades de la Coupe du Monde 2030. L'application offre un système d'authentification sécurisé, un dashboard administrateur professionnel et une interface utilisateur moderne.
+## 🎯 Fonctionnalités
 
-### 🎯 Objectifs
-- ✅ Gestion complète des données (Équipes, Joueurs, Matchs, Stades, Groupes)
-- ✅ Système d'authentification avec rôles (Admin/User)
-- ✅ Dashboard administrateur avec statistiques et graphiques
-- ✅ Interface utilisateur moderne et intuitive
-- ✅ Base de données automatisée
+- **Dashboard Admin** : Vue d'ensemble avec statistiques en temps réel
+- **Gestion des Joueurs** : CRUD complet avec recherche
+- **Gestion des Équipes** : Suivi des équipes participantes
+- **Gestion des Stades** : Base de données des stades
+- **Gestion des Groupes** : Organisation de la phase de groupes
+- **Gestion des Matchs** : Planification et résultats
+- **Authentification** : Système de login/inscription sécurisé
 
----
-
-## 🚀 Démarrage Rapide
+## 🚀 Installation Rapide
 
 ### Prérequis
-- Java 21+
+- Java 17 ou supérieur
+- Maven 3.6+
 - MySQL 8.0+
-- Maven
-- XAMPP (ou MySQL Server)
 
-### Installation et Lancement
+### Étapes
 
+1. **Cloner le projet**
 ```bash
-# 1. Cloner le projet
-git clone <repository-url>
+git clone <votre-repo>
 cd gestionmatch
+```
 
-# 2. Démarrer MySQL
-# (XAMPP Control Panel → Start MySQL)
+2. **Configurer la base de données**
+```bash
+mysql -u root -p < setup_database.sql
+```
 
-# 3. Compiler et lancer
+3. **Compiler et lancer**
+```bash
 mvn clean javafx:run
 ```
 
-### Connexion
-```
-Email    : admin@fifa2030.com
-Password : Admin123
-```
-
-Pour plus de détails, voir [QUICK_START.md](QUICK_START.md)
-
----
-
-## 📋 Fonctionnalités
-
-### 🔐 Authentification
-- ✅ Inscription avec validation
-- ✅ Connexion sécurisée
-- ✅ Gestion des rôles (Admin/User)
-- ✅ Vérification d'unicité d'email
-
-### 📊 Dashboard Administrateur
-- ✅ Tableau de bord avec statistiques en temps réel
-- ✅ Graphiques (Pie Chart, Bar Chart)
-- ✅ Gestion complète des données :
-  - 👥 Joueurs
-  - ⚽ Équipes
-  - 🎮 Matchs
-  - 🏟️ Stades
-  - 🎯 Groupes
-- ✅ Actions rapides
-- ✅ Activités récentes
-- ✅ Déconnexion sécurisée
-
-### 👤 Dashboard Utilisateur
-- ✅ Visualisation des données
-- ✅ Recherche et filtrage
-- ✅ Consultation des statistiques
-
----
+Ou utilisez les scripts fournis :
+- Windows : `run.cmd` ou `run.ps1`
+- Mac/Linux : `./mvnw clean javafx:run`
 
 ## 📁 Structure du Projet
 
 ```
 gestionmatch/
-├── src/main/java/com/example/gestionmatch/
-│   ├── controller/          # Contrôleurs (Logique de présentation)
-│   ├── dao/                 # DAOs (Accès aux données)
-│   ├── model/               # Modèles (Entités)
-│   ├── database/            # Connexion à la BD
-│   └── Main.java            # Point d'entrée
-├── src/main/resources/
-│   ├── fxml/                # Interfaces (FXML)
-│   └── styles/              # Styles (CSS)
-├── setup_database.sql       # Script SQL
-└── Documentation/
-    ├── SETUP_INSTRUCTIONS.md
-    ├── QUICK_START.md
-    ├── IMPLEMENTATION_SUMMARY.md
-    ├── COMPLETION_REPORT.md
-    └── PROJECT_STRUCTURE.md
+├── src/main/
+│   ├── java/com/example/gestionmatch/
+│   │   ├── controller/     # Contrôleurs JavaFX
+│   │   ├── model/          # Modèles de données
+│   │   ├── dao/            # Accès aux données
+│   │   ├── services/       # Logique métier
+│   │   └── util/           # Utilitaires
+│   └── resources/
+│       ├── fxml/           # Interfaces FXML
+│       ├── styles/         # Fichiers CSS
+│       └── images/         # Images et logos
+├── setup_database.sql      # Script de création BDD
+└── pom.xml                 # Configuration Maven
 ```
 
-Pour plus de détails, voir [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)
+## 🎨 Design
 
----
+- **Couleurs** : Rouge FIFA (#C1272D) et Noir (#0a0e27)
+- **Fond** : Terrain de football avec overlay sombre
+- **Style** : Moderne avec coins arrondis et ombres
+- **Tableaux** : Optimisés avec colonnes essentielles uniquement
 
-## 🗄️ Base de Données
+## 🔐 Connexion par Défaut
 
-### Tables
-- `utilisateurs` - Comptes utilisateurs
-- `groupes` - Groupes de compétition
-- `equipes` - Équipes participantes
-- `joueurs` - Joueurs des équipes
-- `stades` - Stades de la compétition
-- `match_data` - Matchs joués
+- **Admin** : `admin@fifa2030.com` / `Admin123`
+- **Utilisateur** : Créer un compte via inscription
 
-### Initialisation Automatique
-La base de données est créée automatiquement au premier lancement de l'application.
+## 📊 Base de Données
 
----
+Tables principales :
+- `utilisateurs` : Comptes utilisateurs
+- `joueurs` : Joueurs des équipes
+- `equipes` : Équipes participantes
+- `stades` : Stades de la compétition
+- `groupes` : Groupes de la phase de poules
+- `match_data` : Matchs programmés
 
-## 🔧 Configuration
+## 🛠️ Technologies
 
-### MySQL
-Modifiez les paramètres dans `DatabaseConnection.java` si nécessaire :
+- **JavaFX 17** : Interface graphique
+- **MySQL** : Base de données
+- **Maven** : Gestion des dépendances
+- **JDBC** : Connexion BDD
 
-```java
-private static final String HOST = "localhost";
-private static final String PORT = "3306";
-private static final String DATABASE = "gestionmatch";
-private static final String USER = "root";
-private static final String PASSWORD = "";  // Changez si vous avez un mot de passe
-```
+## 📝 Documentation
 
----
+- `INSTALLATION_ET_LANCEMENT.md` : Guide d'installation détaillé
+- `QUICK_START.md` : Démarrage rapide
+- `OPTIMISATION_TABLEAUX.md` : Détails des optimisations récentes
 
-## 📚 Documentation
+## ✨ Nouveautés Version 2.0
 
-### Guides Complets
-- [SETUP_INSTRUCTIONS.md](SETUP_INSTRUCTIONS.md) - Guide complet de configuration
-- [QUICK_START.md](QUICK_START.md) - Démarrage rapide
-- [IMPLEMENTATION_SUMMARY.md](IMPLEMENTATION_SUMMARY.md) - Résumé technique
-- [COMPLETION_REPORT.md](COMPLETION_REPORT.md) - Rapport final
-- [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) - Structure du projet
+### Pages avec Fond de Terrain
+Toutes les pages de gestion ont maintenant un fond de terrain de football immersif :
+- `joueurs-view.fxml` : Gestion des joueurs
+- `equipe-view.fxml` : Gestion des équipes
+- `stades-view.fxml` : Gestion des stades
+- `matchs-view.fxml` : Gestion des matchs
+- `groupe-view.fxml` : Phase de groupes
 
----
+### Tableaux Optimisés
+Les colonnes inutilisées (ID, etc.) ont été supprimées pour une meilleure lisibilité :
+- **Joueurs** : Nom, Prénom, N°, Poste
+- **Équipes** : Nom, Pays, Entraîneur
+- **Stades** : Nom, Ville, Capacité
+- **Matchs** : Match, Date, Stade
+- **Groupes** : Nom, Description
 
-## 🎨 Design et UX
-
-### Thème Visuel
-- Couleurs FIFA 2030 (Bleu, Or, Blanc)
-- Design moderne et professionnel
-- Animations fluides
-- Interface responsive
-
-### Composants
-- Formulaires avec validation
-- Tableaux de données
-- Graphiques interactifs
-- Cartes de statistiques
-- Navigation intuitive
-
----
-
-## 🔐 Sécurité
-
-### Authentification
-- Vérification email/mot de passe
-- Gestion des rôles
-- Sessions utilisateur
-
-### Base de Données
-- Requêtes paramétrées (PreparedStatement)
-- Protection contre les injections SQL
-- Gestion des connexions
-
-### Validation
-- Validation des formulaires
-- Vérification d'unicité d'email
-- Confirmation de mot de passe
-
----
-
-## 🛠️ Technologie
-
-### Frontend
-- **JavaFX 21** - Framework GUI
-- **FXML** - Markup pour les interfaces
-- **CSS** - Styles et animations
-
-### Backend
-- **Java 21** - Langage de programmation
-- **MySQL 8.0** - Base de données
-- **JDBC** - Accès aux données
-
-### Build
-- **Maven** - Gestion des dépendances et build
-
----
-
-## 📊 Comptes de Test
-
-### Administrateur (Créé Automatiquement)
-```
-Email    : admin@fifa2030.com
-Password : Admin123
-Rôle     : ADMIN
-```
-
-### Utilisateur Standard
-Créez un compte via le formulaire d'inscription.
-
----
+### Design Moderne
+- Nouveau fichier CSS `tables.css` pour les tableaux
+- Effets hover en rouge FIFA
+- Scrollbar personnalisée
+- Bordures et ombres élégantes
 
 ## 🐛 Dépannage
 
-### Erreur : "Connexion à la base de données échouée"
-1. Vérifiez que MySQL est démarré
-2. Vérifiez les paramètres de connexion
-3. Vérifiez que la base `gestionmatch` existe
-
-### Erreur : "FXML non trouvé"
-1. Vérifiez que les fichiers FXML sont dans `src/main/resources/`
-2. Vérifiez les chemins dans les FXMLLoader
-3. Relancez Maven clean
-
-### Erreur : "Table n'existe pas"
-1. Relancez l'application (elle créera les tables)
-2. Ou exécutez `setup_database.sql` manuellement
-
-Pour plus d'aide, voir [SETUP_INSTRUCTIONS.md](SETUP_INSTRUCTIONS.md)
-
----
-
-## 🚀 Commandes Utiles
-
+### Erreur de connexion MySQL
 ```bash
-# Compiler le projet
-mvn clean compile
+# Vérifier que MySQL est démarré
+mysql -u root -p
 
-# Lancer l'application
-mvn javafx:run
-
-# Générer un JAR
-mvn clean package
-
-# Nettoyer les fichiers générés
-mvn clean
-
-# Vérifier les dépendances
-mvn dependency:tree
+# Créer la base si nécessaire
+mysql -u root -p < setup_database.sql
 ```
 
----
+### Erreur de compilation
+```bash
+# Nettoyer et recompiler
+mvn clean compile
+```
 
-## 📈 Prochaines Étapes
+## 🤝 Contribution
 
-1. Implémenter les formulaires d'ajout/modification complets
-2. Ajouter les colonnes aux TableView
-3. Implémenter la recherche et le filtrage
-4. Ajouter les validations côté serveur
-5. Implémenter les permissions granulaires
-6. Ajouter les exports (PDF, Excel)
-7. Implémenter les notifications
-8. Ajouter les logs d'audit
-
----
-
-## 👥 Contributeurs
-
-- **Développeur** : Yahya
-- **Projet** : FIFA 2030 - Plateforme de Gestion
-- **Date** : Décembre 2025
-
----
+Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou une pull request.
 
 ## 📄 Licence
 
-Ce projet est fourni à titre d'exemple éducatif.
+Ce projet est sous licence MIT.
 
 ---
 
-## 📞 Support
-
-Pour toute question ou problème :
-1. Consultez la documentation fournie
-2. Vérifiez les logs de la console
-3. Vérifiez que MySQL est démarré
-
----
-
-## ✨ Caractéristiques Principales
-
-- ✅ **Authentification Sécurisée** - Système de login avec rôles
-- ✅ **Dashboard Professionnel** - Interface moderne et intuitive
-- ✅ **Gestion Complète** - CRUD pour toutes les entités
-- ✅ **Statistiques en Temps Réel** - Graphiques et cartes
-- ✅ **Base de Données Automatisée** - Création automatique des tables
-- ✅ **Documentation Complète** - Guides et commentaires
-- ✅ **Code Bien Structuré** - Architecture MVC
-- ✅ **Extensible** - Facile d'ajouter de nouvelles fonctionnalités
-
----
-
-## 🎉 Conclusion
-
-**FIFA 2030** est une application complète et professionnelle pour la gestion de la Coupe du Monde 2030. Elle offre une interface utilisateur moderne, une gestion sécurisée des données et une architecture extensible.
-
-**Prêt à utiliser ! 🏆**
-
----
-
-**Dernière mise à jour** : 19 Décembre 2025
+**Version** : 2.0  
+**Date** : Décembre 2025  
 **Statut** : ✅ Production Ready
-**Version** : 1.0.0

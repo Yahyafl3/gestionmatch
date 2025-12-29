@@ -6,53 +6,55 @@
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.gestionmatch.controller.FormGroupeController"
-      spacing="15" style="-fx-padding: 25; -fx-background-color: linear-gradient(to bottom, #1e2442, #151829); -fx-background-radius: 15;">
+      spacing="20" style="-fx-padding: 30; -fx-background-color: white; -fx-background-radius: 16;">
 
     <!-- TITRE -->
-    <HBox alignment="CENTER" style="-fx-background-color: linear-gradient(to right, #C1272D, #8B1F23); -fx-background-radius: 10; -fx-padding: 15;">
-        <Label text="🎯 FORMULAIRE GROUPE" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 5, 0, 0, 2);"/>
+    <HBox alignment="CENTER" style="-fx-background-color: #C1272D; -fx-background-radius: 12; -fx-padding: 15;">
+        <Label text="📋 FORMULAIRE GROUPE" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
     </HBox>
 
     <!-- INFORMATIONS DU GROUPE -->
-    <VBox spacing="10" style="-fx-background-color: rgba(42, 47, 74, 0.6); -fx-background-radius: 10; -fx-padding: 15; -fx-border-color: #FFD700; -fx-border-width: 2; -fx-border-radius: 10;">
-        <Label text="📝 INFORMATIONS DU GROUPE" style="-fx-text-fill: #FFD700; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+    <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 20; -fx-border-color: #C1272D; -fx-border-width: 2; -fx-border-radius: 12;">
+        <Label text="📝 INFORMATIONS DU GROUPE" style="-fx-text-fill: #C1272D; -fx-font-size: 16px; -fx-font-weight: bold;"/>
         
         <VBox spacing="8">
-            <Label text="Nom du groupe *" style="-fx-text-fill: #FFD700; -fx-font-size: 12px; -fx-font-weight: bold;"/>
+            <Label text="Nom du groupe *" style="-fx-text-fill: #1e293b; -fx-font-size: 13px; -fx-font-weight: bold;"/>
             <TextField fx:id="nomField" promptText="Ex: Groupe A" prefHeight="40"
-                       style="-fx-background-color: white; -fx-text-fill: #1a1f3a; -fx-prompt-text-fill: #999; -fx-background-radius: 8; -fx-border-color: #FFD700; -fx-border-width: 2; -fx-border-radius: 8; -fx-font-size: 14px; -fx-padding: 8;"/>
+                       style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8; -fx-background-radius: 8; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 8; -fx-font-size: 14px; -fx-padding: 10;"/>
         </VBox>
 
         <VBox spacing="8">
-            <Label text="Description" style="-fx-text-fill: #FFD700; -fx-font-size: 12px; -fx-font-weight: bold;"/>
+            <Label text="Description" style="-fx-text-fill: #1e293b; -fx-font-size: 13px; -fx-font-weight: bold;"/>
             <TextArea fx:id="descriptionArea" promptText="Description du groupe..." prefHeight="70"
-                      style="-fx-background-color: white; -fx-text-fill: #1a1f3a; -fx-prompt-text-fill: #999; -fx-background-radius: 8; -fx-border-color: #FFD700; -fx-border-width: 2; -fx-border-radius: 8; -fx-font-size: 13px;"/>
+                      style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8; -fx-background-radius: 8; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 8; -fx-font-size: 13px; -fx-padding: 10;"/>
         </VBox>
     </VBox>
 
     <!-- SÉLECTION DES ÉQUIPES -->
-    <VBox spacing="10" style="-fx-background-color: rgba(42, 47, 74, 0.6); -fx-background-radius: 10; -fx-padding: 15; -fx-border-color: #00FF00; -fx-border-width: 2; -fx-border-radius: 10;">
-        <Label text="⚽ SÉLECTIONNER 4 ÉQUIPES" style="-fx-text-fill: #00FF00; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+    <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 20; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 12;">
+        <Label text="⚽ SÉLECTIONNER 4 ÉQUIPES" style="-fx-text-fill: #1e293b; -fx-font-size: 16px; -fx-font-weight: bold;"/>
 
-        <ComboBox fx:id="equipe1Combo" promptText="🥇 Équipe 1" prefHeight="40" prefWidth="500"
-                  style="-fx-background-color: white; -fx-text-fill: #1a1f3a; -fx-background-radius: 8; -fx-border-color: #00FF00; -fx-border-width: 2; -fx-border-radius: 8; -fx-font-size: 13px;"/>
+        <VBox spacing="10">
+            <ComboBox fx:id="equipe1Combo" promptText="🥇 Équipe 1" prefHeight="40" prefWidth="500"
+                      style="-fx-background-color: white; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 13px;"/>
 
-        <ComboBox fx:id="equipe2Combo" promptText="🥈 Équipe 2" prefHeight="40" prefWidth="500"
-                  style="-fx-background-color: white; -fx-text-fill: #1a1f3a; -fx-background-radius: 8; -fx-border-color: #00FF00; -fx-border-width: 2; -fx-border-radius: 8; -fx-font-size: 13px;"/>
+            <ComboBox fx:id="equipe2Combo" promptText="🥈 Équipe 2" prefHeight="40" prefWidth="500"
+                      style="-fx-background-color: white; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 13px;"/>
 
-        <ComboBox fx:id="equipe3Combo" promptText="🥉 Équipe 3" prefHeight="40" prefWidth="500"
-                  style="-fx-background-color: white; -fx-text-fill: #1a1f3a; -fx-background-radius: 8; -fx-border-color: #00FF00; -fx-border-width: 2; -fx-border-radius: 8; -fx-font-size: 13px;"/>
+            <ComboBox fx:id="equipe3Combo" promptText="🥉 Équipe 3" prefHeight="40" prefWidth="500"
+                      style="-fx-background-color: white; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 13px;"/>
 
-        <ComboBox fx:id="equipe4Combo" promptText="🏅 Équipe 4" prefHeight="40" prefWidth="500"
-                  style="-fx-background-color: white; -fx-text-fill: #1a1f3a; -fx-background-radius: 8; -fx-border-color: #00FF00; -fx-border-width: 2; -fx-border-radius: 8; -fx-font-size: 13px;"/>
+            <ComboBox fx:id="equipe4Combo" promptText="🏅 Équipe 4" prefHeight="40" prefWidth="500"
+                      style="-fx-background-color: white; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 13px;"/>
+        </VBox>
     </VBox>
 
     <!-- BOUTONS -->
     <HBox spacing="15" alignment="CENTER" style="-fx-padding: 10 0 0 0;">
         <Button fx:id="btnSauvegarder" text="✓ SAUVEGARDER" onAction="#sauvegarder" prefWidth="180" prefHeight="45"
-                style="-fx-background-color: linear-gradient(to bottom, #00AA00, #006600); -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 8, 0, 0, 3); -fx-border-color: white; -fx-border-width: 2; -fx-border-radius: 10;"/>
+                style="-fx-background-color: #C1272D; -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(193, 39, 45, 0.4), 12, 0, 0, 4);"/>
         <Button fx:id="btnAnnuler" text="✗ ANNULER" onAction="#annuler" prefWidth="180" prefHeight="45"
-                style="-fx-background-color: linear-gradient(to bottom, #DD0000, #990000); -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 8, 0, 0, 3); -fx-border-color: white; -fx-border-width: 2; -fx-border-radius: 10;"/>
+                style="-fx-background-color: #1e293b; -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(30, 41, 59, 0.4), 12, 0, 0, 4);"/>
     </HBox>
 
 </VBox>

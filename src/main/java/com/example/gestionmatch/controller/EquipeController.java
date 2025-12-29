@@ -28,14 +28,9 @@ public class EquipeController {
     @FXML private TextField champRecherche;
 
     @FXML private TableView<Equipe> tableEquipes;
-    @FXML private TableColumn<Equipe, Integer> colId;
     @FXML private TableColumn<Equipe, String> colNom;
     @FXML private TableColumn<Equipe, String> colPays;
     @FXML private TableColumn<Equipe, String> colEntraineur;
-    @FXML private TableColumn<Equipe, Integer> colNombreJoueurs;
-    @FXML private TableColumn<Equipe, Integer> colMatchs;
-    @FXML private TableColumn<Equipe, Integer> colPoints;
-    @FXML private TableColumn<Equipe, String> colGroupe;
 
     @FXML private Label labelErreur;
     @FXML private Label labelSucces;
@@ -70,14 +65,9 @@ public class EquipeController {
     }
 
     private void initialiserTableau() {
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         colPays.setCellValueFactory(new PropertyValueFactory<>("pays"));
         colEntraineur.setCellValueFactory(new PropertyValueFactory<>("entraineur"));
-        colNombreJoueurs.setCellValueFactory(new PropertyValueFactory<>("nombreJoueurs"));
-        colMatchs.setCellValueFactory(new PropertyValueFactory<>("matchsJoues"));
-        colPoints.setCellValueFactory(new PropertyValueFactory<>("points"));
-        colGroupe.setCellValueFactory(new PropertyValueFactory<>("groupeLettre"));
 
         tableEquipes.setItems(equipesObservable);
     }

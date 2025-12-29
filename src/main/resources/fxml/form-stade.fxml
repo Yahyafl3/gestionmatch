@@ -6,39 +6,48 @@
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.gestionmatch.controller.FormStadeController"
-      spacing="15" style="-fx-padding: 20; -fx-background-color: #1a1f3a;">
+      spacing="20" style="-fx-padding: 30; -fx-background-color: white; -fx-background-radius: 16;">
 
-    <Label text="Formulaire Stade" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+    <!-- Titre -->
+    <HBox alignment="CENTER" style="-fx-background-color: #C1272D; -fx-background-radius: 12; -fx-padding: 15;">
+        <Label text="🏟️ FORMULAIRE STADE" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+    </HBox>
 
-    <VBox spacing="8">
-        <Label text="Nom du stade" style="-fx-text-fill: #ccc; -fx-font-size: 12px;"/>
-        <TextField fx:id="nomField" promptText="Ex: Stade Mohammed V" prefHeight="35"
-                   style="-fx-background-color: #0f1429; -fx-text-fill: white; -fx-prompt-text-fill: #666; -fx-background-radius: 6; -fx-border-color: #2a2f4a; -fx-border-width: 1; -fx-border-radius: 6;"/>
+    <!-- Champs du formulaire -->
+    <VBox spacing="15" style="-fx-padding: 20; -fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 12;">
+        
+        <VBox spacing="8">
+            <Label text="Nom du stade *" style="-fx-text-fill: #1e293b; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+            <TextField fx:id="nomField" promptText="Ex: Stade Mohammed V" prefHeight="40"
+                       style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8; -fx-background-radius: 8; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 8; -fx-font-size: 14px; -fx-padding: 10;"/>
+        </VBox>
+
+        <HBox spacing="15">
+            <VBox spacing="8" HBox.hgrow="ALWAYS">
+                <Label text="Ville *" style="-fx-text-fill: #1e293b; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+                <TextField fx:id="villeField" promptText="Ex: Casablanca" prefHeight="40"
+                           style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8; -fx-background-radius: 8; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 8; -fx-font-size: 14px; -fx-padding: 10;"/>
+            </VBox>
+            <VBox spacing="8" HBox.hgrow="ALWAYS">
+                <Label text="Pays *" style="-fx-text-fill: #1e293b; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+                <TextField fx:id="paysField" promptText="Ex: Maroc" prefHeight="40"
+                           style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8; -fx-background-radius: 8; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 8; -fx-font-size: 14px; -fx-padding: 10;"/>
+            </VBox>
+        </HBox>
+
+        <VBox spacing="8">
+            <Label text="Capacité *" style="-fx-text-fill: #1e293b; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+            <TextField fx:id="capaciteField" promptText="Ex: 45000" prefHeight="40"
+                       style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8; -fx-background-radius: 8; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 8; -fx-font-size: 14px; -fx-padding: 10;"/>
+        </VBox>
     </VBox>
 
-    <VBox spacing="8">
-        <Label text="Ville" style="-fx-text-fill: #ccc; -fx-font-size: 12px;"/>
-        <TextField fx:id="villeField" promptText="Ex: Casablanca" prefHeight="35"
-                   style="-fx-background-color: #0f1429; -fx-text-fill: white; -fx-prompt-text-fill: #666; -fx-background-radius: 6; -fx-border-color: #2a2f4a; -fx-border-width: 1; -fx-border-radius: 6;"/>
-    </VBox>
-
-    <VBox spacing="8">
-        <Label text="Pays" style="-fx-text-fill: #ccc; -fx-font-size: 12px;"/>
-        <TextField fx:id="paysField" promptText="Ex: Maroc" prefHeight="35"
-                   style="-fx-background-color: #0f1429; -fx-text-fill: white; -fx-prompt-text-fill: #666; -fx-background-radius: 6; -fx-border-color: #2a2f4a; -fx-border-width: 1; -fx-border-radius: 6;"/>
-    </VBox>
-
-    <VBox spacing="8">
-        <Label text="Capacité" style="-fx-text-fill: #ccc; -fx-font-size: 12px;"/>
-        <TextField fx:id="capaciteField" promptText="Ex: 45000" prefHeight="35"
-                   style="-fx-background-color: #0f1429; -fx-text-fill: white; -fx-prompt-text-fill: #666; -fx-background-radius: 6; -fx-border-color: #2a2f4a; -fx-border-width: 1; -fx-border-radius: 6;"/>
-    </VBox>
-
-    <HBox spacing="10" style="-fx-padding: 10 0 0 0;">
-        <Button fx:id="btnSauvegarder" text="SAUVEGARDER" onAction="#sauvegarder" prefWidth="150" prefHeight="35"
-                style="-fx-background-color: #006233; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 12px; -fx-font-weight: bold; -fx-cursor: hand;"/>
-        <Button fx:id="btnAnnuler" text="ANNULER" onAction="#annuler" prefWidth="150" prefHeight="35"
-                style="-fx-background-color: #8B1F23; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 12px; -fx-font-weight: bold; -fx-cursor: hand;"/>
+    <!-- Boutons -->
+    <HBox spacing="15" alignment="CENTER" style="-fx-padding: 10 0 0 0;">
+        <Button fx:id="btnSauvegarder" text="✓ SAUVEGARDER" onAction="#sauvegarder" prefWidth="180" prefHeight="45"
+                style="-fx-background-color: #C1272D; -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(193, 39, 45, 0.4), 12, 0, 0, 4);"/>
+        <Button fx:id="btnAnnuler" text="✗ ANNULER" onAction="#annuler" prefWidth="180" prefHeight="45"
+                style="-fx-background-color: #1e293b; -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(30, 41, 59, 0.4), 12, 0, 0, 4);"/>
     </HBox>
 
 </VBox>

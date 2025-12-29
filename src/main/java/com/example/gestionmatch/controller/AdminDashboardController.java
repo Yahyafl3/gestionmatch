@@ -167,31 +167,11 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     private void afficherGroupes() {
-        try {
-            cacherToutesVues();
-            
-            // Charger la nouvelle vue des groupes
-            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
-                getClass().getResource("/fxml/groupe-view.fxml")
-            );
-            javafx.scene.Parent groupeView = loader.load();
-            
-            // Remplacer le contenu
-            contentPane.getChildren().clear();
-            contentPane.getChildren().add(groupeView);
-            
-            pageTitle.setText("Phase de Groupes - Coupe du Monde 2030");
-            activerBoutonMenu(btnGroupes);
-        } catch (Exception e) {
-            System.err.println("❌ Erreur chargement vue groupes : " + e.getMessage());
-            e.printStackTrace();
-            
-            // Fallback vers l'ancienne vue
-            groupesView.setVisible(true);
-            pageTitle.setText("Gestion des Groupes");
-            activerBoutonMenu(btnGroupes);
-            chargerGroupes();
-        }
+        cacherToutesVues();
+        groupesView.setVisible(true);
+        pageTitle.setText("Gestion des Groupes");
+        activerBoutonMenu(btnGroupes);
+        chargerGroupes();
     }
 
     @FXML
@@ -204,6 +184,12 @@ public class AdminDashboardController implements Initializable {
     }
 
     private void cacherToutesVues() {
+        // S'assurer que toutes les vues originales sont dans le contentPane
+        if (!contentPane.getChildren().contains(dashboardView)) {
+            contentPane.getChildren().clear();
+            contentPane.getChildren().addAll(dashboardView, joueursView, equipesView, stadesView, groupesView, matchsView);
+        }
+        
         dashboardView.setVisible(false);
         joueursView.setVisible(false);
         equipesView.setVisible(false);
@@ -355,10 +341,6 @@ public class AdminDashboardController implements Initializable {
 
     @SuppressWarnings("unchecked")
     private void initialiserTablesJoueurs() {
-        TableColumn<Joueur, Integer> colId = new TableColumn<>("ID");
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colId.setPrefWidth(50);
-
         TableColumn<Joueur, String> colNom = new TableColumn<>("Nom");
         colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         colNom.setPrefWidth(150);
@@ -367,16 +349,16 @@ public class AdminDashboardController implements Initializable {
         colPrenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         colPrenom.setPrefWidth(150);
 
-        TableColumn<Joueur, Integer> colNumero = new TableColumn<>("Numéro");
+        TableColumn<Joueur, Integer> colNumero = new TableColumn<>("N°");
         colNumero.setCellValueFactory(new PropertyValueFactory<>("numero"));
-        colNumero.setPrefWidth(80);
+        colNumero.setPrefWidth(60);
 
         TableColumn<Joueur, String> colPoste = new TableColumn<>("Poste");
         colPoste.setCellValueFactory(new PropertyValueFactory<>("poste"));
         colPoste.setPrefWidth(120);
 
         tableJoueurs.getColumns().clear();
-        tableJoueurs.getColumns().addAll(colId, colNom, colPrenom, colNumero, colPoste);
+        tableJoueurs.getColumns().addAll(colNom, colPrenom, colNumero, colPoste);
     }
 
     private void chargerJoueurs() {
@@ -471,28 +453,20 @@ public class AdminDashboardController implements Initializable {
 
     @SuppressWarnings("unchecked")
     private void initialiserTablesEquipes() {
-        TableColumn<Equipe, Integer> colId = new TableColumn<>("ID");
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colId.setPrefWidth(50);
-
         TableColumn<Equipe, String> colNom = new TableColumn<>("Nom");
         colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         colNom.setPrefWidth(180);
 
         TableColumn<Equipe, String> colPays = new TableColumn<>("Pays");
         colPays.setCellValueFactory(new PropertyValueFactory<>("pays"));
-        colPays.setPrefWidth(120);
+        colPays.setPrefWidth(150);
 
         TableColumn<Equipe, String> colEntraineur = new TableColumn<>("Entraîneur");
         colEntraineur.setCellValueFactory(new PropertyValueFactory<>("entraineur"));
-        colEntraineur.setPrefWidth(150);
-
-        TableColumn<Equipe, Integer> colPoints = new TableColumn<>("Points");
-        colPoints.setCellValueFactory(new PropertyValueFactory<>("points"));
-        colPoints.setPrefWidth(80);
+        colEntraineur.setPrefWidth(180);
 
         tableEquipes.getColumns().clear();
-        tableEquipes.getColumns().addAll(colId, colNom, colPays, colEntraineur, colPoints);
+        tableEquipes.getColumns().addAll(colNom, colPays, colEntraineur);
     }
 
     private void chargerEquipes() {
@@ -561,10 +535,6 @@ public class AdminDashboardController implements Initializable {
 
     @SuppressWarnings("unchecked")
     private void initialiserTablesStades() {
-        TableColumn<Stade, Integer> colId = new TableColumn<>("ID");
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colId.setPrefWidth(50);
-
         TableColumn<Stade, String> colNom = new TableColumn<>("Nom");
         colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         colNom.setPrefWidth(250);
@@ -578,7 +548,7 @@ public class AdminDashboardController implements Initializable {
         colCapacite.setPrefWidth(120);
 
         tableStades.getColumns().clear();
-        tableStades.getColumns().addAll(colId, colNom, colVille, colCapacite);
+        tableStades.getColumns().addAll(colNom, colVille, colCapacite);
     }
 
     private void chargerStades() {
@@ -647,20 +617,16 @@ public class AdminDashboardController implements Initializable {
 
     @SuppressWarnings("unchecked")
     private void initialiserTablesGroupes() {
-        TableColumn<Groupe, Integer> colId = new TableColumn<>("ID");
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colId.setPrefWidth(50);
-
         TableColumn<Groupe, String> colNom = new TableColumn<>("Nom");
         colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         colNom.setPrefWidth(150);
 
         TableColumn<Groupe, String> colDescription = new TableColumn<>("Description");
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-        colDescription.setPrefWidth(300);
+        colDescription.setPrefWidth(350);
 
         tableGroupes.getColumns().clear();
-        tableGroupes.getColumns().addAll(colId, colNom, colDescription);
+        tableGroupes.getColumns().addAll(colNom, colDescription);
     }
 
     private void chargerGroupes() {
@@ -725,24 +691,20 @@ public class AdminDashboardController implements Initializable {
 
     @SuppressWarnings("unchecked")
     private void initialiserTablesMatchs() {
-        TableColumn<Match, Integer> colId = new TableColumn<>("ID");
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colId.setPrefWidth(50);
-
         TableColumn<Match, String> colNom = new TableColumn<>("Match");
         colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         colNom.setPrefWidth(250);
-
-        TableColumn<Match, String> colLieu = new TableColumn<>("Lieu");
-        colLieu.setCellValueFactory(new PropertyValueFactory<>("lieu"));
-        colLieu.setPrefWidth(180);
 
         TableColumn<Match, String> colDate = new TableColumn<>("Date");
         colDate.setCellValueFactory(new PropertyValueFactory<>("dateMatch"));
         colDate.setPrefWidth(120);
 
+        TableColumn<Match, String> colLieu = new TableColumn<>("Stade");
+        colLieu.setCellValueFactory(new PropertyValueFactory<>("lieu"));
+        colLieu.setPrefWidth(180);
+
         tableMatchs.getColumns().clear();
-        tableMatchs.getColumns().addAll(colId, colNom, colLieu, colDate);
+        tableMatchs.getColumns().addAll(colNom, colDate, colLieu);
     }
 
     private void chargerMatchs() {

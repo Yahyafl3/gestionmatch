@@ -3,7 +3,8 @@ package com.example.gestionmatch.services;
 import com.example.gestionmatch.model.Utilisateur;
 import com.example.gestionmatch.model.TypeUtilisateur;
 import com.example.gestionmatch.dao.UtilisateurDAO;
-import com.example.gestionmatch.exceptions.*;
+import com.example.gestionmatch.exceptions.UsernameDejaExistantException;
+import com.example.gestionmatch.exceptions.EmailDejaUtiliseException;
 
 public class UtilisateurService {
 

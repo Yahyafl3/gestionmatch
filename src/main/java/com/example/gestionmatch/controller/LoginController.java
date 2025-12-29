@@ -103,7 +103,6 @@ public class LoginController {
 
         // Simuler traitement asynchrone (appel d'API / vérification)
         loginButton.setDisable(true);
-        loginButton.setText("Connexion...");
 
         new Thread(() -> {
             try {
@@ -111,7 +110,6 @@ public class LoginController {
                 boolean authSuccess = mockAuthenticate(username, password);
                 Platform.runLater(() -> {
                     loginButton.setDisable(false);
-                    loginButton.setText("Se connecter");
                     if (authSuccess) {
                         // Succès — navigation vers la vue principale
                         System.out.println("Utilisateur connecté : " + username + " (Se souvenir: " + (rememberMe != null && rememberMe.isSelected()) + ")");
@@ -134,7 +132,6 @@ public class LoginController {
             } catch (InterruptedException e) {
                 Platform.runLater(() -> {
                     loginButton.setDisable(false);
-                    loginButton.setText("Se connecter");
                     setError("Erreur interne. Réessayez.");
                 });
             }

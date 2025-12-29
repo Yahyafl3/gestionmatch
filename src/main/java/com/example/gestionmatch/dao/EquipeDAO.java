@@ -3,7 +3,13 @@ package com.example.gestionmatch.dao;
 import com.example.gestionmatch.model.Equipe;
 import com.example.gestionmatch.database.DatabaseConnection;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 

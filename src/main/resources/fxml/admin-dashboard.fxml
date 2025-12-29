@@ -9,9 +9,9 @@
             fx:controller="com.example.gestionmatch.controller.AdminDashboardController"
             stylesheets="@../styles/dashboard.css">
 
-    <!-- SIDEBAR GAUCHE MODERNE VERTE VISIBLE -->
+    <!-- SIDEBAR GAUCHE ROUGE -->
     <left>
-        <VBox style="-fx-background-color: #2d5a3d; -fx-pref-width: 220; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0, 5, 0);" spacing="0">
+        <VBox style="-fx-background-color: #C1272D; -fx-pref-width: 220; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0, 5, 0);" spacing="0">
             
             <!-- Logo -->
             <VBox alignment="CENTER" style="-fx-padding: 25 15; -fx-background-color: transparent;" spacing="8">
@@ -20,38 +20,38 @@
                         <Image url="@../images/4.png" backgroundLoading="true" />
                     </image>
                 </ImageView>
-                <Label text="Dashboard Admin" style="-fx-text-fill: rgba(255,255,255,0.8); -fx-font-size: 12px;"/>
+                <Label text="Dashboard Admin" style="-fx-text-fill: rgba(255,255,255,0.9); -fx-font-size: 12px;"/>
             </VBox>
 
             <!-- Menu avec Texte -->
             <VBox spacing="12" style="-fx-padding: 20 15;" alignment="TOP_LEFT">
-                <Label text="MENU" style="-fx-text-fill: rgba(255,255,255,0.6); -fx-font-size: 11px; -fx-font-weight: bold; -fx-padding: 0 10 5 10;"/>
+                <Label text="MENU" style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px; -fx-font-weight: bold; -fx-padding: 0 10 5 10;"/>
                 
                 <Button fx:id="btnDashboard" text="📊  Dashboard" onAction="#afficherDashboard" 
-                        style="-fx-background-color: rgba(255,255,255,0.25); -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-border-color: rgba(255,255,255,0.4); -fx-border-width: 2; -fx-border-radius: 12; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 600;"/>
+                        style="-fx-background-color: white; -fx-text-fill: #C1272D; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 600;"/>
                 
                 <Button fx:id="btnJoueurs" text="👤  Joueurs" onAction="#afficherJoueurs" 
-                        style="-fx-background-color: rgba(255,255,255,0.15); -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 500;"/>
+                        style="-fx-background-color: white; -fx-text-fill: #C1272D; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 500;"/>
                 
                 <Button fx:id="btnEquipes" text="🏆  Équipes" onAction="#afficherEquipes" 
-                        style="-fx-background-color: rgba(255,255,255,0.15); -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 500;"/>
+                        style="-fx-background-color: white; -fx-text-fill: #C1272D; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 500;"/>
                 
                 <Button fx:id="btnStades" text="🏟️  Stades" onAction="#afficherStades" 
-                        style="-fx-background-color: rgba(255,255,255,0.15); -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 500;"/>
+                        style="-fx-background-color: white; -fx-text-fill: #C1272D; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 500;"/>
                 
                 <Button fx:id="btnGroupes" text="📋  Groupes" onAction="#afficherGroupes" 
-                        style="-fx-background-color: rgba(255,255,255,0.15); -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 500;"/>
+                        style="-fx-background-color: white; -fx-text-fill: #C1272D; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 500;"/>
                 
                 <Button fx:id="btnMatchs" text="⚽  Matchs" onAction="#afficherMatchs" 
-                        style="-fx-background-color: rgba(255,255,255,0.15); -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 500;"/>
+                        style="-fx-background-color: white; -fx-text-fill: #C1272D; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 500;"/>
             </VBox>
 
             <Region VBox.vgrow="ALWAYS"/>
 
-            <!-- Logout ROUGE avec Texte -->
+            <!-- Logout NOIR avec Texte -->
             <VBox style="-fx-padding: 20 15;" alignment="CENTER">
                 <Button text="🚪  Déconnexion" onAction="#deconnecter" 
-                        style="-fx-background-color: #ef4444; -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(239, 68, 68, 0.5), 10, 0, 0, 4); -fx-font-weight: 600;"/>
+                        style="-fx-background-color: #1e293b; -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 4); -fx-font-weight: 600;"/>
             </VBox>
         </VBox>
     </left>
@@ -83,48 +83,56 @@
                     <!-- VUE DASHBOARD MODERNE -->
                     <VBox fx:id="dashboardView" spacing="25" alignment="TOP_LEFT">
                         
-                        <!-- Cartes Statistiques Modernes avec Dégradés VISIBLES -->
+                        <!-- Cartes Statistiques Modernes avec Design Noir et Rouge -->
                         <HBox spacing="20" alignment="CENTER">
-                            <!-- Card 1: Joueurs (Vert) -->
-                            <VBox style="-fx-background-color: linear-gradient(135deg, #54BF93 0%, #3a9d73 100%); -fx-background-radius: 20; -fx-padding: 30; -fx-pref-width: 280; -fx-pref-height: 140; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 25, 0, 0, 12); -fx-border-color: rgba(255,255,255,0.3); -fx-border-width: 2; -fx-border-radius: 20;" spacing="15" HBox.hgrow="ALWAYS">
+                            <!-- Card 1: Joueurs -->
+                            <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 25; -fx-pref-width: 280; -fx-pref-height: 140; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 20, 0, 0, 8); -fx-border-color: #C1272D; -fx-border-width: 3; -fx-border-radius: 16;" spacing="15" HBox.hgrow="ALWAYS">
                                 <HBox alignment="CENTER_LEFT" spacing="15">
-                                    <Label text="👤" style="-fx-font-size: 40px; -fx-background-color: rgba(255,255,255,0.3); -fx-padding: 15; -fx-background-radius: 15;"/>
+                                    <VBox alignment="CENTER" style="-fx-background-color: #C1272D; -fx-pref-width: 60; -fx-pref-height: 60; -fx-background-radius: 12;">
+                                        <Label text="👤" style="-fx-font-size: 32px;"/>
+                                    </VBox>
                                     <VBox spacing="5">
-                                        <Label fx:id="statJoueurs" text="178+" style="-fx-text-fill: white; -fx-font-size: 36px; -fx-font-weight: bold;"/>
-                                        <Label text="Joueurs" style="-fx-text-fill: rgba(255,255,255,0.95); -fx-font-size: 14px; -fx-font-weight: 600;"/>
+                                        <Label text="Joueurs" style="-fx-text-fill: #64748b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
+                                        <Label fx:id="statJoueurs" text="178+" style="-fx-text-fill: #1e293b; -fx-font-size: 32px; -fx-font-weight: bold;"/>
                                     </VBox>
                                 </HBox>
                             </VBox>
 
-                            <!-- Card 2: Équipes (Bleu) -->
-                            <VBox style="-fx-background-color: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); -fx-background-radius: 20; -fx-padding: 30; -fx-pref-width: 280; -fx-pref-height: 140; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 25, 0, 0, 12); -fx-border-color: rgba(255,255,255,0.3); -fx-border-width: 2; -fx-border-radius: 20;" spacing="15" HBox.hgrow="ALWAYS">
+                            <!-- Card 2: Équipes -->
+                            <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 25; -fx-pref-width: 280; -fx-pref-height: 140; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 20, 0, 0, 8); -fx-border-color: #1e293b; -fx-border-width: 3; -fx-border-radius: 16;" spacing="15" HBox.hgrow="ALWAYS">
                                 <HBox alignment="CENTER_LEFT" spacing="15">
-                                    <Label text="🏆" style="-fx-font-size: 40px; -fx-background-color: rgba(255,255,255,0.3); -fx-padding: 15; -fx-background-radius: 15;"/>
+                                    <VBox alignment="CENTER" style="-fx-background-color: #1e293b; -fx-pref-width: 60; -fx-pref-height: 60; -fx-background-radius: 12;">
+                                        <Label text="🏆" style="-fx-font-size: 32px;"/>
+                                    </VBox>
                                     <VBox spacing="5">
-                                        <Label fx:id="statEquipes" text="20+" style="-fx-text-fill: white; -fx-font-size: 36px; -fx-font-weight: bold;"/>
-                                        <Label text="Équipes" style="-fx-text-fill: rgba(255,255,255,0.95); -fx-font-size: 14px; -fx-font-weight: 600;"/>
+                                        <Label text="Équipes" style="-fx-text-fill: #64748b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
+                                        <Label fx:id="statEquipes" text="20+" style="-fx-text-fill: #1e293b; -fx-font-size: 32px; -fx-font-weight: bold;"/>
                                     </VBox>
                                 </HBox>
                             </VBox>
 
-                            <!-- Card 3: Matchs (Rouge/Rose) -->
-                            <VBox style="-fx-background-color: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); -fx-background-radius: 20; -fx-padding: 30; -fx-pref-width: 280; -fx-pref-height: 140; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 25, 0, 0, 12); -fx-border-color: rgba(255,255,255,0.3); -fx-border-width: 2; -fx-border-radius: 20;" spacing="15" HBox.hgrow="ALWAYS">
+                            <!-- Card 3: Matchs -->
+                            <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 25; -fx-pref-width: 280; -fx-pref-height: 140; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 20, 0, 0, 8); -fx-border-color: #C1272D; -fx-border-width: 3; -fx-border-radius: 16;" spacing="15" HBox.hgrow="ALWAYS">
                                 <HBox alignment="CENTER_LEFT" spacing="15">
-                                    <Label text="⚽" style="-fx-font-size: 40px; -fx-background-color: rgba(255,255,255,0.3); -fx-padding: 15; -fx-background-radius: 15;"/>
+                                    <VBox alignment="CENTER" style="-fx-background-color: #C1272D; -fx-pref-width: 60; -fx-pref-height: 60; -fx-background-radius: 12;">
+                                        <Label text="⚽" style="-fx-font-size: 32px;"/>
+                                    </VBox>
                                     <VBox spacing="5">
-                                        <Label fx:id="statMatchs" text="190+" style="-fx-text-fill: white; -fx-font-size: 36px; -fx-font-weight: bold;"/>
-                                        <Label text="Matchs" style="-fx-text-fill: rgba(255,255,255,0.95); -fx-font-size: 14px; -fx-font-weight: 600;"/>
+                                        <Label text="Matchs" style="-fx-text-fill: #64748b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
+                                        <Label fx:id="statMatchs" text="190+" style="-fx-text-fill: #1e293b; -fx-font-size: 32px; -fx-font-weight: bold;"/>
                                     </VBox>
                                 </HBox>
                             </VBox>
 
-                            <!-- Card 4: Stades (Orange) -->
-                            <VBox style="-fx-background-color: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); -fx-background-radius: 20; -fx-padding: 30; -fx-pref-width: 280; -fx-pref-height: 140; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 25, 0, 0, 12); -fx-border-color: rgba(255,255,255,0.3); -fx-border-width: 2; -fx-border-radius: 20;" spacing="15" HBox.hgrow="ALWAYS">
+                            <!-- Card 4: Stades -->
+                            <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 25; -fx-pref-width: 280; -fx-pref-height: 140; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 20, 0, 0, 8); -fx-border-color: #1e293b; -fx-border-width: 3; -fx-border-radius: 16;" spacing="15" HBox.hgrow="ALWAYS">
                                 <HBox alignment="CENTER_LEFT" spacing="15">
-                                    <Label text="🏟️" style="-fx-font-size: 40px; -fx-background-color: rgba(255,255,255,0.3); -fx-padding: 15; -fx-background-radius: 15;"/>
+                                    <VBox alignment="CENTER" style="-fx-background-color: #1e293b; -fx-pref-width: 60; -fx-pref-height: 60; -fx-background-radius: 12;">
+                                        <Label text="🏟️" style="-fx-font-size: 32px;"/>
+                                    </VBox>
                                     <VBox spacing="5">
-                                        <Label fx:id="statStades" text="12+" style="-fx-text-fill: white; -fx-font-size: 36px; -fx-font-weight: bold;"/>
-                                        <Label text="Stades" style="-fx-text-fill: rgba(255,255,255,0.95); -fx-font-size: 14px; -fx-font-weight: 600;"/>
+                                        <Label text="Stades" style="-fx-text-fill: #64748b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
+                                        <Label fx:id="statStades" text="12+" style="-fx-text-fill: #1e293b; -fx-font-size: 32px; -fx-font-weight: bold;"/>
                                     </VBox>
                                 </HBox>
                             </VBox>
@@ -134,7 +142,7 @@
                         <!-- Section Prochains Matchs et Analytics -->
                         <HBox spacing="25">
                             <!-- Prochains Matchs -->
-                            <VBox fx:id="prochainsMatchsContainer" style="-fx-background-color: rgb(255, 255, 255); -fx-background-radius: 20; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 20, 0, 0, 8);" spacing="20" HBox.hgrow="ALWAYS">
+                            <VBox fx:id="prochainsMatchsContainer" style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8); -fx-border-color: #C1272D; -fx-border-width: 3; -fx-border-radius: 16;" spacing="20" HBox.hgrow="ALWAYS">
                                 <HBox alignment="CENTER_LEFT" spacing="10">
                                     <Label text="⚽" style="-fx-font-size: 24px;"/>
                                     <Label text="Prochains Matchs" style="-fx-text-fill: #1e293b; -fx-font-size: 20px; -fx-font-weight: bold;"/>
@@ -147,7 +155,7 @@
 
 
                             <!-- Analytics Rapides -->
-                            <VBox style="-fx-background-color: rgb(255, 255, 255); -fx-background-radius: 20; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 20, 0, 0, 8);" spacing="20" prefWidth="400">
+                            <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8); -fx-border-color: #1e293b; -fx-border-width: 3; -fx-border-radius: 16;" spacing="20" prefWidth="400">
                                 <HBox alignment="CENTER_LEFT" spacing="10">
                                     <Label text="📊" style="-fx-font-size: 24px;"/>
                                     <Label text="Analytics" style="-fx-text-fill: #1e293b; -fx-font-size: 20px; -fx-font-weight: bold;"/>
@@ -156,7 +164,9 @@
                                 <VBox spacing="20">
                                     <!-- Stat 1 -->
                                     <HBox alignment="CENTER_LEFT" spacing="15">
-                                        <Region style="-fx-background-color: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); -fx-background-radius: 12; -fx-pref-width: 50; -fx-pref-height: 50;"/>
+                                        <VBox alignment="CENTER" style="-fx-background-color: #C1272D; -fx-background-radius: 12; -fx-pref-width: 50; -fx-pref-height: 50;">
+                                            <Label text="📈" style="-fx-font-size: 24px;"/>
+                                        </VBox>
                                         <VBox spacing="4" HBox.hgrow="ALWAYS">
                                             <Label text="Taux de remplissage" style="-fx-text-fill: #64748b; -fx-font-size: 13px;"/>
                                             <Label fx:id="tauxRemplissage" text="0%" style="-fx-text-fill: #1e293b; -fx-font-size: 24px; -fx-font-weight: bold;"/>
@@ -167,7 +177,9 @@
                                     
                                     <!-- Stat 2 -->
                                     <HBox alignment="CENTER_LEFT" spacing="15">
-                                        <Region style="-fx-background-color: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); -fx-background-radius: 12; -fx-pref-width: 50; -fx-pref-height: 50;"/>
+                                        <VBox alignment="CENTER" style="-fx-background-color: #1e293b; -fx-background-radius: 12; -fx-pref-width: 50; -fx-pref-height: 50;">
+                                            <Label text="📅" style="-fx-font-size: 24px;"/>
+                                        </VBox>
                                         <VBox spacing="4" HBox.hgrow="ALWAYS">
                                             <Label text="Matchs cette semaine" style="-fx-text-fill: #64748b; -fx-font-size: 13px;"/>
                                             <Label fx:id="matchsSemaine" text="0" style="-fx-text-fill: #1e293b; -fx-font-size: 24px; -fx-font-weight: bold;"/>
@@ -178,7 +190,9 @@
                                     
                                     <!-- Stat 3 -->
                                     <HBox alignment="CENTER_LEFT" spacing="15">
-                                        <Region style="-fx-background-color: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); -fx-background-radius: 12; -fx-pref-width: 50; -fx-pref-height: 50;"/>
+                                        <VBox alignment="CENTER" style="-fx-background-color: #C1272D; -fx-background-radius: 12; -fx-pref-width: 50; -fx-pref-height: 50;">
+                                            <Label text="✅" style="-fx-font-size: 24px;"/>
+                                        </VBox>
                                         <VBox spacing="4" HBox.hgrow="ALWAYS">
                                             <Label text="Équipes qualifiées" style="-fx-text-fill: #64748b; -fx-font-size: 13px;"/>
                                             <Label fx:id="equipesQualifiees" text="0" style="-fx-text-fill: #1e293b; -fx-font-size: 24px; -fx-font-weight: bold;"/>
@@ -192,74 +206,99 @@
 
                     <!-- VUE JOUEURS -->
                     <VBox fx:id="joueursView" visible="false" spacing="25">
-                        <HBox alignment="CENTER_LEFT" spacing="15">
+                        <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8); -fx-border-color: #C1272D; -fx-border-width: 3; -fx-border-radius: 16;">
                             <Label text="👤 Gestion des Joueurs" style="-fx-text-fill: #1e293b; -fx-font-size: 24px; -fx-font-weight: bold;"/>
                             <Region HBox.hgrow="ALWAYS"/>
-                            <Button text="➕ Ajouter" onAction="#ajouterJoueur" styleClass="btn-add"/>
-                            <Button text="✏️ Modifier" onAction="#modifierJoueur" styleClass="btn-edit"/>
-                            <Button text="🗑️ Supprimer" onAction="#supprimerJoueur" styleClass="btn-delete"/>
+                            <Button text="➕ Ajouter" onAction="#ajouterJoueur" 
+                                    style="-fx-background-color: white; -fx-text-fill: #C1272D; -fx-font-size: 14px; -fx-padding: 12 24; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 600; -fx-border-color: #C1272D; -fx-border-width: 2; -fx-border-radius: 10;"/>
+                            <Button text="✏️ Modifier" onAction="#modifierJoueur" 
+                                    style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-font-size: 14px; -fx-padding: 12 24; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 600; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 10;"/>
+                            <Button text="🗑️ Supprimer" onAction="#supprimerJoueur" 
+                                    style="-fx-background-color: #C1272D; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 12 24; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 600;"/>
                         </HBox>
                         
                         <!-- Barre de recherche -->
-                        <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 4);">
+                        <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8); -fx-border-color: #1e293b; -fx-border-width: 3; -fx-border-radius: 16;">
                             <Label text="🔍" style="-fx-font-size: 20px;"/>
                             <TextField fx:id="searchFieldJoueurs" promptText="Rechercher un joueur par nom..." 
-                                       style="-fx-pref-width: 400; -fx-pref-height: 40; -fx-font-size: 14px; -fx-border-color: #e2e8f0; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10;"/>
+                                       style="-fx-pref-width: 400; -fx-pref-height: 40; -fx-font-size: 14px; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10;"/>
                             <Button text="Rechercher" onAction="#rechercherJoueur" 
-                                    style="-fx-background-color: #2d5a3d; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-weight: 600;"/>
+                                    style="-fx-background-color: #C1272D; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-weight: 600;"/>
                             <Button text="Réinitialiser" onAction="#reinitialiserRechercheJoueurs" 
-                                    style="-fx-background-color: #64748b; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-weight: 600;"/>
+                                    style="-fx-background-color: #1e293b; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-weight: 600;"/>
                         </HBox>
                         
-                        <TableView fx:id="tableJoueurs" VBox.vgrow="ALWAYS"/>
+                        <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8); -fx-border-color: #1e293b; -fx-border-width: 3; -fx-border-radius: 16;">
+                            <TableView fx:id="tableJoueurs" VBox.vgrow="ALWAYS"/>
+                        </VBox>
                     </VBox>
 
                     <!-- VUE ÉQUIPES -->
                     <VBox fx:id="equipesView" visible="false" spacing="25">
-                        <HBox alignment="CENTER_LEFT" spacing="15">
+                        <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8); -fx-border-color: #1e293b; -fx-border-width: 3; -fx-border-radius: 16;">
                             <Label text="🏆 Gestion des Équipes" style="-fx-text-fill: #1e293b; -fx-font-size: 24px; -fx-font-weight: bold;"/>
                             <Region HBox.hgrow="ALWAYS"/>
-                            <Button text="➕ Ajouter" onAction="#ajouterEquipe" styleClass="btn-add"/>
-                            <Button text="✏️ Modifier" onAction="#modifierEquipe" styleClass="btn-edit"/>
-                            <Button text="🗑️ Supprimer" onAction="#supprimerEquipe" styleClass="btn-delete"/>
+                            <Button text="➕ Ajouter" onAction="#ajouterEquipe" 
+                                    style="-fx-background-color: white; -fx-text-fill: #C1272D; -fx-font-size: 14px; -fx-padding: 12 24; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 600; -fx-border-color: #C1272D; -fx-border-width: 2; -fx-border-radius: 10;"/>
+                            <Button text="✏️ Modifier" onAction="#modifierEquipe" 
+                                    style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-font-size: 14px; -fx-padding: 12 24; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 600; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 10;"/>
+                            <Button text="🗑️ Supprimer" onAction="#supprimerEquipe" 
+                                    style="-fx-background-color: #C1272D; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 12 24; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 600;"/>
                         </HBox>
-                        <TableView fx:id="tableEquipes" VBox.vgrow="ALWAYS"/>
+                        <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8); -fx-border-color: #1e293b; -fx-border-width: 3; -fx-border-radius: 16;">
+                            <TableView fx:id="tableEquipes" VBox.vgrow="ALWAYS"/>
+                        </VBox>
                     </VBox>
 
                     <!-- VUE STADES -->
                     <VBox fx:id="stadesView" visible="false" spacing="25">
-                        <HBox alignment="CENTER_LEFT" spacing="15">
+                        <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8); -fx-border-color: #C1272D; -fx-border-width: 3; -fx-border-radius: 16;">
                             <Label text="🏟️ Gestion des Stades" style="-fx-text-fill: #1e293b; -fx-font-size: 24px; -fx-font-weight: bold;"/>
                             <Region HBox.hgrow="ALWAYS"/>
-                            <Button text="➕ Ajouter" onAction="#ajouterStade" styleClass="btn-add"/>
-                            <Button text="✏️ Modifier" onAction="#modifierStade" styleClass="btn-edit"/>
-                            <Button text="🗑️ Supprimer" onAction="#supprimerStade" styleClass="btn-delete"/>
+                            <Button text="➕ Ajouter" onAction="#ajouterStade" 
+                                    style="-fx-background-color: white; -fx-text-fill: #C1272D; -fx-font-size: 14px; -fx-padding: 12 24; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 600; -fx-border-color: #C1272D; -fx-border-width: 2; -fx-border-radius: 10;"/>
+                            <Button text="✏️ Modifier" onAction="#modifierStade" 
+                                    style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-font-size: 14px; -fx-padding: 12 24; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 600; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 10;"/>
+                            <Button text="🗑️ Supprimer" onAction="#supprimerStade" 
+                                    style="-fx-background-color: #C1272D; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 12 24; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 600;"/>
                         </HBox>
-                        <TableView fx:id="tableStades" VBox.vgrow="ALWAYS"/>
+                        <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8); -fx-border-color: #C1272D; -fx-border-width: 3; -fx-border-radius: 16;">
+                            <TableView fx:id="tableStades" VBox.vgrow="ALWAYS"/>
+                        </VBox>
                     </VBox>
 
                     <!-- VUE GROUPES -->
                     <VBox fx:id="groupesView" visible="false" spacing="25">
-                        <HBox alignment="CENTER_LEFT" spacing="15">
+                        <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8); -fx-border-color: #1e293b; -fx-border-width: 3; -fx-border-radius: 16;">
                             <Label text="📋 Gestion des Groupes" style="-fx-text-fill: #1e293b; -fx-font-size: 24px; -fx-font-weight: bold;"/>
                             <Region HBox.hgrow="ALWAYS"/>
-                            <Button text="➕ Ajouter" onAction="#ajouterGroupe" styleClass="btn-add"/>
-                            <Button text="✏️ Modifier" onAction="#modifierGroupe" styleClass="btn-edit"/>
-                            <Button text="🗑️ Supprimer" onAction="#supprimerGroupe" styleClass="btn-delete"/>
+                            <Button text="➕ Ajouter" onAction="#ajouterGroupe" 
+                                    style="-fx-background-color: white; -fx-text-fill: #C1272D; -fx-font-size: 14px; -fx-padding: 12 24; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 600; -fx-border-color: #C1272D; -fx-border-width: 2; -fx-border-radius: 10;"/>
+                            <Button text="✏️ Modifier" onAction="#modifierGroupe" 
+                                    style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-font-size: 14px; -fx-padding: 12 24; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 600; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 10;"/>
+                            <Button text="🗑️ Supprimer" onAction="#supprimerGroupe" 
+                                    style="-fx-background-color: #C1272D; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 12 24; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 600;"/>
                         </HBox>
-                        <TableView fx:id="tableGroupes" VBox.vgrow="ALWAYS"/>
+                        <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8); -fx-border-color: #1e293b; -fx-border-width: 3; -fx-border-radius: 16;">
+                            <TableView fx:id="tableGroupes" VBox.vgrow="ALWAYS"/>
+                        </VBox>
                     </VBox>
 
                     <!-- VUE MATCHS -->
                     <VBox fx:id="matchsView" visible="false" spacing="25">
-                        <HBox alignment="CENTER_LEFT" spacing="15">
+                        <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8); -fx-border-color: #C1272D; -fx-border-width: 3; -fx-border-radius: 16;">
                             <Label text="⚽ Gestion des Matchs" style="-fx-text-fill: #1e293b; -fx-font-size: 24px; -fx-font-weight: bold;"/>
                             <Region HBox.hgrow="ALWAYS"/>
-                            <Button text="➕ Ajouter" onAction="#ajouterMatch" styleClass="btn-add"/>
-                            <Button text="✏️ Modifier" onAction="#modifierMatch" styleClass="btn-edit"/>
-                            <Button text="🗑️ Supprimer" onAction="#supprimerMatch" styleClass="btn-delete"/>
+                            <Button text="➕ Ajouter" onAction="#ajouterMatch" 
+                                    style="-fx-background-color: white; -fx-text-fill: #C1272D; -fx-font-size: 14px; -fx-padding: 12 24; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 600; -fx-border-color: #C1272D; -fx-border-width: 2; -fx-border-radius: 10;"/>
+                            <Button text="✏️ Modifier" onAction="#modifierMatch" 
+                                    style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-font-size: 14px; -fx-padding: 12 24; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 600; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 10;"/>
+                            <Button text="🗑️ Supprimer" onAction="#supprimerMatch" 
+                                    style="-fx-background-color: #C1272D; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 12 24; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 600;"/>
                         </HBox>
-                        <TableView fx:id="tableMatchs" VBox.vgrow="ALWAYS"/>
+                        <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8); -fx-border-color: #C1272D; -fx-border-width: 3; -fx-border-radius: 16;">
+                            <TableView fx:id="tableMatchs" VBox.vgrow="ALWAYS"/>
+                        </VBox>
                     </VBox>
 
                 </StackPane>

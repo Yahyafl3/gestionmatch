@@ -7,17 +7,17 @@
 
 <StackPane xmlns="http://javafx.com/javafx/21"
            xmlns:fx="http://javafx.com/fxml/1"
-           style="-fx-background-color: #0a0e27;">
+           stylesheets="@../styles/tables.css">
 
     <!-- IMAGE DE FOND -->
-    <ImageView preserveRatio="false" fitWidth="1920" fitHeight="1080" opacity="0.4">
+    <ImageView preserveRatio="false" fitWidth="2000" fitHeight="1200" opacity="0.35" smooth="true">
         <image>
-            <Image url="@../images/wp7860573.jpg"/>
+            <Image url="@../images/Image-18-10-2025-a-09.51-1.jpeg" backgroundLoading="true"/>
         </image>
     </ImageView>
     
     <!-- OVERLAY -->
-    <Pane style="-fx-background-color: rgba(10, 14, 39, 0.6);"/>
+    <Pane style="-fx-background-color: rgba(10, 14, 39, 0.65);"/>
 
     <BorderPane fx:controller="com.example.gestionmatch.controller.EquipeController"
                 style="-fx-background-color: transparent;">
@@ -84,11 +84,9 @@
                     <Label text="📋 LISTE DES ÉQUIPES" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px;"/>
                     <TableView fx:id="tableEquipes" VBox.vgrow="ALWAYS" style="-fx-background-color: #0f1429;">
                         <columns>
-                            <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
-                            <TableColumn fx:id="colNom" text="Nom" prefWidth="150"/>
-                            <TableColumn fx:id="colPays" text="Pays" prefWidth="120"/>
-                            <TableColumn fx:id="colEntraineur" text="Entraîneur" prefWidth="150"/>
-                            <TableColumn fx:id="colNombreJoueurs" text="Joueurs" prefWidth="80"/>
+                            <TableColumn fx:id="colNom" text="Nom" prefWidth="180"/>
+                            <TableColumn fx:id="colPays" text="Pays" prefWidth="150"/>
+                            <TableColumn fx:id="colEntraineur" text="Entraîneur" prefWidth="180"/>
                         </columns>
                     </TableView>
                 </VBox>
