@@ -84,7 +84,7 @@
 }
 
 .checkbox-custom .box {
-    -fx-background-color: white;
+    -@@fx-background-color: white;
     -fx-border-color: #cbd5e0;
     -fx-border-width: 2px;
     -fx-border-radius: 4px;

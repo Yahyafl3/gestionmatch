@@ -28,22 +28,22 @@
                 <Label text="MENU" style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px; -fx-font-weight: bold; -fx-padding: 0 10 5 10;"/>
                 
                 <Button fx:id="btnDashboard" text="📊  Dashboard" onAction="#afficherDashboard" 
-                        style="-fx-background-color: white; -fx-text-fill: #C1272D; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 600;"/>
+                        style="-fx-background-color: #000000; -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 4);"/>
                 
                 <Button fx:id="btnJoueurs" text="👤  Joueurs" onAction="#afficherJoueurs" 
-                        style="-fx-background-color: white; -fx-text-fill: #C1272D; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 500;"/>
+                        style="-fx-background-color: #000000; -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 4);"/>
                 
                 <Button fx:id="btnEquipes" text="🏆  Équipes" onAction="#afficherEquipes" 
-                        style="-fx-background-color: white; -fx-text-fill: #C1272D; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 500;"/>
+                        style="-fx-background-color: #000000; -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 4);"/>
                 
                 <Button fx:id="btnStades" text="🏟️  Stades" onAction="#afficherStades" 
-                        style="-fx-background-color: white; -fx-text-fill: #C1272D; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 500;"/>
+                        style="-fx-background-color: #000000; -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 4);"/>
                 
                 <Button fx:id="btnGroupes" text="📋  Groupes" onAction="#afficherGroupes" 
-                        style="-fx-background-color: white; -fx-text-fill: #C1272D; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 500;"/>
+                        style="-fx-background-color: #000000; -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 4);"/>
                 
                 <Button fx:id="btnMatchs" text="⚽  Matchs" onAction="#afficherMatchs" 
-                        style="-fx-background-color: white; -fx-text-fill: #C1272D; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 500;"/>
+                        style="-fx-background-color: #000000; -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 4);"/>
             </VBox>
 
             <Region VBox.vgrow="ALWAYS"/>

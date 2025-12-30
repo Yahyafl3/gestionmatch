@@ -1,0 +1,118 @@
+/* ===================================
+   STYLES POUR LES TABLEAUX MODERNES
+   =================================== */
+
+/* Table principale */
+.table-view {
+    -fx-background-color: #0f1429;
+    -fx-background-radius: 12;
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0, 0, 5);
+}
+
+/* En-têtes de colonnes */
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #1e293b 0%, #0f172a 100%);
+    -fx-background-radius: 12 12 0 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #334155 transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-padding: 15 10;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* Lignes du tableau */
+.table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #1e293b transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 12 10;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: rgba(30, 41, 59, 0.3);
+}
+
+.table-row-cell:even {
+    -fx-background-color: rgba(15, 23, 42, 0.3);
+}
+
+.table-row-cell:hover {
+    -fx-background-color: rgba(193, 39, 45, 0.2);
+    -fx-cursor: hand;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgba(193, 39, 45, 0.4);
+    -fx-border-color: #C1272D;
+    -fx-border-width: 0 0 0 4;
+}
+
+.table-row-cell:selected:hover {
+    -fx-background-color: rgba(193, 39, 45, 0.5);
+}
+
+/* Cellules */
+.table-cell {
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10 15;
+}
+
+.table-row-cell:selected .table-cell {
+    -fx-text-fill: white;
+    -fx-font-weight: 600;
+}
+
+/* Scrollbar */
+.table-view .scroll-bar:vertical {
+    -fx-background-color: #0f1429;
+    -fx-pref-width: 12;
+}
+
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: #C1272D;
+    -fx-background-radius: 6;
+}
+
+.table-view .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #d63238;
+}
+
+.table-view .scroll-bar:horizontal {
+    -fx-background-color: #0f1429;
+    -fx-pref-height: 12;
+}
+
+.table-view .scroll-bar:horizontal .thumb {
+    -fx-background-color: #C1272D;
+    -fx-background-radius: 6;
+}
+
+/* Placeholder quand table vide */
+.table-view .placeholder .label {
+    -fx-text-fill: #64748b;
+    -fx-font-size: 14px;
+    -fx-font-style: italic;
+}
+
+/* Focus */
+.table-view:focused .table-row-cell:selected {
+    -fx-background-color: rgba(193, 39, 45, 0.5);
+    -fx-border-color: #C1272D;
+}
+
+/* Coins arrondis pour la dernière ligne */
+.table-row-cell:last-child {
+    -fx-background-radius: 0 0 12 12;
+}
