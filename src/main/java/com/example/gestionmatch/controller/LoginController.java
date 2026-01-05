@@ -2,6 +2,9 @@ package com.example.gestionmatch.controller;
 
 import java.io.IOException;
 
+import com.example.gestionmatch.dao.UtilisateurDAO;
+import com.example.gestionmatch.model.Utilisateur;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +22,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class LoginController {
+    
+    private UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
 
     @FXML
     private TextField usernameField;
@@ -101,38 +106,42 @@ public class LoginController {
             return;
         }
 
-        // Simuler traitement asynchrone (appel d'API / vérification)
+        // Authentification avec la base de données
         loginButton.setDisable(true);
 
         new Thread(() -> {
             try {
-                Thread.sleep(800); // simulation
-                boolean authSuccess = mockAuthenticate(username, password);
+                // Authentifier l'utilisateur via le DAO
+                Utilisateur utilisateur = utilisateurDAO.connexion(username, password);
+                
                 Platform.runLater(() -> {
                     loginButton.setDisable(false);
-                    if (authSuccess) {
-                        // Succès — navigation vers la vue principale
-                        System.out.println("Utilisateur connecté : " + username + " (Se souvenir: " + (rememberMe != null && rememberMe.isSelected()) + ")");
+                    if (utilisateur != null) {
+                        // Succès — navigation vers la vue selon le rôle
+                        System.out.println("✅ Utilisateur connecté : " + username);
+                        System.out.println("   Rôle : " + utilisateur.getRole());
+                        System.out.println("   Se souvenir : " + (rememberMe != null && rememberMe.isSelected()));
                         setError("");
                         try {
-                            loadMainView();
+                            loadDashboard(utilisateur);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Erreur");
-                            alert.setHeaderText("Impossible de charger la vue principale");
+                            alert.setHeaderText("Impossible de charger le dashboard");
                             alert.setContentText(ex.getMessage());
                             alert.showAndWait();
                         }
                     } else {
-                        setError("Nom d'utilisateur ou mot de passe incorrect.");
+                        setError("Email ou mot de passe incorrect.");
                         passwordField.setStyle("-fx-border-color: #C1272D; -fx-border-width: 2px; -fx-border-radius: 8px;");
                     }
                 });
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 Platform.runLater(() -> {
                     loginButton.setDisable(false);
-                    setError("Erreur interne. Réessayez.");
+                    setError("Erreur de connexion à la base de données.");
+                    e.printStackTrace();
                 });
             }
         }).start();
@@ -169,18 +178,34 @@ public class LoginController {
         }
     }
 
-    // Mock d'authentification : accepte user=admin@fifa2030.com / pwd=Admin123 pour test
-    private boolean mockAuthenticate(String username, String password) {
-        return "admin@fifa2030.com".equals(username) && "Admin123".equals(password);
-    }
-
-    // Charge le dashboard admin après connexion
-    private void loadMainView() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin-dashboard.fxml"));
+    // Charge le dashboard selon le rôle de l'utilisateur
+    private void loadDashboard(Utilisateur utilisateur) throws IOException {
+        String fxmlPath;
+        String title;
+        
+        if ("ADMIN".equalsIgnoreCase(utilisateur.getRole())) {
+            fxmlPath = "/fxml/admin-dashboard.fxml";
+            title = "Dashboard Admin - Coupe du Monde 2030";
+        } else {
+            fxmlPath = "/fxml/user-dashboard.fxml";
+            title = "Dashboard Utilisateur - Coupe du Monde 2030";
+        }
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         Parent root = loader.load();
+        
+        // Passer les informations de l'utilisateur au contrôleur du dashboard
+        if ("USER".equalsIgnoreCase(utilisateur.getRole())) {
+            UserDashboardController controller = loader.getController();
+            if (controller != null) {
+                controller.setUsername(utilisateur.getNomComplet());
+            }
+        }
+        
         Stage stage = (Stage) loginButton.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Dashboard Admin - Coupe du Monde 2030");
+        stage.setTitle(title);
+        stage.centerOnScreen();
     }
 }

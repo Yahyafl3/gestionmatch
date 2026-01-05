@@ -17,16 +17,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            System.out.println("\n========================================");
-            System.out.println("🏆 COUPE DU MONDE 2030");
-            System.out.println("   Application de Gestion");
-            System.out.println("========================================\n");
+
 
             // Initialiser la base de données
             SetupDatabaseAuto.initializeDatabase();
 
-            // ⭐ CHARGER LA PAGE DE CONNEXION EN PREMIER
-            System.out.println("🔐 Chargement de la page de connexion...");
 
             // Utiliser FXMLLoader avec un chemin relatif pour éviter les problèmes d'espaces
             FXMLLoader loader = new FXMLLoader();
@@ -39,7 +34,6 @@ public class Main extends Application {
             // Si utilisation d'éléments 3D, activer le DepthTest sur la racine
             root.setDepthTest(DepthTest.ENABLE);
 
-            System.out.println("✅ Page de connexion chargée avec succès\n");
 
             // Créer la scène avec une taille moyenne
             Scene scene = new Scene(root, 1200, 800);
@@ -53,22 +47,9 @@ public class Main extends Application {
             // Afficher la fenêtre
             primaryStage.show();
 
-            System.out.println("========================================");
-            System.out.println("✅ APPLICATION LANCÉE");
-            System.out.println("========================================\n");
-
-            System.out.println("💡 Navigation :");
-            System.out.println("   • Connectez-vous avec votre compte");
-            System.out.println("   • Créez un nouveau compte si vous n'en avez pas\n");
-
-            System.out.println("🔐 Compte administrateur par défaut :");
-            System.out.println("   Email    : admin@fifa2030.com");
-            System.out.println("   Password : Admin123\n");
-
         } catch (Exception e) {
-            System.err.println("\n========================================");
             System.err.println("❌ ERREUR LORS DU LANCEMENT");
-            System.err.println("========================================");
+
             System.err.println("Type d'erreur : " + e.getClass().getName());
             System.err.println("Message : " + e.getMessage());
             System.err.println("\n📋 Stack trace complet :");

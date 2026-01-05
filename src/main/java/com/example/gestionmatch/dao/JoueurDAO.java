@@ -153,11 +153,12 @@ public class JoueurDAO {
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
+                java.sql.Date sqlDate = rs.getDate("date_naissance");
                 Joueur joueur = new Joueur(
                         rs.getInt("id"),
                         rs.getString("nom"),
                         rs.getString("prenom"),
-                        rs.getDate("date_naissance").toLocalDate(),
+                        sqlDate != null ? sqlDate.toLocalDate() : null,
                         rs.getString("poste"),
                         rs.getInt("numero"),
                         rs.getInt("equipe_id")
@@ -183,11 +184,12 @@ public class JoueurDAO {
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
+                java.sql.Date sqlDate = rs.getDate("date_naissance");
                 Joueur joueur = new Joueur(
                         rs.getInt("id"),
                         rs.getString("nom"),
                         rs.getString("prenom"),
-                        rs.getDate("date_naissance").toLocalDate(),
+                        sqlDate != null ? sqlDate.toLocalDate() : null,
                         rs.getString("poste"),
                         rs.getInt("numero"),
                         rs.getInt("equipe_id")
