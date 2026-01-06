@@ -73,6 +73,7 @@ public class GroupeEquipeDAO {
                 equipe.setPays(rs.getString("pays"));
                 equipe.setEntraineur(rs.getString("entraineur"));
                 equipe.setPoints(rs.getInt("points"));
+                equipe.setImagePath(rs.getString("image_path")); // IMPORTANT: Récupérer le chemin de l'image
                 equipes.add(equipe);
             }
             

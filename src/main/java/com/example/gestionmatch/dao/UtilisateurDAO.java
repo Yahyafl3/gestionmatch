@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.example.gestionmatch.database.DatabaseConnection;
 import com.example.gestionmatch.model.Utilisateur;
 
@@ -19,16 +21,24 @@ public class UtilisateurDAO {
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
+            // Hasher le mot de passe avec BCrypt
+            String motDePasseHash = org.mindrot.jbcrypt.BCrypt.hashpw(utilisateur.getMotDePasse(), org.mindrot.jbcrypt.BCrypt.gensalt(10));
+
             pstmt.setString(1, utilisateur.getEmail());
-            pstmt.setString(2, utilisateur.getMotDePasse());
-            pstmt.setString(3, utilisateur.getNom() + " " + utilisateur.getPrenom());
+            pstmt.setString(2, motDePasseHash);
+            pstmt.setString(3, utilisateur.getPrenom() + " " + utilisateur.getNom());  // Prénom d'abord
             pstmt.setString(4, "USER");
             pstmt.setBoolean(5, true);
 
-            return pstmt.executeUpdate() > 0;
+            int result = pstmt.executeUpdate();
+            
+            if (result > 0) {
+                System.out.println("✅ Utilisateur inscrit avec succès: " + utilisateur.getEmail());
+                return true;
+            }
 
         } catch (SQLException e) {
-            System.err.println("Erreur lors de l'inscription: " + e.getMessage());
+            System.err.println("❌ Erreur lors de l'inscription: " + e.getMessage());
             e.printStackTrace();
         }
         return false;
@@ -62,11 +72,18 @@ public class UtilisateurDAO {
                     
                     if (match) {
                         System.out.println("✅ Mot de passe correct - Connexion réussie");
+                        
+                        // Séparer le nom complet en prénom et nom
+                        String nomComplet = rs.getString("nom_complet");
+                        String[] parts = nomComplet.split(" ", 2);
+                        String prenom = parts.length > 0 ? parts[0] : "";
+                        String nom = parts.length > 1 ? parts[1] : nomComplet;
+                        
                         Utilisateur utilisateur = new Utilisateur(
                                 rs.getInt("id"),
                                 rs.getString("email"),
-                                rs.getString("nom_complet"),
-                                "",
+                                nom,
+                                prenom,
                                 role,
                                 true
                         );
@@ -256,5 +273,52 @@ public class UtilisateurDAO {
 
     public void insert(Utilisateur utilisateur) {
         inscrire(utilisateur);
+    }
+    
+    /**
+     * Change le mot de passe d'un utilisateur
+     */
+    public boolean changerMotDePasse(int utilisateurId, String ancienMotDePasse, String nouveauMotDePasse) {
+        // Vérifier d'abord l'ancien mot de passe
+        String sqlVerif = "SELECT mot_de_passe FROM utilisateur WHERE id = ?";
+        
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmtVerif = conn.prepareStatement(sqlVerif)) {
+            
+            pstmtVerif.setInt(1, utilisateurId);
+            ResultSet rs = pstmtVerif.executeQuery();
+            
+            if (rs.next()) {
+                String motDePasseHash = rs.getString("mot_de_passe");
+                
+                // Vérifier l'ancien mot de passe
+                if (!BCrypt.checkpw(ancienMotDePasse, motDePasseHash)) {
+                    System.err.println("❌ Ancien mot de passe incorrect");
+                    return false;
+                }
+                
+                // Hasher le nouveau mot de passe
+                String nouveauHash = BCrypt.hashpw(nouveauMotDePasse, BCrypt.gensalt());
+                
+                // Mettre à jour le mot de passe
+                String sqlUpdate = "UPDATE utilisateur SET mot_de_passe = ? WHERE id = ?";
+                try (PreparedStatement pstmtUpdate = conn.prepareStatement(sqlUpdate)) {
+                    pstmtUpdate.setString(1, nouveauHash);
+                    pstmtUpdate.setInt(2, utilisateurId);
+                    
+                    int result = pstmtUpdate.executeUpdate();
+                    if (result > 0) {
+                        System.out.println("✅ Mot de passe changé avec succès");
+                        return true;
+                    }
+                }
+            }
+            
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur changement mot de passe: " + e.getMessage());
+            e.printStackTrace();
+        }
+        
+        return false;
     }
 }

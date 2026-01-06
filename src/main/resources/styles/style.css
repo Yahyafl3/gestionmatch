@@ -229,3 +229,160 @@
     -fx-text-fill: #a0aec0;
     -fx-padding: 2px 0 0 0;
 }
+
+
+/* ===========================
+   CURSOR STYLES
+   =========================== */
+
+/* Tous les boutons */
+.button {
+    -fx-cursor: hand;
+}
+
+/* ComboBox */
+.combo-box {
+    -fx-cursor: hand;
+}
+
+.combo-box .arrow-button {
+    -fx-cursor: hand;
+}
+
+/* TextField */
+.text-field {
+    -fx-cursor: text;
+}
+
+/* TableView - lignes cliquables */
+.table-row-cell {
+    -fx-cursor: hand;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: rgba(193, 39, 45, 0.05);
+}
+
+/* Liens et éléments cliquables */
+.hyperlink {
+    -fx-cursor: hand;
+}
+
+/* CheckBox et RadioButton */
+.check-box, .radio-button {
+    -fx-cursor: hand;
+}
+
+/* Slider */
+.slider {
+    -fx-cursor: hand;
+}
+
+/* ScrollBar */
+.scroll-bar .thumb {
+    -fx-cursor: hand;
+}
+
+/* TabPane tabs */
+.tab {
+    -fx-cursor: hand;
+}
+
+/* Menu items */
+.menu-item {
+    -fx-cursor: hand;
+}
+
+.context-menu {
+    -fx-cursor: hand;
+}
+
+/* Labels cliquables */
+.label.clickable {
+    -fx-cursor: hand;
+}
+
+/* ImageView cliquable */
+.image-view.clickable {
+    -fx-cursor: hand;
+}
+
+
+/* ===========================
+   SCROLLBAR CUSTOM STYLE
+   =========================== */
+
+/* ScrollPane */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Barre de défilement verticale */
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 12px;
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 6px;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #C1272D;
+    -fx-background-radius: 6px;
+    -fx-background-insets: 2;
+}
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #E63946;
+}
+
+.scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: #A01F24;
+}
+
+/* Boutons de défilement (flèches) */
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 6px;
+    -fx-padding: 3px;
+}
+
+.scroll-bar:vertical .increment-button:hover,
+.scroll-bar:vertical .decrement-button:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow {
+    -fx-background-color: #666;
+    -fx-shape: "M 0 0 L 4 4 L 8 0 Z";
+}
+
+/* Barre de défilement horizontale */
+.scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-pref-height: 12px;
+}
+
+.scroll-bar:horizontal .track {
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 6px;
+}
+
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #C1272D;
+    -fx-background-radius: 6px;
+    -fx-background-insets: 2;
+}
+
+.scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: #E63946;
+}

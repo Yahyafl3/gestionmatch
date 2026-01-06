@@ -1,7 +1,6 @@
 package com.example.gestionmatch.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.example.gestionmatch.model.Equipe;
 import com.example.gestionmatch.services.EquipeService;
@@ -9,38 +8,38 @@ import com.example.gestionmatch.services.EquipeService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 
 public class EquipeController {
-
-    @FXML private TextField champNom;
-    @FXML private TextField champPays;
-    @FXML private TextField champEntraineur;
-    @FXML private TextField champNombreJoueurs;
-    @FXML private TextField champRecherche;
 
     @FXML private TableView<Equipe> tableEquipes;
     @FXML private TableColumn<Equipe, String> colNom;
     @FXML private TableColumn<Equipe, String> colPays;
     @FXML private TableColumn<Equipe, String> colEntraineur;
+    @FXML private TableColumn<Equipe, Integer> colNombreJoueurs;
+    @FXML private TableColumn<Equipe, Integer> colMatchsJoues;
+    @FXML private TableColumn<Equipe, Integer> colVictoires;
+    @FXML private TableColumn<Equipe, Integer> colNuls;
+    @FXML private TableColumn<Equipe, Integer> colDefaites;
+    @FXML private TableColumn<Equipe, Integer> colButsMarques;
+    @FXML private TableColumn<Equipe, Integer> colButsEncaisses;
+    @FXML private TableColumn<Equipe, Integer> colPoints;
 
     @FXML private Label labelErreur;
     @FXML private Label labelSucces;
     @FXML private Label labelNombreEquipes;
-    @FXML private TextArea textAreaDetails;
 
-    @FXML private Button btnAjouter;
     @FXML private Button btnModifier;
     @FXML private Button btnSupprimer;
-    @FXML private Button btnReinitialiser;
 
     private EquipeService equipeService;
     private ObservableList<Equipe> equipesObservable;
@@ -57,17 +56,75 @@ public class EquipeController {
         chargerEquipes();
         configurerSelection();
 
-        labelErreur.setVisible(false);
-        labelSucces.setVisible(false);
-
         btnModifier.setDisable(true);
         btnSupprimer.setDisable(true);
     }
 
     private void initialiserTableau() {
+        System.out.println("🔧 Initialisation du tableau avec drapeaux...");
+        
+        // Colonne Nom avec drapeau
         colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        colNom.setCellFactory(column -> new TableCell<Equipe, String>() {
+            private final ImageView imageView = new ImageView();
+            private final Label label = new Label();
+            private final HBox hbox = new HBox(10);
+
+            {
+                imageView.setFitWidth(32);
+                imageView.setFitHeight(24);
+                imageView.setPreserveRatio(true);
+                hbox.getChildren().addAll(imageView, label);
+                hbox.setAlignment(Pos.CENTER_LEFT);
+            }
+
+            @Override
+            protected void updateItem(String nom, boolean empty) {
+                super.updateItem(nom, empty);
+
+                if (empty || nom == null) {
+                    setGraphic(null);
+                } else {
+                    Equipe equipe = getTableView().getItems().get(getIndex());
+                    label.setText(nom);
+
+                    // Charger l'image du drapeau
+                    if (equipe.getImagePath() != null && !equipe.getImagePath().isEmpty()) {
+                        try {
+                            String cheminImage = "/images/equipes/" + equipe.getImagePath();
+                            System.out.println("🔍 Chargement: " + cheminImage);
+                            Image image = new Image(getClass().getResourceAsStream(cheminImage), 32, 24, true, true);
+                            if (!image.isError()) {
+                                imageView.setImage(image);
+                                System.out.println("✅ Image OK");
+                            } else {
+                                imageView.setImage(null);
+                                System.out.println("❌ Image erreur");
+                            }
+                        } catch (Exception e) {
+                            imageView.setImage(null);
+                            System.out.println("❌ Exception: " + e.getMessage());
+                        }
+                    } else {
+                        imageView.setImage(null);
+                    }
+
+                    setGraphic(hbox);
+                }
+            }
+        });
+        
+        // Autres colonnes
         colPays.setCellValueFactory(new PropertyValueFactory<>("pays"));
         colEntraineur.setCellValueFactory(new PropertyValueFactory<>("entraineur"));
+        colNombreJoueurs.setCellValueFactory(new PropertyValueFactory<>("nombreJoueurs"));
+        colMatchsJoues.setCellValueFactory(new PropertyValueFactory<>("matchsJoues"));
+        colVictoires.setCellValueFactory(new PropertyValueFactory<>("victoires"));
+        colNuls.setCellValueFactory(new PropertyValueFactory<>("nuls"));
+        colDefaites.setCellValueFactory(new PropertyValueFactory<>("defaites"));
+        colButsMarques.setCellValueFactory(new PropertyValueFactory<>("butsMarques"));
+        colButsEncaisses.setCellValueFactory(new PropertyValueFactory<>("butsEncaisses"));
+        colPoints.setCellValueFactory(new PropertyValueFactory<>("points"));
 
         tableEquipes.setItems(equipesObservable);
     }
@@ -77,8 +134,6 @@ public class EquipeController {
                 (observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         equipeSelectionnee = newValue;
-                        remplirFormulaire(newValue);
-                        afficherDetails(newValue);
                         btnModifier.setDisable(false);
                         btnSupprimer.setDisable(false);
                     } else {
@@ -94,258 +149,43 @@ public class EquipeController {
             equipesObservable.clear();
             List<Equipe> equipes = equipeService.listerTous();
             equipesObservable.addAll(equipes);
-
             labelNombreEquipes.setText(equipes.size() + " équipe(s)");
-
+            System.out.println("📋 " + equipes.size() + " équipe(s) chargée(s)");
         } catch (Exception e) {
-            afficherErreur("Erreur lors du chargement : " + e.getMessage());
+            afficherErreur("Erreur: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     @FXML
     public void ajouterEquipe() {
-        try {
-            if (!validerFormulaire()) {
-                return;
-            }
-
-            Equipe equipe = new Equipe();
-            equipe.setNom(champNom.getText().trim());
-            equipe.setPays(champPays.getText().trim());
-            equipe.setEntraineur(champEntraineur.getText().trim());
-
-            String nbJoueursText = champNombreJoueurs.getText().trim();
-            if (!nbJoueursText.isEmpty()) {
-                equipe.setNombreJoueurs(Integer.parseInt(nbJoueursText));
-            }
-
-            equipeService.creer(equipe);
-
-            afficherSucces("✅ Équipe ajoutée : " + equipe.getNom());
-            chargerEquipes();
-            viderFormulaire();
-
-        } catch (Exception e) {
-            afficherErreur("❌ " + e.getMessage());
-            e.printStackTrace();
-        }
+        System.out.println("➕ Ajout d'une équipe");
+        // TODO: Ouvrir le formulaire
     }
 
     @FXML
     public void modifierEquipe() {
-        try {
-            if (equipeSelectionnee == null) {
-                afficherErreur("⚠️ Veuillez sélectionner une équipe");
-                return;
-            }
-
-            if (!validerFormulaire()) {
-                return;
-            }
-
-            equipeSelectionnee.setNom(champNom.getText().trim());
-            equipeSelectionnee.setPays(champPays.getText().trim());
-            equipeSelectionnee.setEntraineur(champEntraineur.getText().trim());
-
-            String nbJoueursText = champNombreJoueurs.getText().trim();
-            if (!nbJoueursText.isEmpty()) {
-                equipeSelectionnee.setNombreJoueurs(Integer.parseInt(nbJoueursText));
-            }
-
-            equipeService.modifier(equipeSelectionnee);
-
-            afficherSucces("✅ Équipe modifiée : " + equipeSelectionnee.getNom());
-            chargerEquipes();
-            viderFormulaire();
-
-        } catch (Exception e) {
-            afficherErreur("❌ " + e.getMessage());
-            e.printStackTrace();
-        }
+        System.out.println("✏️ Modification d'une équipe");
+        // TODO: Ouvrir le formulaire
     }
 
     @FXML
     public void supprimerEquipe() {
         try {
-            if (equipeSelectionnee == null) {
-                afficherErreur("⚠️ Veuillez sélectionner une équipe");
-                return;
-            }
-
-            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmation.setTitle("Confirmation");
-            confirmation.setHeaderText("Supprimer l'équipe");
-            confirmation.setContentText("Voulez-vous vraiment supprimer " + equipeSelectionnee.getNom() + " ?");
-
-            Optional<ButtonType> result = confirmation.showAndWait();
-
-            if (result.isPresent() && result.get() == ButtonType.OK) {
+            if (equipeSelectionnee != null) {
                 equipeService.supprimer(equipeSelectionnee.getId());
-
                 afficherSucces("✅ Équipe supprimée");
                 chargerEquipes();
-                viderFormulaire();
             }
-
         } catch (Exception e) {
-            afficherErreur("❌ " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    @SuppressWarnings("UseSpecificCatch")
-    public void rechercherEquipe() {
-        try {
-            String recherche = champRecherche.getText().trim();
-
-            if (recherche.isEmpty()) {
-                chargerEquipes();
-                return;
-            }
-
-            equipesObservable.clear();
-
-            List<Equipe> toutesEquipes = equipeService.listerTous();
-
-            for (Equipe equipe : toutesEquipes) {
-                if (equipe.getNom().toLowerCase().contains(recherche.toLowerCase()) ||
-                        equipe.getPays().toLowerCase().contains(recherche.toLowerCase())) {
-                    equipesObservable.add(equipe);
-                }
-            }
-
-            labelNombreEquipes.setText(equipesObservable.size() + " résultat(s)");
-
-        } catch (Exception e) {
-            afficherErreur("Erreur : " + e.getMessage());
-            e.printStackTrace();
+            afficherErreur("Erreur: " + e.getMessage());
         }
     }
 
     @FXML
     public void actualiser() {
         chargerEquipes();
-        viderFormulaire();
         afficherSucces("✅ Liste actualisée");
-    }
-
-    @FXML
-    public void reinitialiserStatistiques() {
-        try {
-            if (equipeSelectionnee == null) {
-                afficherErreur("⚠️ Veuillez sélectionner une équipe");
-                return;
-            }
-
-            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmation.setTitle("Confirmation");
-            confirmation.setHeaderText("Réinitialiser les statistiques");
-            confirmation.setContentText("Voulez-vous vraiment réinitialiser les stats de " +
-                    equipeSelectionnee.getNom() + " ?");
-
-            Optional<ButtonType> result = confirmation.showAndWait();
-
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                equipeSelectionnee.reinitialiserStatistiques();
-                equipeService.modifier(equipeSelectionnee);
-
-                afficherSucces("✅ Statistiques réinitialisées");
-                chargerEquipes();
-            }
-
-        } catch (Exception e) {
-            afficherErreur("❌ " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void exporterEquipes() {
-        try {
-            StringBuilder sb = new StringBuilder();
-            sb.append("📋 LISTE DES ÉQUIPES\n");
-            sb.append("=".repeat(60)).append("\n\n");
-
-            List<Equipe> equipes = equipeService.listerTous();
-
-            for (Equipe equipe : equipes) {
-                sb.append(equipe.afficherStatistiques()).append("\n\n");
-            }
-
-            textAreaDetails.setText(sb.toString());
-
-            afficherSucces("✅ Export réalisé (" + equipes.size() + " équipes)");
-
-        } catch (Exception e) {
-            afficherErreur("Erreur : " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void remplirFormulaire(Equipe equipe) {
-        champNom.setText(equipe.getNom());
-        champPays.setText(equipe.getPays());
-        champEntraineur.setText(equipe.getEntraineur());
-        champNombreJoueurs.setText(String.valueOf(equipe.getNombreJoueurs()));
-    }
-
-    private void afficherDetails(Equipe equipe) {
-        textAreaDetails.setText(equipe.afficherStatistiques());
-    }
-
-    private void viderFormulaire() {
-        champNom.clear();
-        champPays.clear();
-        champEntraineur.clear();
-        champNombreJoueurs.clear();
-        champRecherche.clear();
-        textAreaDetails.clear();
-
-        tableEquipes.getSelectionModel().clearSelection();
-        equipeSelectionnee = null;
-
-        btnModifier.setDisable(true);
-        btnSupprimer.setDisable(true);
-    }
-
-    private boolean validerFormulaire() {
-        if (champNom.getText().trim().isEmpty()) {
-            afficherErreur("⚠️ Le nom de l'équipe est obligatoire");
-            champNom.requestFocus();
-            return false;
-        }
-
-        if (champPays.getText().trim().isEmpty()) {
-            afficherErreur("⚠️ Le pays est obligatoire");
-            champPays.requestFocus();
-            return false;
-        }
-
-        if (champEntraineur.getText().trim().isEmpty()) {
-            afficherErreur("⚠️ L'entraîneur est obligatoire");
-            champEntraineur.requestFocus();
-            return false;
-        }
-
-        String nbJoueursText = champNombreJoueurs.getText().trim();
-        if (!nbJoueursText.isEmpty()) {
-            try {
-                int nbJoueurs = Integer.parseInt(nbJoueursText);
-                if (nbJoueurs < 0 || nbJoueurs > 30) {
-                    afficherErreur("⚠️ Le nombre de joueurs doit être entre 0 et 30");
-                    champNombreJoueurs.requestFocus();
-                    return false;
-                }
-            } catch (NumberFormatException e) {
-                afficherErreur("⚠️ Nombre de joueurs invalide");
-                champNombreJoueurs.requestFocus();
-                return false;
-            }
-        }
-
-        return true;
     }
 
     private void afficherErreur(String message) {

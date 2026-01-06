@@ -252,3 +252,118 @@
 .scroll-pane .thumb:hover {
     -fx-background-color: rgba(0, 0, 0, 0.3);
 }
+
+
+/* ===========================
+   CURSOR STYLES
+   =========================== */
+
+/* Tous les boutons */
+.button {
+    -fx-cursor: hand;
+}
+
+/* ComboBox */
+.combo-box {
+    -fx-cursor: hand;
+}
+
+.combo-box .arrow-button {
+    -fx-cursor: hand;
+}
+
+/* TextField avec recherche */
+.text-field {
+    -fx-cursor: text;
+}
+
+/* TableView - lignes cliquables */
+.table-row-cell {
+    -fx-cursor: hand;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: rgba(193, 39, 45, 0.05);
+}
+
+/* Liens et éléments cliquables */
+.hyperlink {
+    -fx-cursor: hand;
+}
+
+/* CheckBox et RadioButton */
+.check-box, .radio-button {
+    -fx-cursor: hand;
+}
+
+/* Slider */
+.slider {
+    -fx-cursor: hand;
+}
+
+/* ScrollBar */
+.scroll-bar .thumb {
+    -fx-cursor: hand;
+}
+
+/* TabPane tabs */
+.tab {
+    -fx-cursor: hand;
+}
+
+/* Menu items */
+.menu-item {
+    -fx-cursor: hand;
+}
+
+.context-menu {
+    -fx-cursor: hand;
+}
+
+
+/* ============================================
+   STYLE TABLEAU ÉQUIPES
+   ============================================ */
+
+.table-equipes {
+    -fx-background-color: white;
+}
+
+.table-equipes .column-header-background {
+    -fx-background-color: #C1272D;
+}
+
+.table-equipes .column-header {
+    -fx-background-color: #C1272D;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+}
+
+.table-equipes .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.table-equipes .table-cell {
+    -fx-text-fill: #1e293b;
+    -fx-font-size: 13px;
+    -fx-padding: 8px;
+}
+
+.table-equipes .table-row-cell {
+    -fx-background-color: white;
+}
+
+.table-equipes .table-row-cell:odd {
+    -fx-background-color: #f8f9fa;
+}
+
+.table-equipes .table-row-cell:selected {
+    -fx-background-color: #fee2e2;
+}
+
+.table-equipes .table-row-cell:hover {
+    -fx-background-color: #fef2f2;
+}

@@ -72,6 +72,7 @@ public class SetupDatabaseAuto {
                     "buts_marques INT DEFAULT 0," +
                     "buts_encaisses INT DEFAULT 0," +
                     "points INT DEFAULT 0," +
+                    "image_path VARCHAR(255)," +
                     "date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
                     "FOREIGN KEY (groupe_id) REFERENCES groupe(id) ON DELETE SET NULL" +
                     ")";
@@ -129,6 +130,19 @@ public class SetupDatabaseAuto {
             stmt.execute(createGroupeEquipe);
             System.out.println("✅ Table 'groupe_equipe' créée/vérifiée");
 
+            // Créer la table favoris
+            String createFavoris = "CREATE TABLE IF NOT EXISTS favoris (" +
+                    "id INT PRIMARY KEY AUTO_INCREMENT," +
+                    "utilisateur_id INT NOT NULL," +
+                    "equipe_id INT NOT NULL," +
+                    "date_ajout TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
+                    "FOREIGN KEY (utilisateur_id) REFERENCES utilisateur(id) ON DELETE CASCADE," +
+                    "FOREIGN KEY (equipe_id) REFERENCES equipe(id) ON DELETE CASCADE," +
+                    "UNIQUE KEY unique_favori (utilisateur_id, equipe_id)" +
+                    ")";
+            stmt.execute(createFavoris);
+            System.out.println("✅ Table 'favoris' créée/vérifiée");
+
             // Insérer l'admin par défaut avec mot de passe hashé BCrypt
             String checkAdmin = "SELECT COUNT(*) as count FROM utilisateur WHERE email = 'admin@fifa2030.com'";
             var rs = stmt.executeQuery(checkAdmin);
@@ -147,8 +161,9 @@ public class SetupDatabaseAuto {
             System.out.println("✅ BASE DE DONNÉES INITIALISÉE");
             System.out.println("========================================\n");
             
-            // Insérer les données de test
-            InsertTestData.insererDonneesTest();
+            // NE PAS insérer les données de test automatiquement
+            // pour permettre l'ajout manuel des équipes avec drapeaux
+            // InsertTestData.insererDonneesTest();
 
         } catch (Exception e) {
             System.err.println("\n❌ Erreur lors de l'initialisation de la base de données:");

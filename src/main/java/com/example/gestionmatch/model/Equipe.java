@@ -10,6 +10,7 @@ public class Equipe {
     private String entraineur;
     private int nombreJoueurs;
     private LocalDateTime dateCreation;
+    private String imagePath; // Chemin vers l'image de l'équipe
 
     private Integer groupeId;
     private String groupeLettre;
@@ -95,6 +96,14 @@ public class Equipe {
 
     public void setDateCreation(LocalDateTime dateCreation) {
         this.dateCreation = dateCreation;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public Integer getGroupeId() {

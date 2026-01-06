@@ -79,7 +79,25 @@ public class InsertTestData {
             insererEquipe(conn, "Sénégal", "Sénégal", "Aliou Cissé", 26, 4);
             insererEquipe(conn, "États-Unis", "États-Unis", "Gregg Berhalter", 26, 4);
             
-            System.out.println("✅ 16 équipes nationales insérées");
+            // Équipes supplémentaires (sans groupe pour l'instant)
+            insererEquipe(conn, "Belgique", "Belgique", "Domenico Tedesco", 26, 0);
+            insererEquipe(conn, "Italie", "Italie", "Luciano Spalletti", 26, 0);
+            insererEquipe(conn, "Uruguay", "Uruguay", "Marcelo Bielsa", 26, 0);
+            insererEquipe(conn, "Colombie", "Colombie", "Néstor Lorenzo", 26, 0);
+            insererEquipe(conn, "Suisse", "Suisse", "Murat Yakin", 26, 0);
+            insererEquipe(conn, "Pologne", "Pologne", "Michał Probierz", 26, 0);
+            insererEquipe(conn, "Suède", "Suède", "Janne Andersson", 26, 0);
+            insererEquipe(conn, "Algérie", "Algérie", "Djamel Belmadi", 26, 0);
+            insererEquipe(conn, "Tunisie", "Tunisie", "Jalel Kadri", 26, 0);
+            insererEquipe(conn, "Égypte", "Égypte", "Rui Vitória", 26, 0);
+            insererEquipe(conn, "Nigeria", "Nigeria", "José Peseiro", 26, 0);
+            insererEquipe(conn, "Cameroun", "Cameroun", "Rigobert Song", 26, 0);
+            insererEquipe(conn, "Ghana", "Ghana", "Chris Hughton", 26, 0);
+            insererEquipe(conn, "Côte d'Ivoire", "Côte d'Ivoire", "Jean-Louis Gasset", 26, 0);
+            insererEquipe(conn, "Canada", "Canada", "Jesse Marsch", 26, 0);
+            insererEquipe(conn, "Costa Rica", "Costa Rica", "Gustavo Alfaro", 26, 0);
+            
+            System.out.println("✅ 32 équipes nationales insérées");
 
             // ============================================
             // INSERTION DES JOUEURS
@@ -191,7 +209,7 @@ public class InsertTestData {
             System.out.println("✅ DONNÉES COUPE DU MONDE 2030 CHARGÉES");
             System.out.println("========================================");
             System.out.println("📊 Résumé :");
-            System.out.println("   • 16 équipes nationales");
+            System.out.println("   • 32 équipes nationales");
             System.out.println("   • 40+ joueurs");
             System.out.println("   • 13 stades officiels");
             System.out.println("   • 8 matchs programmés");
@@ -203,14 +221,18 @@ public class InsertTestData {
         }
     }
 
-    private static void insererEquipe(Connection conn, String nom, String pays, String entraineur, int nbJoueurs, int groupeId) throws Exception {
+    private static void insererEquipe(Connection conn, String nom, String pays, String entraineur, int nbJoueurs, Integer groupeId) throws Exception {
         String sql = "INSERT INTO equipe (nom, pays, entraineur, nombre_joueurs, groupe_id) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, nom);
             pstmt.setString(2, pays);
             pstmt.setString(3, entraineur);
             pstmt.setInt(4, nbJoueurs);
-            pstmt.setInt(5, groupeId);
+            if (groupeId != null && groupeId > 0) {
+                pstmt.setInt(5, groupeId);
+            } else {
+                pstmt.setNull(5, java.sql.Types.INTEGER);
+            }
             pstmt.executeUpdate();
         }
     }

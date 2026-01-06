@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.example.gestionmatch.dao.EquipeDAO;
 import com.example.gestionmatch.dao.GroupeDAO;
+import com.example.gestionmatch.dao.GroupeEquipeDAO;
 import com.example.gestionmatch.dao.JoueurDAO;
 import com.example.gestionmatch.dao.MatchDAO;
 import com.example.gestionmatch.dao.StadeDAO;
@@ -24,23 +27,32 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -66,12 +78,14 @@ public class AdminDashboardController implements Initializable {
     @FXML private TableView<Stade> tableStades;
     @FXML private TableView<Groupe> tableGroupes;
     @FXML private TableView<Match> tableMatchs;
+    @FXML private GridPane groupesGrid;
 
     private final JoueurDAO joueurDAO = new JoueurDAO();
     private final EquipeDAO equipeDAO = new EquipeDAO();
     private final StadeDAO stadeDAO = new StadeDAO();
     private final GroupeDAO groupeDAO = new GroupeDAO();
     private final MatchDAO matchDAO = new MatchDAO();
+    private final GroupeEquipeDAO groupeEquipeDAO = new GroupeEquipeDAO();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -453,20 +467,123 @@ public class AdminDashboardController implements Initializable {
 
     @SuppressWarnings("unchecked")
     private void initialiserTablesEquipes() {
-        TableColumn<Equipe, String> colNom = new TableColumn<>("Nom");
+        // Colonne Nom avec drapeau
+        TableColumn<Equipe, String> colNom = new TableColumn<>("Équipe");
         colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        colNom.setPrefWidth(180);
+        colNom.setPrefWidth(200);
+        colNom.setCellFactory(column -> new TableCell<Equipe, String>() {
+            private final ImageView imageView = new ImageView();
+            private final Label label = new Label();
+            private final HBox hbox = new HBox(10);
+
+            {
+                imageView.setFitWidth(32);
+                imageView.setFitHeight(24);
+                imageView.setPreserveRatio(true);
+                hbox.getChildren().addAll(imageView, label);
+                hbox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+            }
+
+            @Override
+            protected void updateItem(String nom, boolean empty) {
+                super.updateItem(nom, empty);
+
+                if (empty || nom == null) {
+                    setGraphic(null);
+                } else {
+                    Equipe equipe = getTableView().getItems().get(getIndex());
+                    label.setText(nom);
+
+                    // Charger l'image du drapeau
+                    if (equipe.getImagePath() != null && !equipe.getImagePath().isEmpty()) {
+                        javafx.scene.image.Image image = null;
+                        
+                        try {
+                            // Méthode 1: Essayer depuis le classpath (target/classes - prioritaire)
+                            String cheminImage = "/images/equipes/" + equipe.getImagePath();
+                            java.io.InputStream stream = getClass().getResourceAsStream(cheminImage);
+                            if (stream != null) {
+                                image = new javafx.scene.image.Image(stream, 32, 24, true, true);
+                                if (!image.isError()) {
+                                    imageView.setImage(image);
+                                    setGraphic(hbox);
+                                    return;
+                                }
+                            }
+                        } catch (Exception e) {
+                            // Ignorer et essayer la méthode suivante
+                        }
+                        
+                        try {
+                            // Méthode 2: Essayer depuis le système de fichiers (fallback)
+                            java.io.File imageFile = new java.io.File("target/classes/images/equipes/" + equipe.getImagePath());
+                            if (imageFile.exists()) {
+                                image = new javafx.scene.image.Image(imageFile.toURI().toString(), 32, 24, true, true);
+                                if (!image.isError()) {
+                                    imageView.setImage(image);
+                                    setGraphic(hbox);
+                                    return;
+                                }
+                            }
+                        } catch (Exception e) {
+                            // Ignorer
+                        }
+                        
+                        // Si aucune méthode n'a fonctionné, pas d'image
+                        imageView.setImage(null);
+                    } else {
+                        imageView.setImage(null);
+                    }
+
+                    setGraphic(hbox);
+                }
+            }
+        });
 
         TableColumn<Equipe, String> colPays = new TableColumn<>("Pays");
         colPays.setCellValueFactory(new PropertyValueFactory<>("pays"));
-        colPays.setPrefWidth(150);
+        colPays.setPrefWidth(120);
 
         TableColumn<Equipe, String> colEntraineur = new TableColumn<>("Entraîneur");
         colEntraineur.setCellValueFactory(new PropertyValueFactory<>("entraineur"));
-        colEntraineur.setPrefWidth(180);
+        colEntraineur.setPrefWidth(150);
+
+        TableColumn<Equipe, Integer> colNombreJoueurs = new TableColumn<>("Joueurs");
+        colNombreJoueurs.setCellValueFactory(new PropertyValueFactory<>("nombreJoueurs"));
+        colNombreJoueurs.setPrefWidth(80);
+
+        TableColumn<Equipe, Integer> colMatchsJoues = new TableColumn<>("MJ");
+        colMatchsJoues.setCellValueFactory(new PropertyValueFactory<>("matchsJoues"));
+        colMatchsJoues.setPrefWidth(50);
+
+        TableColumn<Equipe, Integer> colVictoires = new TableColumn<>("V");
+        colVictoires.setCellValueFactory(new PropertyValueFactory<>("victoires"));
+        colVictoires.setPrefWidth(40);
+
+        TableColumn<Equipe, Integer> colNuls = new TableColumn<>("N");
+        colNuls.setCellValueFactory(new PropertyValueFactory<>("nuls"));
+        colNuls.setPrefWidth(40);
+
+        TableColumn<Equipe, Integer> colDefaites = new TableColumn<>("D");
+        colDefaites.setCellValueFactory(new PropertyValueFactory<>("defaites"));
+        colDefaites.setPrefWidth(40);
+
+        TableColumn<Equipe, Integer> colButsMarques = new TableColumn<>("BP");
+        colButsMarques.setCellValueFactory(new PropertyValueFactory<>("butsMarques"));
+        colButsMarques.setPrefWidth(50);
+
+        TableColumn<Equipe, Integer> colButsEncaisses = new TableColumn<>("BC");
+        colButsEncaisses.setCellValueFactory(new PropertyValueFactory<>("butsEncaisses"));
+        colButsEncaisses.setPrefWidth(50);
+
+        TableColumn<Equipe, Integer> colPoints = new TableColumn<>("Pts");
+        colPoints.setCellValueFactory(new PropertyValueFactory<>("points"));
+        colPoints.setPrefWidth(50);
 
         tableEquipes.getColumns().clear();
-        tableEquipes.getColumns().addAll(colNom, colPays, colEntraineur);
+        tableEquipes.getColumns().addAll(colNom, colPays, colEntraineur, colNombreJoueurs,
+                colMatchsJoues, colVictoires, colNuls, colDefaites, 
+                colButsMarques, colButsEncaisses, colPoints);
     }
 
     private void chargerEquipes() {
@@ -518,6 +635,8 @@ public class AdminDashboardController implements Initializable {
             FormEquipeController controller = loader.getController();
             if (equipe != null) controller.setEquipe(equipe);
             controller.setOnSaveCallback(() -> {
+                // Rafraîchir le tableau pour afficher les nouvelles images
+                tableEquipes.refresh();
                 chargerEquipes();
                 chargerStatistiques();
             });
@@ -617,50 +736,291 @@ public class AdminDashboardController implements Initializable {
 
     @SuppressWarnings("unchecked")
     private void initialiserTablesGroupes() {
-        TableColumn<Groupe, String> colNom = new TableColumn<>("Nom");
-        colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        colNom.setPrefWidth(150);
-
-        TableColumn<Groupe, String> colDescription = new TableColumn<>("Description");
-        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-        colDescription.setPrefWidth(350);
-
-        tableGroupes.getColumns().clear();
-        tableGroupes.getColumns().addAll(colNom, colDescription);
+        // Méthode conservée pour compatibilité mais non utilisée
     }
 
     private void chargerGroupes() {
-        tableGroupes.setItems(FXCollections.observableArrayList(groupeDAO.getAllGroupes()));
-    }
-
-    @FXML
-    private void ajouterGroupe() {
-        ouvrirFormulaireGroupe(null);
-    }
-
-    @FXML
-    private void modifierGroupe() {
-        Groupe selected = tableGroupes.getSelectionModel().getSelectedItem();
-        if (selected == null) {
-            showAlert("Attention", "Veuillez sélectionner un groupe", Alert.AlertType.WARNING);
+        if (groupesGrid == null) {
             return;
         }
-        ouvrirFormulaireGroupe(selected);
+        
+        groupesGrid.getChildren().clear();
+        List<Groupe> groupes = groupeDAO.getAllGroupes();
+        
+        int col = 0;
+        int row = 0;
+        
+        for (Groupe groupe : groupes) {
+            VBox groupeCard = creerCarteGroupe(groupe);
+            groupesGrid.add(groupeCard, col, row);
+            
+            col++;
+            if (col >= 4) {
+                col = 0;
+                row++;
+            }
+        }
+    }
+    
+    private VBox creerCarteGroupe(Groupe groupe) {
+        VBox card = new VBox(15);
+        card.setStyle("-fx-background-color: white; " +
+                     "-fx-background-radius: 16; " +
+                     "-fx-padding: 20; " +
+                     "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8); " +
+                     "-fx-border-color: #e5e7eb; " +
+                     "-fx-border-width: 2; " +
+                     "-fx-border-radius: 16;");
+        card.setPrefWidth(280);
+        card.setMinHeight(400);
+        
+        // En-tête rouge
+        HBox header = new HBox();
+        header.setAlignment(Pos.CENTER);
+        header.setStyle("-fx-background-color: #C1272D; " +
+                       "-fx-background-radius: 12; " +
+                       "-fx-padding: 18;");
+        
+        Label nomGroupe = new Label(groupe.getNom());
+        nomGroupe.setStyle("-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;");
+        header.getChildren().add(nomGroupe);
+        
+        // Zone scrollable pour les équipes
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
+        scrollPane.setFitToWidth(true);
+        scrollPane.setPrefHeight(220);
+        scrollPane.setMaxHeight(220);
+        
+        VBox equipesBox = new VBox(12);
+        equipesBox.setStyle("-fx-padding: 5;");
+        
+        // Charger les équipes du groupe
+        List<Equipe> equipes = groupeEquipeDAO.getEquipesDuGroupe(groupe.getId());
+        
+        if (equipes.isEmpty()) {
+            Label aucuneEquipe = new Label("Aucune équipe");
+            aucuneEquipe.setStyle("-fx-text-fill: #94a3b8; -fx-font-size: 14px; " +
+                                 "-fx-font-style: italic; -fx-padding: 20; -fx-alignment: center;");
+            equipesBox.getChildren().add(aucuneEquipe);
+        } else {
+            for (Equipe equipe : equipes) {
+                HBox equipeRow = creerLigneEquipe(equipe, groupe);
+                equipesBox.getChildren().add(equipeRow);
+            }
+        }
+        
+        scrollPane.setContent(equipesBox);
+        
+        // Compteur
+        Label compteur = new Label(equipes.size() + " / 4 équipes");
+        compteur.setStyle("-fx-text-fill: #64748b; -fx-font-size: 13px; -fx-font-weight: 600;");
+        
+        // Boutons d'action
+        HBox actions = new HBox(10);
+        actions.setAlignment(Pos.CENTER);
+        
+        Button btnAjouter = new Button("➕ Ajouter");
+        btnAjouter.setStyle("-fx-background-color: #C1272D; -fx-text-fill: white; " +
+                           "-fx-font-size: 13px; -fx-padding: 12 20; -fx-background-radius: 8; " +
+                           "-fx-cursor: hand; -fx-font-weight: 600;");
+        btnAjouter.setOnAction(e -> ajouterEquipeAuGroupe(groupe));
+        
+        Button btnModifier = new Button("✏️");
+        btnModifier.setStyle("-fx-background-color: #1e293b; -fx-text-fill: white; " +
+                            "-fx-font-size: 13px; -fx-padding: 12 16; -fx-background-radius: 8; " +
+                            "-fx-cursor: hand;");
+        btnModifier.setOnAction(e -> modifierGroupe(groupe));
+        
+        Button btnSupprimer = new Button("🗑️");
+        btnSupprimer.setStyle("-fx-background-color: #ef4444; -fx-text-fill: white; " +
+                             "-fx-font-size: 13px; -fx-padding: 12 16; -fx-background-radius: 8; " +
+                             "-fx-cursor: hand;");
+        btnSupprimer.setOnAction(e -> supprimerGroupe(groupe));
+        
+        actions.getChildren().addAll(btnAjouter, btnModifier, btnSupprimer);
+        
+        card.getChildren().addAll(header, scrollPane, compteur, actions);
+        
+        return card;
+    }
+    
+    private HBox creerLigneEquipe(Equipe equipe, Groupe groupe) {
+        HBox row = new HBox(10);
+        row.setAlignment(Pos.CENTER_LEFT);
+        row.setStyle("-fx-background-color: #f8f9fa; " +
+                    "-fx-background-radius: 8; " +
+                    "-fx-padding: 10;");
+        
+        // Drapeau AVANT le nom - Méthode robuste avec vérification du stream
+        if (equipe.getImagePath() != null && !equipe.getImagePath().isEmpty()) {
+            try {
+                // Construire le chemin de l'image
+                String cheminImage = "/images/equipes/" + equipe.getImagePath();
+                
+                // Charger le stream AVANT de créer l'image
+                java.io.InputStream stream = getClass().getResourceAsStream(cheminImage);
+                
+                // Vérifier si le stream existe
+                if (stream != null) {
+                    javafx.scene.image.Image image = new javafx.scene.image.Image(stream);
+                    
+                    // Vérifier si l'image est chargée correctement
+                    if (!image.isError() && image.getWidth() > 0) {
+                        ImageView flag = new ImageView(image);
+                        flag.setFitWidth(32);
+                        flag.setFitHeight(24);
+                        flag.setPreserveRatio(true);
+                        flag.setSmooth(true);
+                        flag.setStyle("-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 1);");
+                        row.getChildren().add(flag);
+                    } else {
+                        // Si erreur de chargement, afficher emoji
+                        Label emoji = new Label("🏴");
+                        emoji.setStyle("-fx-font-size: 20px;");
+                        row.getChildren().add(emoji);
+                    }
+                } else {
+                    // Stream null = fichier introuvable, afficher emoji
+                    Label emoji = new Label("🏴");
+                    emoji.setStyle("-fx-font-size: 20px;");
+                    row.getChildren().add(emoji);
+                }
+            } catch (Exception e) {
+                // En cas d'erreur, afficher emoji
+                Label emoji = new Label("🏴");
+                emoji.setStyle("-fx-font-size: 20px;");
+                row.getChildren().add(emoji);
+            }
+        } else {
+            // Pas d'image définie, afficher emoji
+            Label emoji = new Label("🏴");
+            emoji.setStyle("-fx-font-size: 20px;");
+            row.getChildren().add(emoji);
+        }
+        
+        // Nom de l'équipe
+        Label nomEquipe = new Label(equipe.getNom());
+        nomEquipe.setStyle("-fx-text-fill: #1e293b; -fx-font-size: 14px; -fx-font-weight: 600;");
+        row.getChildren().add(nomEquipe);
+        
+        // Spacer
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        row.getChildren().add(spacer);
+        
+        // Bouton retirer
+        Button btnRetirer = new Button("✖");
+        btnRetirer.setStyle("-fx-background-color: #C1272D; -fx-text-fill: white; " +
+                           "-fx-font-size: 11px; -fx-padding: 6 10; -fx-background-radius: 6; " +
+                           "-fx-cursor: hand; -fx-font-weight: bold;");
+        btnRetirer.setOnAction(e -> retirerEquipeDuGroupe(equipe, groupe));
+        row.getChildren().add(btnRetirer);
+        
+        return row;
     }
 
     @FXML
-    private void supprimerGroupe() {
-        Groupe selected = tableGroupes.getSelectionModel().getSelectedItem();
-        if (selected == null) {
-            showAlert("Attention", "Veuillez sélectionner un groupe", Alert.AlertType.WARNING);
+    private void creerGroupe() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Créer un groupe");
+        dialog.setHeaderText("Nouveau groupe");
+        dialog.setContentText("Nom du groupe (ex: Groupe A):");
+        
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(nom -> {
+            if (nom.trim().isEmpty()) {
+                showAlert("Erreur", "Le nom du groupe ne peut pas être vide", Alert.AlertType.ERROR);
+                return;
+            }
+            
+            Groupe groupe = new Groupe();
+            groupe.setNom(nom.trim());
+            groupe.setDescription("Groupe de la Coupe du Monde 2030");
+            
+            if (groupeDAO.ajouterGroupe(groupe)) {
+                showAlert("Succès", "Groupe créé avec succès", Alert.AlertType.INFORMATION);
+                chargerGroupes();
+            } else {
+                showAlert("Erreur", "Erreur lors de la création du groupe", Alert.AlertType.ERROR);
+            }
+        });
+    }
+    
+    private void ajouterEquipeAuGroupe(Groupe groupe) {
+        int nbEquipes = groupeEquipeDAO.compterEquipesDansGroupe(groupe.getId());
+        if (nbEquipes >= 4) {
+            showAlert("Limite atteinte", "Un groupe ne peut contenir que 4 équipes maximum", Alert.AlertType.WARNING);
             return;
         }
-
+        
+        List<Equipe> toutesEquipes = equipeDAO.getAllEquipes();
+        List<Equipe> equipesDisponibles = new ArrayList<>();
+        
+        for (Equipe equipe : toutesEquipes) {
+            if (!groupeEquipeDAO.equipeEstDansGroupe(groupe.getId(), equipe.getId())) {
+                equipesDisponibles.add(equipe);
+            }
+        }
+        
+        if (equipesDisponibles.isEmpty()) {
+            showAlert("Aucune équipe disponible", "Toutes les équipes sont déjà assignées", Alert.AlertType.INFORMATION);
+            return;
+        }
+        
+        ChoiceDialog<Equipe> dialog = new ChoiceDialog<>(equipesDisponibles.get(0), equipesDisponibles);
+        dialog.setTitle("Ajouter une équipe");
+        dialog.setHeaderText("Ajouter une équipe au " + groupe.getNom());
+        dialog.setContentText("Choisir une équipe:");
+        
+        Optional<Equipe> result = dialog.showAndWait();
+        result.ifPresent(equipe -> {
+            if (groupeEquipeDAO.ajouterEquipeAuGroupe(groupe.getId(), equipe.getId())) {
+                showAlert("Succès", equipe.getNom() + " ajoutée au " + groupe.getNom(), Alert.AlertType.INFORMATION);
+                chargerGroupes();
+            } else {
+                showAlert("Erreur", "Impossible d'ajouter l'équipe", Alert.AlertType.ERROR);
+            }
+        });
+    }
+    
+    private void modifierGroupe(Groupe groupe) {
+        TextInputDialog dialog = new TextInputDialog(groupe.getNom());
+        dialog.setTitle("Modifier le groupe");
+        dialog.setHeaderText("Modifier " + groupe.getNom());
+        dialog.setContentText("Nouveau nom:");
+        
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(nom -> {
+            if (nom.trim().isEmpty()) {
+                showAlert("Erreur", "Le nom du groupe ne peut pas être vide", Alert.AlertType.ERROR);
+                return;
+            }
+            
+            groupe.setNom(nom.trim());
+            if (groupeDAO.modifierGroupe(groupe)) {
+                showAlert("Succès", "Groupe modifié avec succès", Alert.AlertType.INFORMATION);
+                chargerGroupes();
+            } else {
+                showAlert("Erreur", "Erreur lors de la modification", Alert.AlertType.ERROR);
+            }
+        });
+    }
+    
+    private void supprimerGroupe(Groupe groupe) {
+        int nbEquipes = groupeEquipeDAO.compterEquipesDansGroupe(groupe.getId());
+        if (nbEquipes > 0) {
+            showAlert("Impossible de supprimer", 
+                     "Le groupe contient " + nbEquipes + " équipe(s). Retirez d'abord toutes les équipes.", 
+                     Alert.AlertType.WARNING);
+            return;
+        }
+        
         Optional<ButtonType> result = showConfirmation("Confirmation", 
-            "Voulez-vous vraiment supprimer ce groupe ?");
+            "Voulez-vous vraiment supprimer le " + groupe.getNom() + " ?");
         
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            if (groupeDAO.supprimerGroupe(selected.getId())) {
+            if (groupeDAO.supprimerGroupe(groupe.getId())) {
                 showAlert("Succès", "Groupe supprimé", Alert.AlertType.INFORMATION);
                 chargerGroupes();
             } else {
@@ -668,25 +1028,34 @@ public class AdminDashboardController implements Initializable {
             }
         }
     }
-
-    private void ouvrirFormulaireGroupe(Groupe groupe) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/form-groupe.fxml"));
-            VBox root = loader.load();
-            
-            FormGroupeController controller = loader.getController();
-            if (groupe != null) controller.setGroupe(groupe);
-            controller.setOnSaveCallback(this::chargerGroupes);
-            
-            Stage stage = new Stage();
-            stage.setTitle(groupe == null ? "Ajouter un groupe" : "Modifier un groupe");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-        } catch (IOException e) {
-            System.err.println("❌ Erreur : " + e.getMessage());
-            showAlert("Erreur", "Impossible d'ouvrir le formulaire", Alert.AlertType.ERROR);
+    
+    private void retirerEquipeDuGroupe(Equipe equipe, Groupe groupe) {
+        Optional<ButtonType> result = showConfirmation("Confirmation", 
+            "Retirer " + equipe.getNom() + " du " + groupe.getNom() + " ?");
+        
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            if (groupeEquipeDAO.retirerEquipeDuGroupe(groupe.getId(), equipe.getId())) {
+                showAlert("Succès", equipe.getNom() + " retirée du " + groupe.getNom(), Alert.AlertType.INFORMATION);
+                chargerGroupes();
+            } else {
+                showAlert("Erreur", "Impossible de retirer l'équipe", Alert.AlertType.ERROR);
+            }
         }
+    }
+
+    @FXML
+    private void ajouterGroupe() {
+        creerGroupe();
+    }
+
+    @FXML
+    private void modifierGroupe() {
+        showAlert("Information", "Cliquez sur le bouton ✏️ d'une carte de groupe pour le modifier", Alert.AlertType.INFORMATION);
+    }
+
+    @FXML
+    private void supprimerGroupe() {
+        showAlert("Information", "Cliquez sur le bouton 🗑️ d'une carte de groupe pour le supprimer", Alert.AlertType.INFORMATION);
     }
 
     @SuppressWarnings("unchecked")

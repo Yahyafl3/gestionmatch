@@ -7,8 +7,12 @@
 <ScrollPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.gestionmatch.controller.FormEquipeController"
-            fitToWidth="true" 
-            style="-fx-background: white; -fx-background-color: white;">
+            fitToWidth="true"
+            vbarPolicy="ALWAYS"
+            hbarPolicy="NEVER"
+            prefHeight="500"
+            maxHeight="500"
+            style="-fx-background: white; -fx-background-color: white; -fx-focus-color: transparent;">
 
 <VBox spacing="20" style="-fx-padding: 30; -fx-background-color: white; -fx-background-radius: 16;">
 
@@ -46,6 +50,30 @@
                            style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8; -fx-background-radius: 8; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 8; -fx-font-size: 14px; -fx-padding: 10;"/>
             </VBox>
         </HBox>
+    </VBox>
+
+    <!-- SECTION IMAGE DE L'ÉQUIPE -->
+    <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 20; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 12;">
+        <Label text="🖼️ IMAGE DE L'ÉQUIPE" style="-fx-text-fill: #C1272D; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+        
+        <HBox spacing="15" alignment="CENTER_LEFT">
+            <VBox spacing="8" HBox.hgrow="ALWAYS">
+                <Label text="Sélectionner une image" style="-fx-text-fill: #1e293b; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <TextField fx:id="imagePathField" promptText="Aucune image sélectionnée" editable="false" prefHeight="40" HBox.hgrow="ALWAYS"
+                               style="-fx-background-color: #f8f9fa; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8; -fx-background-radius: 8; -fx-border-color: #1e293b; -fx-border-width: 2; -fx-border-radius: 8; -fx-font-size: 14px; -fx-padding: 10;"/>
+                    <Button fx:id="btnChoisirImage" text="📁 Parcourir" onAction="#choisirImage" prefWidth="140" prefHeight="40"
+                            style="-fx-background-color: #1e293b; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;"/>
+                </HBox>
+            </VBox>
+        </HBox>
+        
+        <!-- Aperçu de l'image -->
+        <VBox spacing="8" alignment="CENTER">
+            <Label text="Aperçu" style="-fx-text-fill: #64748b; -fx-font-size: 12px; -fx-font-weight: bold;"/>
+            <javafx.scene.image.ImageView fx:id="imagePreview" fitWidth="200" fitHeight="150" preserveRatio="true"
+                                          style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);"/>
+        </VBox>
     </VBox>
 
     <!-- SECTION STATISTIQUES -->

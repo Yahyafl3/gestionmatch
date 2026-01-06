@@ -199,6 +199,8 @@ public class LoginController {
             UserDashboardController controller = loader.getController();
             if (controller != null) {
                 controller.setUsername(utilisateur.getNomComplet());
+                controller.setUserEmail(utilisateur.getEmail());
+                controller.setUtilisateurId(utilisateur.getId());
             }
         }
         

@@ -1,23 +1,23 @@
 package com.example.gestionmatch.dao;
 
-import com.example.gestionmatch.model.Equipe;
-import com.example.gestionmatch.database.DatabaseConnection;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Types;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.gestionmatch.database.DatabaseConnection;
+import com.example.gestionmatch.model.Equipe;
 
 public class EquipeDAO {
 
 
     public void insert(Equipe equipe) throws SQLException {
-        String sql = "INSERT INTO equipe (nom, pays, entraineur, nombre_joueurs) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO equipe (nom, pays, entraineur, nombre_joueurs, matchs_joues, victoires, nuls, defaites, buts_marques, buts_encaisses, points, image_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -26,6 +26,14 @@ public class EquipeDAO {
             pstmt.setString(2, equipe.getPays());
             pstmt.setString(3, equipe.getEntraineur());
             pstmt.setInt(4, equipe.getNombreJoueurs());
+            pstmt.setInt(5, equipe.getMatchsJoues());
+            pstmt.setInt(6, equipe.getVictoires());
+            pstmt.setInt(7, equipe.getNuls());
+            pstmt.setInt(8, equipe.getDefaites());
+            pstmt.setInt(9, equipe.getButsMarques());
+            pstmt.setInt(10, equipe.getButsEncaisses());
+            pstmt.setInt(11, equipe.getPoints());
+            pstmt.setString(12, equipe.getImagePath());
 
             int affectedRows = pstmt.executeUpdate();
 
@@ -134,7 +142,7 @@ public class EquipeDAO {
     public void update(Equipe equipe) throws SQLException {
         String sql = "UPDATE equipe SET nom = ?, pays = ?, entraineur = ?, nombre_joueurs = ?, " +
                 "groupe_id = ?, matchs_joues = ?, victoires = ?, nuls = ?, defaites = ?, " +
-                "buts_marques = ?, buts_encaisses = ?, points = ? WHERE id = ?";
+                "buts_marques = ?, buts_encaisses = ?, points = ?, image_path = ? WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -157,7 +165,8 @@ public class EquipeDAO {
             pstmt.setInt(10, equipe.getButsMarques());
             pstmt.setInt(11, equipe.getButsEncaisses());
             pstmt.setInt(12, equipe.getPoints());
-            pstmt.setInt(13, equipe.getId());
+            pstmt.setString(13, equipe.getImagePath());
+            pstmt.setInt(14, equipe.getId());
 
             int affectedRows = pstmt.executeUpdate();
 
@@ -264,6 +273,7 @@ public class EquipeDAO {
         equipe.setPays(rs.getString("pays"));
         equipe.setEntraineur(rs.getString("entraineur"));
         equipe.setNombreJoueurs(rs.getInt("nombre_joueurs"));
+        equipe.setImagePath(rs.getString("image_path"));
 
         Integer groupeId = (Integer) rs.getObject("groupe_id");
         equipe.setGroupeId(groupeId);
