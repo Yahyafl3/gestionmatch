@@ -1,12 +1,12 @@
 package com.example.gestionmatch.services;
 
-import com.example.gestionmatch.model.Equipe;
+import java.sql.SQLException;
+import java.util.List;
+
 import com.example.gestionmatch.dao.EquipeDAO;
 import com.example.gestionmatch.exceptions.EquipeDejaExistanteException;
 import com.example.gestionmatch.exceptions.EquipeNonTrouveeException;
-
-import java.sql.SQLException;
-import java.util.List;
+import com.example.gestionmatch.model.Equipe;
 
 public class EquipeService {
 
@@ -97,8 +97,8 @@ public class EquipeService {
             throw new IllegalArgumentException("L'entraîneur est obligatoire");
         }
 
-        if (equipe.getNombreJoueurs() < 0 || equipe.getNombreJoueurs() > 30) {
-            throw new IllegalArgumentException("Le nombre de joueurs doit être entre 0 et 30");
+        if (equipe.getNombreJoueurs() < 0 || equipe.getNombreJoueurs() > 26) {
+            throw new IllegalArgumentException("Le nombre de joueurs doit être entre 0 et 26");
         }
     }
 }

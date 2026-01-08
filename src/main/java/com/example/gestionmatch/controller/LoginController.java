@@ -21,6 +21,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+@SuppressWarnings("unused")
 public class LoginController {
     
     private UtilisateurDAO utilisateurDAO = new UtilisateurDAO();

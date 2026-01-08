@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+@SuppressWarnings("unused")
 public class FormEquipeController {
 
     @FXML private TextField nomField;

@@ -303,6 +303,23 @@ public class EquipeDAO {
             return new ArrayList<>();
         }
     }
+    
+    public Equipe getEquipeByNom(String nom) {
+        String sql = "SELECT * FROM equipe WHERE nom = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, nom);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                return mapResultSetToEquipe(rs);
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur lors de la récupération de l'équipe par nom : " + e.getMessage());
+        }
+        return null;
+    }
 
     public boolean ajouterEquipe(Equipe equipe) {
         try {

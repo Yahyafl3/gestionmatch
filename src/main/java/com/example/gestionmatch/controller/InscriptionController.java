@@ -22,6 +22,7 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+@SuppressWarnings("unused")
 public class InscriptionController {
 
     @FXML private TextField registerPrenom;

@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+@SuppressWarnings("unused")
 public class FormGroupeController implements Initializable {
 
     @FXML private TextField nomField;

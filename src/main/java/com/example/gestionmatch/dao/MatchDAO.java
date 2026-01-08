@@ -16,7 +16,7 @@ public class MatchDAO {
 
     // Ajouter un match
     public boolean ajouter(Match match) {
-        String sql = "INSERT INTO match_data (nom, score, date_match) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO match_data (nom, score, date_match, lieu, equipe_a, equipe_b) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -24,6 +24,9 @@ public class MatchDAO {
             pstmt.setString(1, match.getNom());
             pstmt.setString(2, match.getScore());
             pstmt.setDate(3, Date.valueOf(match.getDateMatch()));
+            pstmt.setString(4, match.getLieu());
+            pstmt.setString(5, match.getEquipeA());
+            pstmt.setString(6, match.getEquipeB());
 
             int rowsAffected = pstmt.executeUpdate();
 
@@ -37,6 +40,7 @@ public class MatchDAO {
 
         } catch (SQLException e) {
             System.err.println("Erreur lors de l'ajout du match: " + e.getMessage());
+            e.printStackTrace();
         }
         return false;
     }
@@ -57,6 +61,10 @@ public class MatchDAO {
                         rs.getString("score"),
                         rs.getDate("date_match").toLocalDate()
                 );
+                // Récupérer le lieu (nom du stade)
+                match.setLieu(rs.getString("lieu"));
+                match.setEquipeA(rs.getString("equipe_a"));
+                match.setEquipeB(rs.getString("equipe_b"));
                 matches.add(match);
             }
 
@@ -84,6 +92,10 @@ public class MatchDAO {
                         rs.getString("score"),
                         rs.getDate("date_match").toLocalDate()
                 );
+                // Récupérer le lieu (nom du stade)
+                match.setLieu(rs.getString("lieu"));
+                match.setEquipeA(rs.getString("equipe_a"));
+                match.setEquipeB(rs.getString("equipe_b"));
                 matches.add(match);
             }
 
@@ -104,12 +116,17 @@ public class MatchDAO {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                return new Match(
+                Match match = new Match(
                         rs.getInt("id"),
                         rs.getString("nom"),
                         rs.getString("score"),
                         rs.getDate("date_match").toLocalDate()
                 );
+                // Récupérer le lieu (nom du stade)
+                match.setLieu(rs.getString("lieu"));
+                match.setEquipeA(rs.getString("equipe_a"));
+                match.setEquipeB(rs.getString("equipe_b"));
+                return match;
             }
 
         } catch (SQLException e) {
@@ -120,7 +137,7 @@ public class MatchDAO {
 
     // Mettre à jour un match
     public boolean modifier(Match match) {
-        String sql = "UPDATE match_data SET nom = ?, score = ?, date_match = ? WHERE id = ?";
+        String sql = "UPDATE match_data SET nom = ?, score = ?, date_match = ?, lieu = ?, equipe_a = ?, equipe_b = ? WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -128,12 +145,16 @@ public class MatchDAO {
             pstmt.setString(1, match.getNom());
             pstmt.setString(2, match.getScore());
             pstmt.setDate(3, Date.valueOf(match.getDateMatch()));
-            pstmt.setInt(4, match.getId());
+            pstmt.setString(4, match.getLieu());
+            pstmt.setString(5, match.getEquipeA());
+            pstmt.setString(6, match.getEquipeB());
+            pstmt.setInt(7, match.getId());
 
             return pstmt.executeUpdate() > 0;
 
         } catch (SQLException e) {
             System.err.println("Erreur lors de la modification du match: " + e.getMessage());
+            e.printStackTrace();
         }
         return false;
     }

@@ -1,7 +1,24 @@
 package com.example.gestionmatch.controller;
 
-import com.example.gestionmatch.dao.*;
-import com.example.gestionmatch.model.*;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.example.gestionmatch.dao.EquipeDAO;
+import com.example.gestionmatch.dao.FavorisDAO;
+import com.example.gestionmatch.dao.GroupeDAO;
+import com.example.gestionmatch.dao.JoueurDAO;
+import com.example.gestionmatch.dao.MatchDAO;
+import com.example.gestionmatch.dao.StadeDAO;
+import com.example.gestionmatch.dao.UtilisateurDAO;
+import com.example.gestionmatch.model.Equipe;
+import com.example.gestionmatch.model.Groupe;
+import com.example.gestionmatch.model.Joueur;
+import com.example.gestionmatch.model.Match;
+import com.example.gestionmatch.model.Stade;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -9,20 +26,29 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Contrôleur pour le tableau de bord utilisateur avec toutes les fonctionnalités
  */
+@SuppressWarnings("unused")
 public class UserDashboardController {
 
     // DAOs
@@ -93,10 +119,10 @@ public class UserDashboardController {
     @FXML private Button btnProfil;
 
     // Données
-    private ObservableList<Joueur> tousLesJoueurs = FXCollections.observableArrayList();
-    private ObservableList<Equipe> toutesLesEquipes = FXCollections.observableArrayList();
-    private ObservableList<Stade> tousLesStades = FXCollections.observableArrayList();
-    private ObservableList<Match> tousLesMatchs = FXCollections.observableArrayList();
+    private final ObservableList<Joueur> tousLesJoueurs = FXCollections.observableArrayList();
+    private final ObservableList<Equipe> toutesLesEquipes = FXCollections.observableArrayList();
+    private final ObservableList<Stade> tousLesStades = FXCollections.observableArrayList();
+    private final ObservableList<Match> tousLesMatchs = FXCollections.observableArrayList();
     private FilteredList<Joueur> joueursFilteres;
     private FilteredList<Equipe> equipesFilteres;
     private FilteredList<Stade> stadesFilteres;
@@ -131,6 +157,7 @@ public class UserDashboardController {
     /**
      * Initialise la table des joueurs
      */
+    @SuppressWarnings("unchecked")
     private void initTableJoueurs() {
         if (tableJoueurs != null) {
             TableColumn<Joueur, String> colNom = new TableColumn<>("Nom");
@@ -160,6 +187,7 @@ public class UserDashboardController {
     /**
      * Initialise la table des équipes
      */
+    @SuppressWarnings("unchecked")
     private void initTableEquipes() {
         if (tableEquipes != null) {
             // Colonne Équipe avec drapeau
@@ -206,6 +234,7 @@ public class UserDashboardController {
     /**
      * Initialise la table des stades
      */
+    @SuppressWarnings("unchecked")
     private void initTableStades() {
         if (tableStades != null) {
             TableColumn<Stade, String> colNom = new TableColumn<>("Stade");
@@ -231,6 +260,7 @@ public class UserDashboardController {
     /**
      * Initialise la table des matchs
      */
+    @SuppressWarnings("unchecked")
     private void initTableMatchs() {
         if (tableMatchs != null) {
             // Colonne Match avec drapeaux
@@ -309,6 +339,7 @@ public class UserDashboardController {
     /**
      * Initialise la table des favoris
      */
+    @SuppressWarnings("unchecked")
     private void initTableFavoris() {
         if (tableFavoris != null) {
             // Colonne Équipe avec drapeau
