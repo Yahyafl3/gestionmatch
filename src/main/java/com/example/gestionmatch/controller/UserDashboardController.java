@@ -59,6 +59,7 @@ public class UserDashboardController {
     private final MatchDAO matchDAO = new MatchDAO();
     private final FavorisDAO favorisDAO = new FavorisDAO();
     private final UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
+    private final com.example.gestionmatch.dao.GroupeEquipeDAO groupeEquipeDAO = new com.example.gestionmatch.dao.GroupeEquipeDAO();
 
     // UI Components
     @FXML private BorderPane rootPane;
@@ -72,10 +73,16 @@ public class UserDashboardController {
     @FXML private VBox equipesView;
     @FXML private VBox matchsView;
     @FXML private VBox groupesView;
+    @FXML private javafx.scene.layout.GridPane groupesGrid;  // Grille pour les groupes (comme Admin)
     @FXML private VBox joueursView;
     @FXML private VBox stadesView;
     @FXML private VBox favorisView;
     @FXML private VBox profilView;
+    
+    // Conteneurs pour la page d'accueil
+    @FXML private VBox prochainsMatchsBox;
+    @FXML private VBox favorisAccueilBox;
+    @FXML private HBox groupesAccueilBox;
     
     // Statistiques
     @FXML private Label statEquipes;
@@ -472,6 +479,7 @@ public class UserDashboardController {
         if (pageTitle != null) pageTitle.setText("Accueil");
         setActiveButton(btnAccueil);
         chargerStatistiques();
+        chargerContenuAccueil(); // Charger le contenu dynamique de l'accueil
     }
 
     @FXML
@@ -758,10 +766,21 @@ public class UserDashboardController {
                     if (selected == null || selected.equals("Tous")) {
                         equipesFilteres.setPredicate(p -> true);
                     } else {
-                        equipesFilteres.setPredicate(equipe -> {
-                            // Filtrer par nom de groupe
-                            return equipe.getGroupeId() != null;
-                        });
+                        // Trouver l'ID du groupe sélectionné
+                        Groupe groupeSelectionne = groupes.stream()
+                            .filter(g -> g.getNom().equals(selected))
+                            .findFirst()
+                            .orElse(null);
+                        
+                        if (groupeSelectionne != null) {
+                            equipesFilteres.setPredicate(equipe -> {
+                                // Filtrer par ID de groupe
+                                return equipe.getGroupeId() != null && 
+                                       equipe.getGroupeId() == groupeSelectionne.getId();
+                            });
+                        } else {
+                            equipesFilteres.setPredicate(p -> true);
+                        }
                     }
                 });
             }
@@ -827,40 +846,148 @@ public class UserDashboardController {
     }
     
     private void chargerGroupes() {
-        try {
-            // Vider la vue actuelle
-            if (groupesView == null) return;
-            groupesView.getChildren().clear();
-            
-            // Créer une grille pour les groupes (2 colonnes)
-            javafx.scene.layout.GridPane grid = new javafx.scene.layout.GridPane();
-            grid.setHgap(20);
-            grid.setVgap(20);
-            grid.setPadding(new javafx.geometry.Insets(10));
-            
-            List<Groupe> groupes = groupeDAO.getAllGroupes();
-            List<Equipe> toutesEquipes = equipeDAO.getAllEquipes();
-            
-            int row = 0, col = 0;
-            for (Groupe groupe : groupes) {
-                // Créer une carte pour chaque groupe
-                VBox carteGroupe = creerCarteGroupe(groupe, toutesEquipes);
-                grid.add(carteGroupe, col, row);
-                
-                col++;
-                if (col >= 2) {
-                    col = 0;
-                    row++;
-                }
-            }
-            
-            groupesView.getChildren().add(grid);
-            System.out.println("✅ " + groupes.size() + " groupes chargés");
-        } catch (Exception e) {
-            System.err.println("❌ Erreur chargement groupes: " + e.getMessage());
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger les groupes");
+        if (groupesGrid == null) {
+            System.err.println("❌ groupesGrid est null !");
+            return;
         }
+        
+        System.out.println("🔍 Chargement des groupes (affichage Admin)...");
+        groupesGrid.getChildren().clear();
+        List<Groupe> groupes = groupeDAO.getAllGroupes();
+        System.out.println("📊 Groupes trouvés: " + groupes.size());
+        
+        int col = 0;
+        int row = 0;
+        
+        for (Groupe groupe : groupes) {
+            System.out.println("  Création carte pour: " + groupe.getNom());
+            VBox groupeCard = creerCarteGroupeUser(groupe);
+            groupesGrid.add(groupeCard, col, row);
+            
+            col++;
+            if (col >= 4) {
+                col = 0;
+                row++;
+            }
+        }
+        
+        System.out.println("✅✅✅ " + groupes.size() + " groupes chargés avec succès !");
+    }
+    
+    private VBox creerCarteGroupeUser(Groupe groupe) {
+        VBox card = new VBox(15);
+        card.setStyle("-fx-background-color: white; " +
+                     "-fx-background-radius: 16; " +
+                     "-fx-padding: 20; " +
+                     "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8); " +
+                     "-fx-border-color: #e5e7eb; " +
+                     "-fx-border-width: 2; " +
+                     "-fx-border-radius: 16;");
+        card.setPrefWidth(280);
+        card.setMinHeight(350);
+        
+        // En-tête rouge
+        HBox header = new HBox();
+        header.setAlignment(javafx.geometry.Pos.CENTER);
+        header.setStyle("-fx-background-color: #C1272D; " +
+                       "-fx-background-radius: 12; " +
+                       "-fx-padding: 18;");
+        
+        Label nomGroupe = new Label(groupe.getNom());
+        nomGroupe.setStyle("-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;");
+        header.getChildren().add(nomGroupe);
+        
+        // Zone scrollable pour les équipes
+        javafx.scene.control.ScrollPane scrollPane = new javafx.scene.control.ScrollPane();
+        scrollPane.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
+        scrollPane.setFitToWidth(true);
+        scrollPane.setPrefHeight(220);
+        scrollPane.setMaxHeight(220);
+        
+        VBox equipesBox = new VBox(12);
+        equipesBox.setStyle("-fx-padding: 5;");
+        
+        // Charger les équipes du groupe depuis la table groupe_equipe (comme Admin)
+        List<Equipe> equipes = groupeEquipeDAO.getEquipesDuGroupe(groupe.getId());
+        
+        if (equipes.isEmpty()) {
+            Label aucuneEquipe = new Label("Aucune équipe");
+            aucuneEquipe.setStyle("-fx-text-fill: #94a3b8; -fx-font-size: 14px; " +
+                                 "-fx-font-style: italic; -fx-padding: 20; -fx-alignment: center;");
+            equipesBox.getChildren().add(aucuneEquipe);
+        } else {
+            for (Equipe equipe : equipes) {
+                HBox equipeRow = creerLigneEquipeUser(equipe);
+                equipesBox.getChildren().add(equipeRow);
+            }
+        }
+        
+        scrollPane.setContent(equipesBox);
+        
+        // Compteur
+        Label compteur = new Label(equipes.size() + " / 4 équipes");
+        compteur.setStyle("-fx-text-fill: #64748b; -fx-font-size: 13px; -fx-font-weight: 600;");
+        
+        card.getChildren().addAll(header, scrollPane, compteur);
+        
+        return card;
+    }
+    
+    private HBox creerLigneEquipeUser(Equipe equipe) {
+        HBox row = new HBox(10);
+        row.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        row.setStyle("-fx-background-color: #f8f9fa; " +
+                    "-fx-background-radius: 8; " +
+                    "-fx-padding: 10;");
+        
+        // Drapeau AVANT le nom
+        if (equipe.getImagePath() != null && !equipe.getImagePath().isEmpty()) {
+            try {
+                String cheminImage = "/images/equipes/" + equipe.getImagePath();
+                java.io.InputStream stream = getClass().getResourceAsStream(cheminImage);
+                
+                if (stream != null) {
+                    javafx.scene.image.Image image = new javafx.scene.image.Image(stream);
+                    
+                    if (!image.isError() && image.getWidth() > 0) {
+                        javafx.scene.image.ImageView flag = new javafx.scene.image.ImageView(image);
+                        flag.setFitWidth(32);
+                        flag.setFitHeight(24);
+                        flag.setPreserveRatio(true);
+                        flag.setSmooth(true);
+                        flag.setStyle("-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 1);");
+                        row.getChildren().add(flag);
+                    } else {
+                        Label emoji = new Label("🏴");
+                        emoji.setStyle("-fx-font-size: 20px;");
+                        row.getChildren().add(emoji);
+                    }
+                } else {
+                    Label emoji = new Label("🏴");
+                    emoji.setStyle("-fx-font-size: 20px;");
+                    row.getChildren().add(emoji);
+                }
+            } catch (Exception e) {
+                Label emoji = new Label("🏴");
+                emoji.setStyle("-fx-font-size: 20px;");
+                row.getChildren().add(emoji);
+            }
+        } else {
+            Label emoji = new Label("🏴");
+            emoji.setStyle("-fx-font-size: 20px;");
+            row.getChildren().add(emoji);
+        }
+        
+        // Nom de l'équipe
+        Label nomEquipe = new Label(equipe.getNom());
+        nomEquipe.setStyle("-fx-text-fill: #1e293b; -fx-font-size: 14px; -fx-font-weight: 600;");
+        row.getChildren().add(nomEquipe);
+        
+        // Effet hover
+        row.setOnMouseEntered(e -> row.setStyle("-fx-background-color: #e5e7eb; -fx-background-radius: 8; -fx-padding: 10; -fx-cursor: hand;"));
+        row.setOnMouseExited(e -> row.setStyle("-fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-padding: 10;"));
+        
+        return row;
     }
     
     /**
@@ -1832,6 +1959,36 @@ public class UserDashboardController {
         }
     }
     
+    @FXML
+    private void ajouterAuxFavoris() {
+        Equipe selected = tableEquipes.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert(Alert.AlertType.WARNING, "Attention", "Veuillez sélectionner une équipe");
+            return;
+        }
+        
+        if (utilisateurId == 0) {
+            showAlert(Alert.AlertType.WARNING, "Attention", "Veuillez vous reconnecter");
+            return;
+        }
+        
+        // Vérifier si l'équipe est déjà dans les favoris
+        if (favorisDAO.estFavori(utilisateurId, selected.getId())) {
+            showAlert(Alert.AlertType.INFORMATION, "Information", 
+                     "⭐ " + selected.getNom() + " est déjà dans vos favoris !");
+            return;
+        }
+        
+        // Ajouter aux favoris
+        if (favorisDAO.ajouterFavori(utilisateurId, selected.getId())) {
+            showAlert(Alert.AlertType.INFORMATION, "Succès", 
+                     "⭐ " + selected.getNom() + " ajoutée aux favoris !");
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Erreur", 
+                     "Erreur lors de l'ajout aux favoris");
+        }
+    }
+    
     private void retirerDesFavoris(Equipe equipe) {
         if (utilisateurId == 0) {
             showAlert(Alert.AlertType.WARNING, "Attention", "Veuillez vous reconnecter");
@@ -1845,6 +2002,320 @@ public class UserDashboardController {
         } else {
             showAlert(Alert.AlertType.ERROR, "Erreur", 
                      "Impossible de retirer cette équipe des favoris");
+        }
+    }
+    
+    /**
+     * Charge le contenu dynamique de la page d'accueil
+     */
+    private void chargerContenuAccueil() {
+        chargerProchainsMatchs();
+        chargerFavorisAccueil();
+        chargerGroupesAccueil();
+    }
+    
+    /**
+     * Charge les 3 prochains matchs
+     */
+    private void chargerProchainsMatchs() {
+        if (prochainsMatchsBox == null) return;
+        
+        prochainsMatchsBox.getChildren().clear();
+        List<Match> matchs = matchDAO.getAllMatchs();
+        
+        // Prendre les 3 premiers matchs
+        int count = 0;
+        for (Match match : matchs) {
+            if (count >= 3) break;
+            
+            VBox matchCard = new VBox(12);
+            matchCard.setStyle(
+                "-fx-background-color: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); " +
+                "-fx-background-radius: 15; " +
+                "-fx-padding: 20; " +
+                "-fx-cursor: hand; " +
+                "-fx-border-color: #e5e7eb; " +
+                "-fx-border-width: 1; " +
+                "-fx-border-radius: 15;"
+            );
+            
+            // Effet hover
+            matchCard.setOnMouseEntered(e -> matchCard.setStyle(
+                "-fx-background-color: linear-gradient(135deg, #667eea 0%, #764ba2 100%); " +
+                "-fx-background-radius: 15; " +
+                "-fx-padding: 20; " +
+                "-fx-cursor: hand; " +
+                "-fx-border-color: #667eea; " +
+                "-fx-border-width: 2; " +
+                "-fx-border-radius: 15; " +
+                "-fx-effect: dropshadow(gaussian, rgba(102, 126, 234, 0.4), 15, 0, 0, 5);"
+            ));
+            matchCard.setOnMouseExited(e -> matchCard.setStyle(
+                "-fx-background-color: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); " +
+                "-fx-background-radius: 15; " +
+                "-fx-padding: 20; " +
+                "-fx-cursor: hand; " +
+                "-fx-border-color: #e5e7eb; " +
+                "-fx-border-width: 1; " +
+                "-fx-border-radius: 15;"
+            ));
+            
+            // Nom du match
+            Label nomMatch = new Label(match.getNom());
+            nomMatch.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1e293b;");
+            
+            // Score avec badge
+            HBox scoreBox = new HBox(10);
+            scoreBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+            Label scoreLabel = new Label("Score:");
+            scoreLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #64748b; -fx-font-weight: 600;");
+            Label score = new Label(match.getScore() != null ? match.getScore() : "À venir");
+            score.setStyle(
+                "-fx-font-size: 14px; " +
+                "-fx-text-fill: white; " +
+                "-fx-background-color: #667eea; " +
+                "-fx-padding: 4 12; " +
+                "-fx-background-radius: 8; " +
+                "-fx-font-weight: bold;"
+            );
+            scoreBox.getChildren().addAll(scoreLabel, score);
+            
+            // Date avec icône
+            Label date = new Label("📅 " + match.getDateMatch());
+            date.setStyle("-fx-font-size: 13px; -fx-text-fill: #94a3b8; -fx-font-weight: 600;");
+            
+            matchCard.getChildren().addAll(nomMatch, scoreBox, date);
+            prochainsMatchsBox.getChildren().add(matchCard);
+            count++;
+        }
+        
+        if (matchs.isEmpty()) {
+            VBox emptyBox = new VBox(15);
+            emptyBox.setAlignment(javafx.geometry.Pos.CENTER);
+            emptyBox.setStyle("-fx-padding: 40;");
+            
+            Label icon = new Label("⚽");
+            icon.setStyle("-fx-font-size: 48px; -fx-opacity: 0.3;");
+            
+            Label noData = new Label("Aucun match disponible");
+            noData.setStyle("-fx-text-fill: #94a3b8; -fx-font-size: 15px; -fx-font-weight: 600;");
+            
+            emptyBox.getChildren().addAll(icon, noData);
+            prochainsMatchsBox.getChildren().add(emptyBox);
+        }
+    }
+    
+    /**
+     * Charge les équipes favorites pour l'accueil
+     */
+    private void chargerFavorisAccueil() {
+        if (favorisAccueilBox == null) return;
+        
+        favorisAccueilBox.getChildren().clear();
+        
+        if (utilisateurId == 0) {
+            VBox emptyBox = new VBox(15);
+            emptyBox.setAlignment(javafx.geometry.Pos.CENTER);
+            emptyBox.setStyle("-fx-padding: 40;");
+            
+            Label icon = new Label("⭐");
+            icon.setStyle("-fx-font-size: 48px; -fx-opacity: 0.3;");
+            
+            Label noData = new Label("Connectez-vous pour voir vos favoris");
+            noData.setStyle("-fx-text-fill: #94a3b8; -fx-font-size: 15px; -fx-font-weight: 600;");
+            
+            emptyBox.getChildren().addAll(icon, noData);
+            favorisAccueilBox.getChildren().add(emptyBox);
+            return;
+        }
+        
+        List<Equipe> favoris = favorisDAO.getFavoris(utilisateurId);
+        
+        // Prendre les 3 premières équipes favorites
+        int count = 0;
+        for (Equipe equipe : favoris) {
+            if (count >= 3) break;
+            
+            HBox equipeCard = new HBox(18);
+            equipeCard.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+            equipeCard.setStyle(
+                "-fx-background-color: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); " +
+                "-fx-background-radius: 15; " +
+                "-fx-padding: 20; " +
+                "-fx-cursor: hand; " +
+                "-fx-border-color: #fed7aa; " +
+                "-fx-border-width: 1; " +
+                "-fx-border-radius: 15;"
+            );
+            
+            // Effet hover
+            equipeCard.setOnMouseEntered(e -> equipeCard.setStyle(
+                "-fx-background-color: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); " +
+                "-fx-background-radius: 15; " +
+                "-fx-padding: 20; " +
+                "-fx-cursor: hand; " +
+                "-fx-border-color: #f093fb; " +
+                "-fx-border-width: 2; " +
+                "-fx-border-radius: 15; " +
+                "-fx-effect: dropshadow(gaussian, rgba(240, 147, 251, 0.4), 15, 0, 0, 5);"
+            ));
+            equipeCard.setOnMouseExited(e -> equipeCard.setStyle(
+                "-fx-background-color: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); " +
+                "-fx-background-radius: 15; " +
+                "-fx-padding: 20; " +
+                "-fx-cursor: hand; " +
+                "-fx-border-color: #fed7aa; " +
+                "-fx-border-width: 1; " +
+                "-fx-border-radius: 15;"
+            ));
+            
+            // Drapeau avec effet
+            javafx.scene.Node drapeau = getDrapeauImage(equipe.getPays(), 40, 30);
+            
+            // Nom équipe
+            VBox infoBox = new VBox(4);
+            Label nomEquipe = new Label(equipe.getNom());
+            nomEquipe.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1e293b;");
+            
+            Label pays = new Label(equipe.getPays());
+            pays.setStyle("-fx-font-size: 12px; -fx-text-fill: #64748b; -fx-font-weight: 600;");
+            
+            infoBox.getChildren().addAll(nomEquipe, pays);
+            
+            // Badge étoile
+            Label star = new Label("⭐");
+            star.setStyle("-fx-font-size: 24px;");
+            
+            equipeCard.getChildren().addAll(drapeau, infoBox, star);
+            favorisAccueilBox.getChildren().add(equipeCard);
+            count++;
+        }
+        
+        if (favoris.isEmpty()) {
+            VBox emptyBox = new VBox(15);
+            emptyBox.setAlignment(javafx.geometry.Pos.CENTER);
+            emptyBox.setStyle("-fx-padding: 40;");
+            
+            Label icon = new Label("⭐");
+            icon.setStyle("-fx-font-size: 48px; -fx-opacity: 0.3;");
+            
+            Label noData = new Label("Aucune équipe favorite");
+            noData.setStyle("-fx-text-fill: #94a3b8; -fx-font-size: 15px; -fx-font-weight: 600;");
+            
+            Label hint = new Label("Ajoutez des équipes depuis la vue Équipes");
+            hint.setStyle("-fx-text-fill: #cbd5e1; -fx-font-size: 13px;");
+            
+            emptyBox.getChildren().addAll(icon, noData, hint);
+            favorisAccueilBox.getChildren().add(emptyBox);
+        }
+    }
+    
+    /**
+     * Charge un aperçu des groupes pour l'accueil
+     */
+    private void chargerGroupesAccueil() {
+        if (groupesAccueilBox == null) return;
+        
+        groupesAccueilBox.getChildren().clear();
+        List<Groupe> groupes = groupeDAO.getAllGroupes();
+        
+        // Afficher tous les groupes en miniature
+        for (Groupe groupe : groupes) {
+            VBox groupeCard = new VBox(12);
+            groupeCard.setStyle(
+                "-fx-background-color: white; " +
+                "-fx-background-radius: 15; " +
+                "-fx-padding: 20; " +
+                "-fx-border-color: #e5e7eb; " +
+                "-fx-border-width: 2; " +
+                "-fx-border-radius: 15; " +
+                "-fx-pref-width: 160; " +
+                "-fx-cursor: hand; " +
+                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 3);"
+            );
+            
+            // Effet hover
+            groupeCard.setOnMouseEntered(e -> groupeCard.setStyle(
+                "-fx-background-color: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); " +
+                "-fx-background-radius: 15; " +
+                "-fx-padding: 20; " +
+                "-fx-border-color: #C1272D; " +
+                "-fx-border-width: 3; " +
+                "-fx-border-radius: 15; " +
+                "-fx-pref-width: 160; " +
+                "-fx-cursor: hand; " +
+                "-fx-effect: dropshadow(gaussian, rgba(193, 39, 45, 0.3), 15, 0, 0, 5); " +
+                "-fx-scale-x: 1.05; " +
+                "-fx-scale-y: 1.05;"
+            ));
+            groupeCard.setOnMouseExited(e -> groupeCard.setStyle(
+                "-fx-background-color: white; " +
+                "-fx-background-radius: 15; " +
+                "-fx-padding: 20; " +
+                "-fx-border-color: #e5e7eb; " +
+                "-fx-border-width: 2; " +
+                "-fx-border-radius: 15; " +
+                "-fx-pref-width: 160; " +
+                "-fx-cursor: hand; " +
+                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 3);"
+            ));
+            
+            // En-tête avec dégradé
+            HBox header = new HBox();
+            header.setAlignment(javafx.geometry.Pos.CENTER);
+            header.setStyle(
+                "-fx-background-color: linear-gradient(135deg, #C1272D 0%, #8B1C1C 100%); " +
+                "-fx-background-radius: 10; " +
+                "-fx-padding: 12; " +
+                "-fx-effect: dropshadow(gaussian, rgba(193, 39, 45, 0.3), 8, 0, 0, 3);"
+            );
+            
+            Label nomGroupe = new Label(groupe.getNom());
+            nomGroupe.setStyle(
+                "-fx-text-fill: white; " +
+                "-fx-font-size: 16px; " +
+                "-fx-font-weight: bold; " +
+                "-fx-letter-spacing: 1px;"
+            );
+            header.getChildren().add(nomGroupe);
+            
+            // Nombre d'équipes avec badge
+            int nbEquipes = groupeEquipeDAO.compterEquipesDansGroupe(groupe.getId());
+            HBox compteurBox = new HBox(8);
+            compteurBox.setAlignment(javafx.geometry.Pos.CENTER);
+            
+            Label icon = new Label("🏆");
+            icon.setStyle("-fx-font-size: 16px;");
+            
+            Label compteur = new Label(nbEquipes + " / 4");
+            compteur.setStyle(
+                "-fx-text-fill: #64748b; " +
+                "-fx-font-size: 13px; " +
+                "-fx-font-weight: bold; " +
+                "-fx-background-color: #f1f5f9; " +
+                "-fx-padding: 4 10; " +
+                "-fx-background-radius: 8;"
+            );
+            
+            compteurBox.getChildren().addAll(icon, compteur);
+            
+            groupeCard.getChildren().addAll(header, compteurBox);
+            groupesAccueilBox.getChildren().add(groupeCard);
+        }
+        
+        if (groupes.isEmpty()) {
+            VBox emptyBox = new VBox(15);
+            emptyBox.setAlignment(javafx.geometry.Pos.CENTER);
+            emptyBox.setStyle("-fx-padding: 40;");
+            
+            Label icon = new Label("📋");
+            icon.setStyle("-fx-font-size: 48px; -fx-opacity: 0.3;");
+            
+            Label noData = new Label("Aucun groupe disponible");
+            noData.setStyle("-fx-text-fill: #94a3b8; -fx-font-size: 15px; -fx-font-weight: 600;");
+            
+            emptyBox.getChildren().addAll(icon, noData);
+            groupesAccueilBox.getChildren().add(emptyBox);
         }
     }
     

@@ -1,0 +1,31 @@
+#!/bin/bash
+
+echo "🏆 LANCEMENT APPLICATION - TEST GROUPES USER"
+echo "============================================="
+echo ""
+echo "📊 DONNÉES DANS LA BASE:"
+echo ""
+echo "SELECT id, nom FROM groupe ORDER BY nom;" | /Applications/MAMP/Library/bin/mysql80/bin/mysql --socket=/Applications/MAMP/tmp/mysql/mysql.sock -u root -proot gestionmatch 2>/dev/null
+echo ""
+echo "📋 INSTRUCTIONS:"
+echo "1. L'application va se lancer"
+echo "2. Connecte-toi avec un compte UTILISATEUR (pas admin)"
+echo "3. Clique sur le bouton 'Groupes' dans le menu de gauche"
+echo "4. Observe les logs dans cette console"
+echo ""
+echo "🔍 LOGS À SURVEILLER:"
+echo "  - '🔍 Début chargement groupes...'"
+echo "  - '📊 Groupes trouvés dans la base: X'"
+echo "  - '✅ ScrollPane trouvé !'"
+echo "  - '✅✅✅ X groupes chargés avec succès !'"
+echo ""
+echo "❌ SI ERREUR:"
+echo "  - 'groupesView est null !' → Problème FXML"
+echo "  - 'Groupes trouvés dans la base: 0' → Problème DAO"
+echo "  - 'ScrollPane non trouvé' → Problème structure"
+echo ""
+echo "🚀 Lancement dans 3 secondes..."
+sleep 3
+echo ""
+
+./mvnw clean javafx:run 2>&1 | grep -E "(🔍|📊|✅|❌|Début|chargement|groupes|Groupe|ScrollPane|carte)"

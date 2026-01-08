@@ -102,56 +102,133 @@
             <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="scroll-pane" VBox.vgrow="ALWAYS" style="-fx-background: transparent; -fx-background-color: transparent;">
                 <StackPane fx:id="contentPane" style="-fx-padding: 30; -fx-background-color: transparent;">
                     
-                    <!-- VUE ACCUEIL -->
-                    <VBox fx:id="accueilView" spacing="25" alignment="TOP_LEFT">
-                        <!-- Cartes Statistiques -->
-                        <HBox spacing="20" alignment="CENTER">
-                            <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 25; -fx-pref-width: 280; -fx-pref-height: 140; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 20, 0, 0, 8); -fx-border-color: #C1272D; -fx-border-width: 3; -fx-border-radius: 16;" spacing="15" HBox.hgrow="ALWAYS">
+                    <!-- VUE ACCUEIL ULTRA MODERNE -->
+                    <ScrollPane fitToWidth="true" fitToHeight="true" style="-fx-background-color: #f8fafc; -fx-background: #f8fafc;">
+                        <VBox fx:id="accueilView" spacing="40" alignment="TOP_LEFT" style="-fx-background-color: #f8fafc; -fx-padding: 0 0 40 0;">
+                        
+                        <!-- Hero Section avec dégradé -->
+                        <VBox spacing="12" style="-fx-background-color: linear-gradient(to right, #C1272D, #8B1C1C); -fx-background-radius: 20; -fx-padding: 40 30; -fx-effect: dropshadow(gaussian, rgba(193, 39, 45, 0.3), 20, 0, 0, 10);">
+                            <Label text="🏆 Coupe du Monde 2030" style="-fx-text-fill: white; -fx-font-size: 36px; -fx-font-weight: bold; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 0, 2);"/>
+                            <Label text="Maroc • Portugal • Espagne" style="-fx-text-fill: rgba(255,255,255,0.9); -fx-font-size: 18px; -fx-font-weight: 600;"/>
+                            <Label text="Suivez tous les matchs, équipes et statistiques en temps réel" style="-fx-text-fill: rgba(255,255,255,0.8); -fx-font-size: 15px;"/>
+                        </VBox>
+                        
+                        <!-- Cartes Statistiques Modernes -->
+                        <HBox spacing="25" alignment="CENTER">
+                            <!-- Carte Joueurs -->
+                            <VBox style="-fx-background-color: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -fx-background-radius: 20; -fx-padding: 30; -fx-pref-width: 280; -fx-pref-height: 160; -fx-effect: dropshadow(gaussian, rgba(102, 126, 234, 0.4), 20, 0, 0, 10);" spacing="20" HBox.hgrow="ALWAYS">
                                 <HBox alignment="CENTER_LEFT" spacing="15">
-                                    <VBox alignment="CENTER" style="-fx-background-color: #C1272D; -fx-pref-width: 60; -fx-pref-height: 60; -fx-background-radius: 12;">
-                                        <Label text="👤" style="-fx-font-size: 32px;"/>
+                                    <VBox alignment="CENTER" style="-fx-background-color: rgba(255,255,255,0.2); -fx-pref-width: 70; -fx-pref-height: 70; -fx-background-radius: 15;">
+                                        <Label text="👤" style="-fx-font-size: 38px;"/>
                                     </VBox>
                                     <VBox spacing="5">
-                                        <Label text="Joueurs" style="-fx-text-fill: #64748b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
-                                        <Label fx:id="statJoueurs" text="0" style="-fx-text-fill: #1e293b; -fx-font-size: 32px; -fx-font-weight: bold;"/>
+                                        <Label text="JOUEURS" style="-fx-text-fill: rgba(255,255,255,0.8); -fx-font-size: 12px; -fx-font-weight: 700; -fx-letter-spacing: 1px;"/>
+                                        <Label fx:id="statJoueurs" text="0" style="-fx-text-fill: white; -fx-font-size: 38px; -fx-font-weight: bold;"/>
                                     </VBox>
                                 </HBox>
                             </VBox>
-                            <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 25; -fx-pref-width: 280; -fx-pref-height: 140; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 20, 0, 0, 8); -fx-border-color: #000000; -fx-border-width: 3; -fx-border-radius: 16;" spacing="15" HBox.hgrow="ALWAYS">
+                            
+                            <!-- Carte Équipes -->
+                            <VBox style="-fx-background-color: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); -fx-background-radius: 20; -fx-padding: 30; -fx-pref-width: 280; -fx-pref-height: 160; -fx-effect: dropshadow(gaussian, rgba(240, 147, 251, 0.4), 20, 0, 0, 10);" spacing="20" HBox.hgrow="ALWAYS">
                                 <HBox alignment="CENTER_LEFT" spacing="15">
-                                    <VBox alignment="CENTER" style="-fx-background-color: #000000; -fx-pref-width: 60; -fx-pref-height: 60; -fx-background-radius: 12;">
-                                        <Label text="🏆" style="-fx-font-size: 32px;"/>
+                                    <VBox alignment="CENTER" style="-fx-background-color: rgba(255,255,255,0.2); -fx-pref-width: 70; -fx-pref-height: 70; -fx-background-radius: 15;">
+                                        <Label text="🏆" style="-fx-font-size: 38px;"/>
                                     </VBox>
                                     <VBox spacing="5">
-                                        <Label text="Équipes" style="-fx-text-fill: #64748b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
-                                        <Label fx:id="statEquipes" text="0" style="-fx-text-fill: #1e293b; -fx-font-size: 32px; -fx-font-weight: bold;"/>
+                                        <Label text="ÉQUIPES" style="-fx-text-fill: rgba(255,255,255,0.8); -fx-font-size: 12px; -fx-font-weight: 700; -fx-letter-spacing: 1px;"/>
+                                        <Label fx:id="statEquipes" text="0" style="-fx-text-fill: white; -fx-font-size: 38px; -fx-font-weight: bold;"/>
                                     </VBox>
                                 </HBox>
                             </VBox>
-                            <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 25; -fx-pref-width: 280; -fx-pref-height: 140; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 20, 0, 0, 8); -fx-border-color: #C1272D; -fx-border-width: 3; -fx-border-radius: 16;" spacing="15" HBox.hgrow="ALWAYS">
+                            
+                            <!-- Carte Matchs -->
+                            <VBox style="-fx-background-color: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); -fx-background-radius: 20; -fx-padding: 30; -fx-pref-width: 280; -fx-pref-height: 160; -fx-effect: dropshadow(gaussian, rgba(79, 172, 254, 0.4), 20, 0, 0, 10);" spacing="20" HBox.hgrow="ALWAYS">
                                 <HBox alignment="CENTER_LEFT" spacing="15">
-                                    <VBox alignment="CENTER" style="-fx-background-color: #C1272D; -fx-pref-width: 60; -fx-pref-height: 60; -fx-background-radius: 12;">
-                                        <Label text="⚽" style="-fx-font-size: 32px;"/>
+                                    <VBox alignment="CENTER" style="-fx-background-color: rgba(255,255,255,0.2); -fx-pref-width: 70; -fx-pref-height: 70; -fx-background-radius: 15;">
+                                        <Label text="⚽" style="-fx-font-size: 38px;"/>
                                     </VBox>
                                     <VBox spacing="5">
-                                        <Label text="Matchs" style="-fx-text-fill: #64748b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
-                                        <Label fx:id="statMatchs" text="0" style="-fx-text-fill: #1e293b; -fx-font-size: 32px; -fx-font-weight: bold;"/>
+                                        <Label text="MATCHS" style="-fx-text-fill: rgba(255,255,255,0.8); -fx-font-size: 12px; -fx-font-weight: 700; -fx-letter-spacing: 1px;"/>
+                                        <Label fx:id="statMatchs" text="0" style="-fx-text-fill: white; -fx-font-size: 38px; -fx-font-weight: bold;"/>
                                     </VBox>
                                 </HBox>
                             </VBox>
-                            <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 25; -fx-pref-width: 280; -fx-pref-height: 140; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 20, 0, 0, 8); -fx-border-color: #000000; -fx-border-width: 3; -fx-border-radius: 16;" spacing="15" HBox.hgrow="ALWAYS">
+                            
+                            <!-- Carte Stades -->
+                            <VBox style="-fx-background-color: linear-gradient(135deg, #fa709a 0%, #fee140 100%); -fx-background-radius: 20; -fx-padding: 30; -fx-pref-width: 280; -fx-pref-height: 160; -fx-effect: dropshadow(gaussian, rgba(250, 112, 154, 0.4), 20, 0, 0, 10);" spacing="20" HBox.hgrow="ALWAYS">
                                 <HBox alignment="CENTER_LEFT" spacing="15">
-                                    <VBox alignment="CENTER" style="-fx-background-color: #000000; -fx-pref-width: 60; -fx-pref-height: 60; -fx-background-radius: 12;">
-                                        <Label text="🏟️" style="-fx-font-size: 32px;"/>
+                                    <VBox alignment="CENTER" style="-fx-background-color: rgba(255,255,255,0.2); -fx-pref-width: 70; -fx-pref-height: 70; -fx-background-radius: 15;">
+                                        <Label text="🏟️" style="-fx-font-size: 38px;"/>
                                     </VBox>
                                     <VBox spacing="5">
-                                        <Label text="Stades" style="-fx-text-fill: #64748b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
-                                        <Label fx:id="statStades" text="0" style="-fx-text-fill: #1e293b; -fx-font-size: 32px; -fx-font-weight: bold;"/>
+                                        <Label text="STADES" style="-fx-text-fill: rgba(255,255,255,0.8); -fx-font-size: 12px; -fx-font-weight: 700; -fx-letter-spacing: 1px;"/>
+                                        <Label fx:id="statStades" text="0" style="-fx-text-fill: white; -fx-font-size: 38px; -fx-font-weight: bold;"/>
                                     </VBox>
                                 </HBox>
                             </VBox>
                         </HBox>
+                        
+                        <!-- Section Prochains Matchs et Favoris -->
+                        <HBox spacing="30" VBox.vgrow="ALWAYS">
+                            
+                            <!-- Prochains Matchs avec design moderne -->
+                            <VBox spacing="25" style="-fx-background-color: white; -fx-background-radius: 20; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 20, 0, 0, 8);" HBox.hgrow="ALWAYS">
+                                <HBox alignment="CENTER_LEFT" spacing="15">
+                                    <VBox alignment="CENTER" style="-fx-background-color: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -fx-pref-width: 50; -fx-pref-height: 50; -fx-background-radius: 12;">
+                                        <Label text="⚽" style="-fx-font-size: 26px;"/>
+                                    </VBox>
+                                    <VBox spacing="2">
+                                        <Label text="Prochains Matchs" style="-fx-text-fill: #1e293b; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+                                        <Label text="Les matchs à venir" style="-fx-text-fill: #64748b; -fx-font-size: 13px;"/>
+                                    </VBox>
+                                    <Region HBox.hgrow="ALWAYS"/>
+                                    <Button text="Voir tout →" onAction="#afficherMatchs" style="-fx-background-color: linear-gradient(to right, #667eea, #764ba2); -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 10 20; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 600; -fx-effect: dropshadow(gaussian, rgba(102, 126, 234, 0.3), 10, 0, 0, 3);"/>
+                                </HBox>
+                                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" prefHeight="320">
+                                    <VBox fx:id="prochainsMatchsBox" spacing="15" style="-fx-background-color: transparent;"/>
+                                </ScrollPane>
+                            </VBox>
+                            
+                            <!-- Mes Favoris avec design moderne -->
+                            <VBox spacing="25" style="-fx-background-color: white; -fx-background-radius: 20; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 20, 0, 0, 8);" HBox.hgrow="ALWAYS">
+                                <HBox alignment="CENTER_LEFT" spacing="15">
+                                    <VBox alignment="CENTER" style="-fx-background-color: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); -fx-pref-width: 50; -fx-pref-height: 50; -fx-background-radius: 12;">
+                                        <Label text="⭐" style="-fx-font-size: 26px;"/>
+                                    </VBox>
+                                    <VBox spacing="2">
+                                        <Label text="Mes Favoris" style="-fx-text-fill: #1e293b; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+                                        <Label text="Vos équipes préférées" style="-fx-text-fill: #64748b; -fx-font-size: 13px;"/>
+                                    </VBox>
+                                    <Region HBox.hgrow="ALWAYS"/>
+                                    <Button text="Voir tout →" onAction="#afficherFavoris" style="-fx-background-color: linear-gradient(to right, #f093fb, #f5576c); -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 10 20; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 600; -fx-effect: dropshadow(gaussian, rgba(240, 147, 251, 0.3), 10, 0, 0, 3);"/>
+                                </HBox>
+                                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" prefHeight="320">
+                                    <VBox fx:id="favorisAccueilBox" spacing="15" style="-fx-background-color: transparent;"/>
+                                </ScrollPane>
+                            </VBox>
+                            
+                        </HBox>
+                        
+                        <!-- Section Groupes avec design moderne -->
+                        <VBox spacing="25" style="-fx-background-color: white; -fx-background-radius: 20; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 20, 0, 0, 8);">
+                            <HBox alignment="CENTER_LEFT" spacing="15">
+                                <VBox alignment="CENTER" style="-fx-background-color: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); -fx-pref-width: 50; -fx-pref-height: 50; -fx-background-radius: 12;">
+                                    <Label text="📋" style="-fx-font-size: 26px;"/>
+                                </VBox>
+                                <VBox spacing="2">
+                                    <Label text="Groupes de la Coupe du Monde" style="-fx-text-fill: #1e293b; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+                                    <Label text="Phase de groupes" style="-fx-text-fill: #64748b; -fx-font-size: 13px;"/>
+                                </VBox>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Button text="Voir tout →" onAction="#afficherGroupes" style="-fx-background-color: linear-gradient(to right, #4facfe, #00f2fe); -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 10 20; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 600; -fx-effect: dropshadow(gaussian, rgba(79, 172, 254, 0.3), 10, 0, 0, 3);"/>
+                            </HBox>
+                            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+                                <HBox fx:id="groupesAccueilBox" spacing="20" style="-fx-background-color: transparent; -fx-padding: 10;"/>
+                            </ScrollPane>
+                        </VBox>
+                        
                     </VBox>
+                    </ScrollPane>
 
                     <!-- VUE JOUEURS AVEC RECHERCHE -->
                     <VBox fx:id="joueursView" visible="false" spacing="25">
@@ -172,6 +249,8 @@
                             <TextField fx:id="searchEquipe" promptText="🔍 Rechercher une équipe..." style="-fx-pref-width: 300; -fx-pref-height: 40; -fx-font-size: 14px;"/>
                             <ComboBox fx:id="filterGroupeEquipe" promptText="Filtrer par groupe" style="-fx-pref-width: 200; -fx-cursor: hand;"/>
                             <Region HBox.hgrow="ALWAYS"/>
+                            <Button text="⭐ Ajouter aux Favoris" onAction="#ajouterAuxFavoris" 
+                                    style="-fx-background-color: #f59e0b; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-weight: 600;"/>
                             <Button text="🔄 Actualiser" onAction="#actualiserEquipes" 
                                     style="-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-weight: 600;"/>
                         </HBox>
@@ -190,14 +269,18 @@
                         <TableView fx:id="tableStades" VBox.vgrow="ALWAYS"/>
                     </VBox>
 
-                    <!-- VUE GROUPES -->
-                    <VBox fx:id="groupesView" visible="false" spacing="25">
-                        <HBox spacing="15" alignment="CENTER_RIGHT">
+                    <!-- VUE GROUPES (MÊME AFFICHAGE QUE ADMIN) -->
+                    <VBox fx:id="groupesView" visible="false" spacing="28">
+                        <HBox alignment="CENTER_LEFT" spacing="18" style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);">
+                            <Label text="📋 Groupes de la Coupe du Monde" style="-fx-text-fill: #0f172a; -fx-font-size: 26px; -fx-font-weight: 700; -fx-letter-spacing: -0.5px;"/>
+                            <Region HBox.hgrow="ALWAYS"/>
                             <Button text="🔄 Actualiser" onAction="#actualiserGroupes" 
-                                    style="-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-weight: 600;"/>
+                                    style="-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 14 28; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 600; -fx-effect: dropshadow(gaussian, rgba(16, 185, 129, 0.25), 10, 0, 0, 3);"/>
                         </HBox>
-                        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
-                            <VBox spacing="20" style="-fx-background-color: transparent;"/>
+                        
+                        <!-- Grille des groupes (identique à Admin) -->
+                        <ScrollPane fitToWidth="true" fitToHeight="true" style="-fx-background-color: transparent; -fx-background: transparent;" VBox.vgrow="ALWAYS">
+                            <GridPane fx:id="groupesGrid" hgap="22" vgap="22" style="-fx-padding: 12; -fx-background-color: transparent;"/>
                         </ScrollPane>
                     </VBox>
 

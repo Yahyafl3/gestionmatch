@@ -9,12 +9,10 @@
       stylesheets="@../styles/modern-management.css"
       spacing="25" style="-fx-padding: 35; -fx-background-color: #f8fafc;">
 
-    <!-- TITRE -->
     <HBox alignment="CENTER" style="-fx-background-color: linear-gradient(to right, #C1272D, #A01F24); -fx-background-radius: 14; -fx-padding: 22; -fx-effect: dropshadow(gaussian, rgba(193, 39, 45, 0.25), 15, 0, 0, 5);">
         <Label text="📋 FORMULAIRE GROUPE" style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold; -fx-letter-spacing: 0.5px;"/>
     </HBox>
 
-    <!-- INFORMATIONS DU GROUPE -->
     <VBox spacing="18" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 25; -fx-border-color: #e2e8f0; -fx-border-width: 1; -fx-border-radius: 14; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.06), 12, 0, 0, 3);">
         <Label text="📝 INFORMATIONS DU GROUPE" style="-fx-text-fill: #C1272D; -fx-font-size: 17px; -fx-font-weight: bold; -fx-letter-spacing: 0.3px;"/>
         
