@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!-- BARRE DE RECHERCHE GLOBALE MODERNE -->
+<HBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      alignment="CENTER_LEFT" spacing="12" 
+      style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 8 16; -fx-border-color: #e2e8f0; -fx-border-width: 2; -fx-border-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 2);">
+    
+    <!-- Icône de recherche -->
+    <Label text="🔍" style="-fx-font-size: 18px;"/>
+    
+    <!-- Champ de recherche -->
+    <TextField fx:id="searchField" promptText="Rechercher joueurs, équipes, matchs... (Ctrl+K)" 
+               style="-fx-background-color: transparent; -fx-border-width: 0; -fx-font-size: 14px; -fx-pref-width: 400;"
+               HBox.hgrow="ALWAYS"/>
+    
+    <!-- Badge raccourci clavier -->
+    <Label text="⌘K" style="-fx-background-color: #f1f5f9; -fx-text-fill: #64748b; -fx-padding: 4 8; -fx-background-radius: 6; -fx-font-size: 11px; -fx-font-weight: bold;"/>
+    
+</HBox>

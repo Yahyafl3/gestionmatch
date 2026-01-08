@@ -16,7 +16,7 @@ public class JoueurDAO {
 
     // Ajouter un joueur
     public boolean ajouter(Joueur joueur) {
-        String sql = "INSERT INTO joueur (nom, prenom, date_naissance, poste, numero, equipe_id) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO joueur (nom, prenom, date_naissance, poste, numero, equipe_id, nationalite) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -34,6 +34,7 @@ public class JoueurDAO {
             pstmt.setString(4, joueur.getPoste());
             pstmt.setInt(5, joueur.getNumero());
             pstmt.setInt(6, joueur.getEquipeId());
+            pstmt.setString(7, joueur.getNationalite());
 
             int rowsAffected = pstmt.executeUpdate();
 
@@ -70,7 +71,8 @@ public class JoueurDAO {
                         sqlDate != null ? sqlDate.toLocalDate() : null,
                         rs.getString("poste"),
                         rs.getInt("numero"),
-                        rs.getInt("equipe_id")
+                        rs.getInt("equipe_id"),
+                        rs.getString("nationalite")
                 );
                 joueurs.add(joueur);
             }
@@ -92,14 +94,16 @@ public class JoueurDAO {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
+                java.sql.Date sqlDate = rs.getDate("date_naissance");
                 return new Joueur(
                         rs.getInt("id"),
                         rs.getString("nom"),
                         rs.getString("prenom"),
-                        rs.getDate("date_naissance").toLocalDate(),
+                        sqlDate != null ? sqlDate.toLocalDate() : null,
                         rs.getString("poste"),
                         rs.getInt("numero"),
-                        rs.getInt("equipe_id")
+                        rs.getInt("equipe_id"),
+                        rs.getString("nationalite")
                 );
             }
 
@@ -121,14 +125,16 @@ public class JoueurDAO {
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
+                java.sql.Date sqlDate = rs.getDate("date_naissance");
                 Joueur joueur = new Joueur(
                         rs.getInt("id"),
                         rs.getString("nom"),
                         rs.getString("prenom"),
-                        rs.getDate("date_naissance").toLocalDate(),
+                        sqlDate != null ? sqlDate.toLocalDate() : null,
                         rs.getString("poste"),
                         rs.getInt("numero"),
-                        rs.getInt("equipe_id")
+                        rs.getInt("equipe_id"),
+                        rs.getString("nationalite")
                 );
                 joueurs.add(joueur);
             }
@@ -161,7 +167,8 @@ public class JoueurDAO {
                         sqlDate != null ? sqlDate.toLocalDate() : null,
                         rs.getString("poste"),
                         rs.getInt("numero"),
-                        rs.getInt("equipe_id")
+                        rs.getInt("equipe_id"),
+                        rs.getString("nationalite")
                 );
                 joueurs.add(joueur);
             }
@@ -192,7 +199,8 @@ public class JoueurDAO {
                         sqlDate != null ? sqlDate.toLocalDate() : null,
                         rs.getString("poste"),
                         rs.getInt("numero"),
-                        rs.getInt("equipe_id")
+                        rs.getInt("equipe_id"),
+                        rs.getString("nationalite")
                 );
                 joueurs.add(joueur);
             }
@@ -205,7 +213,7 @@ public class JoueurDAO {
 
     // Modifier un joueur
     public boolean modifier(Joueur joueur) {
-        String sql = "UPDATE joueur SET nom = ?, prenom = ?, date_naissance = ?, poste = ?, numero = ?, equipe_id = ? WHERE id = ?";
+        String sql = "UPDATE joueur SET nom = ?, prenom = ?, date_naissance = ?, poste = ?, numero = ?, equipe_id = ?, nationalite = ? WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -223,7 +231,8 @@ public class JoueurDAO {
             pstmt.setString(4, joueur.getPoste());
             pstmt.setInt(5, joueur.getNumero());
             pstmt.setInt(6, joueur.getEquipeId());
-            pstmt.setInt(7, joueur.getId());
+            pstmt.setString(7, joueur.getNationalite());
+            pstmt.setInt(8, joueur.getId());
 
             boolean success = pstmt.executeUpdate() > 0;
             if (success) {

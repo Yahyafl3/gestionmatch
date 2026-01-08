@@ -34,6 +34,7 @@ public class FormJoueurController implements Initializable {
     @FXML private TextField nomField;
     @FXML private TextField prenomField;
     @FXML private TextField numeroField;
+    @FXML private TextField nationaliteField;
     @FXML private ComboBox<String> posteCombo;
     @FXML private ComboBox<Equipe> equipeCombo;
 
@@ -79,6 +80,9 @@ public class FormJoueurController implements Initializable {
             prenomField.setText(joueur.getPrenom());
             numeroField.setText(String.valueOf(joueur.getNumero()));
             posteCombo.setValue(joueur.getPoste());
+            if (nationaliteField != null && joueur.getNationalite() != null) {
+                nationaliteField.setText(joueur.getNationalite());
+            }
             
             for (Equipe e : equipeCombo.getItems()) {
                 if (e.getId() == joueur.getEquipeId()) {
@@ -98,12 +102,18 @@ public class FormJoueurController implements Initializable {
         String nom = nomField.getText().trim();
         String prenom = prenomField.getText().trim();
         String numeroStr = numeroField.getText().trim();
+        String nationalite = nationaliteField != null ? nationaliteField.getText().trim() : "";
         String poste = posteCombo.getValue();
         Equipe equipe = equipeCombo.getValue();
 
         if (nom.isEmpty() || prenom.isEmpty() || numeroStr.isEmpty() || poste == null || equipe == null) {
             showAlert("Erreur", "Tous les champs sont obligatoires", Alert.AlertType.ERROR);
             return;
+        }
+        
+        // Si nationalité vide, utiliser le pays de l'équipe
+        if (nationalite.isEmpty()) {
+            nationalite = equipe.getPays();
         }
 
         int numero;
@@ -116,7 +126,7 @@ public class FormJoueurController implements Initializable {
 
         boolean success;
         if (joueurModif == null) {
-            Joueur nouveauJoueur = new Joueur(nom, prenom, null, poste, numero, equipe.getId());
+            Joueur nouveauJoueur = new Joueur(nom, prenom, null, poste, numero, equipe.getId(), nationalite);
             success = joueurDAO.ajouterJoueur(nouveauJoueur);
         } else {
             joueurModif.setNom(nom);
@@ -124,6 +134,7 @@ public class FormJoueurController implements Initializable {
             joueurModif.setNumero(numero);
             joueurModif.setPoste(poste);
             joueurModif.setEquipeId(equipe.getId());
+            joueurModif.setNationalite(nationalite);
             success = joueurDAO.modifierJoueur(joueurModif);
         }
 

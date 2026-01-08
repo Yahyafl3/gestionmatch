@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.*?>
+
+<!-- PAGE STATISTIQUES AVANCÉES -->
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      spacing="24" style="-fx-padding: 20; -fx-background-color: #f8fafc;">
+    
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);">
+        <Label text="📊 Statistiques Avancées" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <ComboBox promptText="Période" style="-fx-pref-width: 150;">
+            <items>
+                <String fx:value="Aujourd'hui"/>
+                <String fx:value="Cette semaine"/>
+                <String fx:value="Ce mois"/>
+                <String fx:value="Cette année"/>
+            </items>
+        </ComboBox>
+    </HBox>
+    
+    <!-- Première ligne: Graphiques -->
+    <HBox spacing="20" VBox.vgrow="ALWAYS">
+        
+        <!-- Graphique Buts par Équipe -->
+        <VBox spacing="12" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);">
+            <Label text="🎯 Buts par Équipe" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
+            <BarChart fx:id="butsChart" legendVisible="false" VBox.vgrow="ALWAYS">
+                <xAxis>
+                    <CategoryAxis label="Équipes"/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="Buts" side="LEFT"/>
+                </yAxis>
+            </BarChart>
+        </VBox>
+        
+        <!-- Graphique Répartition Victoires -->
+        <VBox spacing="12" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);">
+            <Label text="🏆 Répartition des Résultats" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
+            <PieChart fx:id="resultsChart" legendVisible="true" VBox.vgrow="ALWAYS"/>
+        </VBox>
+        
+    </HBox>
+    
+    <!-- Deuxième ligne: Top Buteurs -->
+    <VBox spacing="12" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);">
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <Label text="⚽ Top 10 Buteurs" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="Mise à jour: Maintenant" style="-fx-font-size: 11px; -fx-text-fill: #94a3b8;"/>
+        </HBox>
+        
+        <Separator/>
+        
+        <!-- Liste des buteurs -->
+        <GridPane hgap="20" vgap="12">
+            
+            <!-- Buteur 1 -->
+            <HBox spacing="12" alignment="CENTER_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <Label text="🥇" style="-fx-font-size: 24px;"/>
+                <VBox spacing="2">
+                    <Label text="Cristiano Ronaldo" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <Label text="Portugal" style="-fx-font-size: 11px; -fx-text-fill: #64748b;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="12 buts" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #C1272D;"/>
+            </HBox>
+            
+            <!-- Buteur 2 -->
+            <HBox spacing="12" alignment="CENTER_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <Label text="🥈" style="-fx-font-size: 24px;"/>
+                <VBox spacing="2">
+                    <Label text="Lionel Messi" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <Label text="Argentine" style="-fx-font-size: 11px; -fx-text-fill: #64748b;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="10 buts" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #C1272D;"/>
+            </HBox>
+            
+            <!-- Buteur 3 -->
+            <HBox spacing="12" alignment="CENTER_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                <Label text="🥉" style="-fx-font-size: 24px;"/>
+                <VBox spacing="2">
+                    <Label text="Kylian Mbappé" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <Label text="France" style="-fx-font-size: 11px; -fx-text-fill: #64748b;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="9 buts" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #C1272D;"/>
+            </HBox>
+            
+            <!-- Buteur 4 -->
+            <HBox spacing="12" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <Label text="4️⃣" style="-fx-font-size: 20px;"/>
+                <VBox spacing="2">
+                    <Label text="Neymar Jr" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <Label text="Brésil" style="-fx-font-size: 11px; -fx-text-fill: #64748b;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="8 buts" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #64748b;"/>
+            </HBox>
+            
+            <!-- Buteur 5 -->
+            <HBox spacing="12" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Label text="5️⃣" style="-fx-font-size: 20px;"/>
+                <VBox spacing="2">
+                    <Label text="Hakim Ziyech" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <Label text="Maroc" style="-fx-font-size: 11px; -fx-text-fill: #64748b;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="7 buts" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #64748b;"/>
+            </HBox>
+            
+        </GridPane>
+    </VBox>
+    
+    <!-- Troisième ligne: Statistiques par Groupe -->
+    <HBox spacing="20">
+        
+        <!-- Groupe A -->
+        <VBox spacing="12" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);">
+            <Label text="📋 Groupe A" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
+            <Separator/>
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="Matchs joués:" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="12" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="Buts marqués:" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="45" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="Leader:" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="Maroc" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #C1272D;"/>
+            </HBox>
+        </VBox>
+        
+        <!-- Groupe B -->
+        <VBox spacing="12" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);">
+            <Label text="📋 Groupe B" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
+            <Separator/>
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="Matchs joués:" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="12" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="Buts marqués:" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="38" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="Leader:" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="Brésil" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #C1272D;"/>
+            </HBox>
+        </VBox>
+        
+        <!-- Groupe C -->
+        <VBox spacing="12" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);">
+            <Label text="📋 Groupe C" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
+            <Separator/>
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="Matchs joués:" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="12" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="Buts marqués:" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="42" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="Leader:" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="France" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #C1272D;"/>
+            </HBox>
+        </VBox>
+        
+        <!-- Groupe D -->
+        <VBox spacing="12" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);">
+            <Label text="📋 Groupe D" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
+            <Separator/>
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="Matchs joués:" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="12" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="Buts marqués:" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="40" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="Leader:" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="Portugal" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #C1272D;"/>
+            </HBox>
+        </VBox>
+        
+    </HBox>
+    
+</VBox>

@@ -117,6 +117,13 @@ public class UserDashboardController {
     @FXML private Button btnStades;
     @FXML private Button btnFavoris;
     @FXML private Button btnProfil;
+    @FXML private Button btnStatistiques;
+    @FXML private Button btnCalendrier;
+    @FXML private Button btnComparaison;
+    @FXML private Button btnNotifications;
+    
+    @FXML private TextField globalSearchField;
+    @FXML private Label notificationBadge;
 
     // Données
     private final ObservableList<Joueur> tousLesJoueurs = FXCollections.observableArrayList();
@@ -162,25 +169,35 @@ public class UserDashboardController {
         if (tableJoueurs != null) {
             TableColumn<Joueur, String> colNom = new TableColumn<>("Nom");
             colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
-            colNom.setPrefWidth(150);
+            colNom.setPrefWidth(120);
+            colNom.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
             TableColumn<Joueur, String> colPrenom = new TableColumn<>("Prénom");
             colPrenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
-            colPrenom.setPrefWidth(150);
+            colPrenom.setPrefWidth(120);
+            colPrenom.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
             TableColumn<Joueur, String> colPoste = new TableColumn<>("Poste");
             colPoste.setCellValueFactory(new PropertyValueFactory<>("poste"));
-            colPoste.setPrefWidth(120);
+            colPoste.setPrefWidth(100);
+            colPoste.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
             TableColumn<Joueur, Integer> colNumero = new TableColumn<>("N°");
             colNumero.setCellValueFactory(new PropertyValueFactory<>("numero"));
-            colNumero.setPrefWidth(60);
+            colNumero.setPrefWidth(50);
+            colNumero.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-alignment: CENTER;");
+
+            TableColumn<Joueur, String> colNationalite = new TableColumn<>("Nationalité");
+            colNationalite.setCellValueFactory(new PropertyValueFactory<>("nationalite"));
+            colNationalite.setPrefWidth(120);
+            colNationalite.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
             TableColumn<Joueur, String> colDateNaissance = new TableColumn<>("Date de Naissance");
             colDateNaissance.setCellValueFactory(new PropertyValueFactory<>("dateNaissance"));
-            colDateNaissance.setPrefWidth(150);
+            colDateNaissance.setPrefWidth(140);
+            colDateNaissance.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
-            tableJoueurs.getColumns().addAll(colNom, colPrenom, colPoste, colNumero, colDateNaissance);
+            tableJoueurs.getColumns().addAll(colNom, colPrenom, colPoste, colNumero, colNationalite, colDateNaissance);
         }
     }
 
@@ -543,8 +560,73 @@ public class UserDashboardController {
         if (btnStades != null) btnStades.setStyle(defaultStyle);
         if (btnFavoris != null) btnFavoris.setStyle(defaultStyle);
         if (btnProfil != null) btnProfil.setStyle(defaultStyle);
+        if (btnStatistiques != null) btnStatistiques.setStyle(defaultStyle);
+        if (btnCalendrier != null) btnCalendrier.setStyle(defaultStyle);
+        if (btnComparaison != null) btnComparaison.setStyle(defaultStyle);
         
         if (activeBtn != null) activeBtn.setStyle(activeStyle);
+    }
+    
+    // ========================================
+    // NOUVELLES PAGES
+    // ========================================
+    
+    @FXML
+    private void afficherStatistiques(javafx.event.ActionEvent event) {
+        chargerPageDynamique("/fxml/statistics-page.fxml", "Statistiques");
+        setActiveButton(btnStatistiques);
+    }
+    
+    @FXML
+    private void afficherCalendrier(javafx.event.ActionEvent event) {
+        chargerPageDynamique("/fxml/calendar-page.fxml", "Calendrier");
+        setActiveButton(btnCalendrier);
+    }
+    
+    @FXML
+    private void afficherComparaison(javafx.event.ActionEvent event) {
+        chargerPageDynamique("/fxml/team-comparison.fxml", "Comparaison");
+        setActiveButton(btnComparaison);
+    }
+    
+    @FXML
+    private void afficherNotifications(javafx.event.ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Notifications");
+        alert.setHeaderText("Centre de Notifications");
+        alert.setContentText("🔔 2 nouvelles notifications:\n\n" +
+                           "⚽ Match à venir: Maroc vs Brésil demain\n" +
+                           "📊 Nouvelles statistiques disponibles");
+        alert.showAndWait();
+        
+        // Réinitialiser le badge
+        if (notificationBadge != null) {
+            notificationBadge.setText("0");
+            notificationBadge.setVisible(false);
+        }
+    }
+    
+    private void chargerPageDynamique(String fxmlPath, String titre) {
+        try {
+            cacherToutesLesVues();
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            javafx.scene.Parent page = loader.load();
+            
+            // Remplacer le contenu
+            contentPane.getChildren().clear();
+            contentPane.getChildren().add(page);
+            
+            if (pageTitle != null) {
+                pageTitle.setText(titre);
+            }
+            
+            System.out.println("✅ Page chargée: " + titre);
+        } catch (IOException e) {
+            System.err.println("❌ Erreur chargement page: " + e.getMessage());
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la page: " + titre);
+        }
     }
 
     // Suite dans le prochain message...

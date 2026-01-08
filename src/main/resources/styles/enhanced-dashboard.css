@@ -1,0 +1,489 @@
+/* ============================================
+   ENHANCED DASHBOARD - STYLES ENRICHIS
+   Coupe du Monde 2030 - Compatible JavaFX
+   ============================================ */
+
+/* === BARRE DE RECHERCHE GLOBALE === */
+.global-search {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 10 16;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 2;
+    -fx-border-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 2);
+}
+
+.global-search:focused {
+    -fx-border-color: #C1272D;
+    -fx-effect: dropshadow(gaussian, rgba(193, 39, 45, 0.2), 12, 0, 0, 4);
+}
+
+.global-search .text-field {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-font-size: 14px;
+}
+
+/* === CENTRE DE NOTIFICATIONS === */
+.notification-center {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8);
+}
+
+.notification-item {
+    -fx-background-radius: 10;
+    -fx-padding: 12;
+    -fx-cursor: hand;
+}
+
+.notification-item:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 2);
+    -fx-translate-x: 4;
+}
+
+.notification-item.unread {
+    -fx-border-color: #C1272D;
+    -fx-border-width: 0 0 0 4;
+}
+
+.notification-badge {
+    -fx-background-color: #C1272D;
+    -fx-text-fill: white;
+    -fx-padding: 4 10;
+    -fx-background-radius: 12;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+/* === PROFIL UTILISATEUR === */
+.user-profile-menu {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 8 16;
+    -fx-cursor: hand;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 2;
+    -fx-border-radius: 12;
+}
+
+.user-profile-menu:hover {
+    -fx-border-color: #C1272D;
+    -fx-effect: dropshadow(gaussian, rgba(193, 39, 45, 0.15), 10, 0, 0, 3);
+}
+
+.user-avatar {
+    -fx-background-color: #C1272D;
+    -fx-background-radius: 50%;
+    -fx-pref-width: 40;
+    -fx-pref-height: 40;
+}
+
+/* === GRAPHIQUES === */
+.chart-container {
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);
+}
+
+.chart {
+    -fx-padding: 10;
+}
+
+.chart-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0f172a;
+}
+
+.chart-legend {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 8;
+    -fx-padding: 8;
+}
+
+/* === FILTRES AVANCÉS === */
+.filter-panel {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 16;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 2;
+    -fx-border-radius: 12;
+}
+
+.filter-chip {
+    -fx-background-color: #f1f5f9;
+    -fx-text-fill: #475569;
+    -fx-padding: 6 12;
+    -fx-background-radius: 20;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-cursor: hand;
+}
+
+.filter-chip:hover {
+    -fx-background-color: #e2e8f0;
+}
+
+.filter-chip.active {
+    -fx-background-color: #C1272D;
+    -fx-text-fill: white;
+}
+
+/* === BADGES ET INDICATEURS === */
+.badge {
+    -fx-background-radius: 6;
+    -fx-padding: 4 10;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.badge-new {
+    -fx-background-color: #10b981;
+    -fx-text-fill: white;
+}
+
+.badge-top {
+    -fx-background-color: #f59e0b;
+    -fx-text-fill: white;
+}
+
+.badge-live {
+    -fx-background-color: #ef4444;
+    -fx-text-fill: white;
+}
+
+.badge-info {
+    -fx-background-color: #3b82f6;
+    -fx-text-fill: white;
+}
+
+/* === CARTES STATISTIQUES ENRICHIES === */
+.stat-card-enhanced {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);
+}
+
+.stat-card-enhanced:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8);
+    -fx-translate-y: -4;
+    -fx-cursor: hand;
+}
+
+.stat-card-gradient {
+    -fx-background-color: #C1272D;
+    -fx-background-radius: 16;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(gaussian, rgba(193, 39, 45, 0.3), 15, 0, 0, 4);
+}
+
+.stat-card-gradient .label {
+    -fx-text-fill: white;
+}
+
+/* === TIMELINE MATCHS === */
+.match-timeline {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);
+}
+
+.match-timeline-item {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 12;
+    -fx-padding: 16;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 0 0 0 4;
+}
+
+.match-timeline-item.upcoming {
+    -fx-border-color: #3b82f6;
+}
+
+.match-timeline-item.live {
+    -fx-border-color: #ef4444;
+    -fx-background-color: #fef2f2;
+}
+
+.match-timeline-item.finished {
+    -fx-border-color: #10b981;
+}
+
+/* === COMPARAISON ÉQUIPES === */
+.team-comparison {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);
+}
+
+.vs-badge {
+    -fx-background-color: #C1272D;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 12 20;
+    -fx-background-radius: 50%;
+}
+
+.team-stat-bar {
+    -fx-background-color: #e2e8f0;
+    -fx-background-radius: 8;
+    -fx-pref-height: 8;
+}
+
+.team-stat-bar .fill {
+    -fx-background-color: #C1272D;
+    -fx-background-radius: 8;
+}
+
+/* === LEADERBOARD === */
+.leaderboard {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);
+}
+
+.leaderboard-item {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 10;
+    -fx-padding: 12;
+}
+
+.leaderboard-item:hover {
+    -fx-background-color: #f1f5f9;
+    -fx-cursor: hand;
+}
+
+.leaderboard-item.rank-1 {
+    -fx-background-color: #fde68a;
+}
+
+.leaderboard-item.rank-2 {
+    -fx-background-color: #d1d5db;
+}
+
+.leaderboard-item.rank-3 {
+    -fx-background-color: #fdba74;
+}
+
+/* === ACTIONS RAPIDES === */
+.quick-action-button {
+    -fx-background-color: #C1272D;
+    -fx-text-fill: white;
+    -fx-background-radius: 50%;
+    -fx-pref-width: 60;
+    -fx-pref-height: 60;
+    -fx-font-size: 24px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(193, 39, 45, 0.4), 15, 0, 0, 5);
+}
+
+.quick-action-button:hover {
+    -fx-background-color: #E63946;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-effect: dropshadow(gaussian, rgba(193, 39, 45, 0.6), 20, 0, 0, 8);
+}
+
+/* === MODE SOMBRE === */
+.dark-mode {
+    -fx-background-color: #0f172a;
+}
+
+.dark-mode .card {
+    -fx-background-color: #1e293b;
+    -fx-border-color: #334155;
+}
+
+.dark-mode .label {
+    -fx-text-fill: #f1f5f9;
+}
+
+.dark-mode .table-view {
+    -fx-background-color: #1e293b;
+}
+
+/* === SIDEBAR COLLAPSIBLE === */
+.sidebar-collapsed {
+    -fx-pref-width: 80;
+}
+
+.sidebar-collapsed .button-text {
+    -fx-opacity: 0;
+}
+
+/* === TOOLTIPS ENRICHIS === */
+.custom-tooltip {
+    -fx-background-color: #1e293b;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-padding: 8 12;
+    -fx-font-size: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 4);
+}
+
+/* === PROGRESS INDICATORS === */
+.progress-ring {
+    -fx-progress-color: #C1272D;
+}
+
+.progress-ring .track {
+    -fx-background-color: #e2e8f0;
+}
+
+/* === CARTES JOUEUR ENRICHIES === */
+.player-card-enhanced {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);
+}
+
+.player-card-enhanced:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8);
+    -fx-translate-y: -6;
+    -fx-cursor: hand;
+}
+
+.player-avatar {
+    -fx-background-color: #667eea;
+    -fx-background-radius: 50%;
+    -fx-pref-width: 80;
+    -fx-pref-height: 80;
+}
+
+.player-stats-bar {
+    -fx-background-color: #e2e8f0;
+    -fx-background-radius: 10;
+    -fx-pref-height: 10;
+}
+
+.player-stats-bar .fill {
+    -fx-background-color: #C1272D;
+    -fx-background-radius: 10;
+}
+
+/* === CALENDRIER MATCHS === */
+.calendar-view {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);
+}
+
+.calendar-day {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 8;
+    -fx-padding: 12;
+    -fx-cursor: hand;
+}
+
+.calendar-day:hover {
+    -fx-background-color: #f1f5f9;
+}
+
+.calendar-day.has-match {
+    -fx-background-color: #fee2e2;
+    -fx-border-color: #C1272D;
+    -fx-border-width: 2;
+}
+
+.calendar-day.today {
+    -fx-background-color: #C1272D;
+}
+
+.calendar-day.today .label {
+    -fx-text-fill: white;
+}
+
+/* === CARTES MODERNES === */
+.modern-card {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);
+}
+
+.modern-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8);
+    -fx-cursor: hand;
+}
+
+/* === BOUTONS MODERNES === */
+.modern-button {
+    -fx-background-color: #C1272D;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-padding: 12 24;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(193, 39, 45, 0.3), 10, 0, 0, 3);
+}
+
+.modern-button:hover {
+    -fx-background-color: #E63946;
+    -fx-effect: dropshadow(gaussian, rgba(193, 39, 45, 0.5), 15, 0, 0, 5);
+}
+
+.modern-button:pressed {
+    -fx-background-color: #A01F24;
+    -fx-translate-y: 1;
+}
+
+/* === INPUTS MODERNES === */
+.modern-input {
+    -fx-background-color: white;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 12;
+    -fx-font-size: 14px;
+}
+
+.modern-input:focused {
+    -fx-border-color: #C1272D;
+    -fx-effect: dropshadow(gaussian, rgba(193, 39, 45, 0.2), 10, 0, 0, 3);
+}
+
+/* === LABELS MODERNES === */
+.modern-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #0f172a;
+    -fx-font-weight: 600;
+}
+
+.modern-label-secondary {
+    -fx-font-size: 12px;
+    -fx-text-fill: #64748b;
+}
+
+/* === SÉPARATEURS === */
+.modern-separator {
+    -fx-background-color: #e2e8f0;
+    -fx-pref-height: 2;
+}
+
+/* === CONTENEURS === */
+.modern-container {
+    -fx-background-color: #f8fafc;
+    -fx-padding: 20;
+    -fx-spacing: 20;
+}
+
+/* === GRILLES === */
+.modern-grid {
+    -fx-hgap: 20;
+    -fx-vgap: 20;
+    -fx-padding: 20;
+}

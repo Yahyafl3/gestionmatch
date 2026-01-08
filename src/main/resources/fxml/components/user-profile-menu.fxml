@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<!-- MENU PROFIL UTILISATEUR -->
+<HBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      alignment="CENTER" spacing="12" 
+      style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 8 16; -fx-cursor: hand; -fx-border-color: #e2e8f0; -fx-border-width: 2; -fx-border-radius: 12;">
+    
+    <!-- Avatar -->
+    <StackPane style="-fx-background-color: linear-gradient(to bottom right, #C1272D, #E63946); -fx-background-radius: 50%; -fx-pref-width: 40; -fx-pref-height: 40;">
+        <Label text="A" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+    </StackPane>
+    
+    <!-- Info utilisateur -->
+    <VBox spacing="2">
+        <Label fx:id="userName" text="Admin FIFA" style="-fx-font-weight: bold; -fx-font-size: 13px; -fx-text-fill: #0f172a;"/>
+        <Label fx:id="userRole" text="Administrateur" style="-fx-font-size: 11px; -fx-text-fill: #64748b;"/>
+    </VBox>
+    
+    <!-- Icône dropdown -->
+    <Label text="▼" style="-fx-font-size: 10px; -fx-text-fill: #94a3b8;"/>
+    
+</HBox>

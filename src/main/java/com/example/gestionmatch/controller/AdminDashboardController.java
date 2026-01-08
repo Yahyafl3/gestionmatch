@@ -74,8 +74,10 @@ public class AdminDashboardController implements Initializable {
     @FXML private VBox barGroupes;
     
     @FXML private Button btnDashboard, btnJoueurs, btnEquipes, btnStades, btnGroupes, btnMatchs;
+    @FXML private Button btnStatistiques, btnCalendrier, btnComparaison, btnNotifications;
     
-    @FXML private TextField searchFieldJoueurs;
+    @FXML private TextField searchFieldJoueurs, globalSearchField;
+    @FXML private Label notificationBadge;
     
     @FXML private TableView<Joueur> tableJoueurs;
     @FXML private TableView<Equipe> tableEquipes;
@@ -488,22 +490,31 @@ public class AdminDashboardController implements Initializable {
     private void initialiserTablesJoueurs() {
         TableColumn<Joueur, String> colNom = new TableColumn<>("Nom");
         colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        colNom.setPrefWidth(150);
+        colNom.setPrefWidth(130);
+        colNom.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
         TableColumn<Joueur, String> colPrenom = new TableColumn<>("Prénom");
         colPrenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
-        colPrenom.setPrefWidth(150);
+        colPrenom.setPrefWidth(130);
+        colPrenom.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
         TableColumn<Joueur, Integer> colNumero = new TableColumn<>("N°");
         colNumero.setCellValueFactory(new PropertyValueFactory<>("numero"));
-        colNumero.setPrefWidth(60);
+        colNumero.setPrefWidth(50);
+        colNumero.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-alignment: CENTER;");
 
         TableColumn<Joueur, String> colPoste = new TableColumn<>("Poste");
         colPoste.setCellValueFactory(new PropertyValueFactory<>("poste"));
-        colPoste.setPrefWidth(120);
+        colPoste.setPrefWidth(110);
+        colPoste.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+
+        TableColumn<Joueur, String> colNationalite = new TableColumn<>("Nationalité");
+        colNationalite.setCellValueFactory(new PropertyValueFactory<>("nationalite"));
+        colNationalite.setPrefWidth(130);
+        colNationalite.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
         tableJoueurs.getColumns().clear();
-        tableJoueurs.getColumns().addAll(colNom, colPrenom, colNumero, colPoste);
+        tableJoueurs.getColumns().addAll(colNom, colPrenom, colNumero, colPoste, colNationalite);
     }
 
     private void chargerJoueurs() {
@@ -601,7 +612,8 @@ public class AdminDashboardController implements Initializable {
         // Colonne Nom avec drapeau
         TableColumn<Equipe, String> colNom = new TableColumn<>("Équipe");
         colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        colNom.setPrefWidth(200);
+        colNom.setPrefWidth(250);
+        colNom.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
         colNom.setCellFactory(column -> new TableCell<Equipe, String>() {
             private final ImageView imageView = new ImageView();
             private final Label label = new Label();
@@ -673,48 +685,56 @@ public class AdminDashboardController implements Initializable {
 
         TableColumn<Equipe, String> colPays = new TableColumn<>("Pays");
         colPays.setCellValueFactory(new PropertyValueFactory<>("pays"));
-        colPays.setPrefWidth(120);
+        colPays.setPrefWidth(150);
+        colPays.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
         TableColumn<Equipe, String> colEntraineur = new TableColumn<>("Entraîneur");
         colEntraineur.setCellValueFactory(new PropertyValueFactory<>("entraineur"));
-        colEntraineur.setPrefWidth(150);
+        colEntraineur.setPrefWidth(180);
+        colEntraineur.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
         TableColumn<Equipe, Integer> colNombreJoueurs = new TableColumn<>("Joueurs");
         colNombreJoueurs.setCellValueFactory(new PropertyValueFactory<>("nombreJoueurs"));
-        colNombreJoueurs.setPrefWidth(80);
+        colNombreJoueurs.setPrefWidth(90);
+        colNombreJoueurs.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-alignment: CENTER;");
 
         TableColumn<Equipe, Integer> colMatchsJoues = new TableColumn<>("MJ");
         colMatchsJoues.setCellValueFactory(new PropertyValueFactory<>("matchsJoues"));
-        colMatchsJoues.setPrefWidth(50);
+        colMatchsJoues.setPrefWidth(60);
+        colMatchsJoues.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-alignment: CENTER;");
 
         TableColumn<Equipe, Integer> colVictoires = new TableColumn<>("V");
         colVictoires.setCellValueFactory(new PropertyValueFactory<>("victoires"));
-        colVictoires.setPrefWidth(40);
+        colVictoires.setPrefWidth(50);
+        colVictoires.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-alignment: CENTER;");
 
         TableColumn<Equipe, Integer> colNuls = new TableColumn<>("N");
         colNuls.setCellValueFactory(new PropertyValueFactory<>("nuls"));
-        colNuls.setPrefWidth(40);
+        colNuls.setPrefWidth(50);
+        colNuls.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-alignment: CENTER;");
 
         TableColumn<Equipe, Integer> colDefaites = new TableColumn<>("D");
         colDefaites.setCellValueFactory(new PropertyValueFactory<>("defaites"));
-        colDefaites.setPrefWidth(40);
+        colDefaites.setPrefWidth(50);
+        colDefaites.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-alignment: CENTER;");
 
         TableColumn<Equipe, Integer> colButsMarques = new TableColumn<>("BP");
         colButsMarques.setCellValueFactory(new PropertyValueFactory<>("butsMarques"));
-        colButsMarques.setPrefWidth(50);
+        colButsMarques.setPrefWidth(60);
+        colButsMarques.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-alignment: CENTER;");
 
         TableColumn<Equipe, Integer> colButsEncaisses = new TableColumn<>("BC");
         colButsEncaisses.setCellValueFactory(new PropertyValueFactory<>("butsEncaisses"));
-        colButsEncaisses.setPrefWidth(50);
-
-        TableColumn<Equipe, Integer> colPoints = new TableColumn<>("Pts");
-        colPoints.setCellValueFactory(new PropertyValueFactory<>("points"));
-        colPoints.setPrefWidth(50);
+        colButsEncaisses.setPrefWidth(60);
+        colButsEncaisses.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-alignment: CENTER;");
 
         tableEquipes.getColumns().clear();
         tableEquipes.getColumns().addAll(colNom, colPays, colEntraineur, colNombreJoueurs,
                 colMatchsJoues, colVictoires, colNuls, colDefaites, 
-                colButsMarques, colButsEncaisses, colPoints);
+                colButsMarques, colButsEncaisses);
+        
+        // Appliquer le style en gras pour toutes les cellules
+        tableEquipes.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
     }
 
     private void chargerEquipes() {
@@ -1287,6 +1307,67 @@ public class AdminDashboardController implements Initializable {
             stage.setTitle("Connexion - Coupe du Monde 2030");
         } catch (IOException e) {
             System.err.println("❌ Erreur : " + e.getMessage());
+        }
+    }
+    
+    // ========================================
+    // NOUVELLES PAGES
+    // ========================================
+    
+    @FXML
+    private void afficherStatistiques() {
+        chargerPageDynamique("/fxml/statistics-page.fxml", "Statistiques Avancées");
+        activerBoutonMenu(btnStatistiques);
+    }
+    
+    @FXML
+    private void afficherCalendrier() {
+        chargerPageDynamique("/fxml/calendar-page.fxml", "Calendrier des Matchs");
+        activerBoutonMenu(btnCalendrier);
+    }
+    
+    @FXML
+    private void afficherComparaison() {
+        chargerPageDynamique("/fxml/team-comparison.fxml", "Comparaison d'Équipes");
+        activerBoutonMenu(btnComparaison);
+    }
+    
+    @FXML
+    private void afficherNotifications() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Notifications");
+        alert.setHeaderText("Centre de Notifications");
+        alert.setContentText("🔔 3 nouvelles notifications:\n\n" +
+                           "⚽ Match à venir: Maroc vs Brésil demain\n" +
+                           "👤 5 nouveaux joueurs ajoutés\n" +
+                           "📊 Statistiques mises à jour");
+        alert.showAndWait();
+        
+        // Réinitialiser le badge
+        if (notificationBadge != null) {
+            notificationBadge.setText("0");
+            notificationBadge.setVisible(false);
+        }
+    }
+    
+    private void chargerPageDynamique(String fxmlPath, String titre) {
+        try {
+            cacherToutesVues();
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            javafx.scene.Parent page = loader.load();
+            
+            // Remplacer le contenu
+            contentPane.getChildren().clear();
+            contentPane.getChildren().add(page);
+            
+            pageTitle.setText(titre);
+            
+            System.out.println("✅ Page chargée: " + titre);
+        } catch (IOException e) {
+            System.err.println("❌ Erreur chargement page: " + e.getMessage());
+            e.printStackTrace();
+            showAlert("Erreur", "Impossible de charger la page: " + titre, Alert.AlertType.ERROR);
         }
     }
 

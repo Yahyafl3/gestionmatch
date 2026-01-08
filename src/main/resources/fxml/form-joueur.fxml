@@ -6,61 +6,80 @@
 <ScrollPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.gestionmatch.controller.FormJoueurController"
+            stylesheets="@../styles/modern-management.css"
             fitToWidth="true"
             vbarPolicy="ALWAYS"
             hbarPolicy="NEVER"
-            prefHeight="500"
-            prefWidth="650"
+            prefHeight="550"
+            prefWidth="750"
             style="-fx-background: #f8fafc; -fx-background-color: #f8fafc;">
 
 <VBox spacing="25" style="-fx-padding: 35; -fx-background-color: #f8fafc;">
 
-    <!-- Titre -->
+    <!-- TITRE -->
     <HBox alignment="CENTER" style="-fx-background-color: linear-gradient(to right, #C1272D, #A01F24); -fx-background-radius: 14; -fx-padding: 22; -fx-effect: dropshadow(gaussian, rgba(193, 39, 45, 0.25), 15, 0, 0, 5);">
         <Label text="👤 FORMULAIRE JOUEUR" style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold; -fx-letter-spacing: 0.5px;"/>
     </HBox>
 
-    <!-- Champs du formulaire -->
-    <VBox spacing="18" style="-fx-padding: 25; -fx-background-color: white; -fx-background-radius: 14; -fx-border-color: #e2e8f0; -fx-border-width: 1; -fx-border-radius: 14; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.06), 12, 0, 0, 3);">
+    <!-- SECTION IDENTITÉ -->
+    <VBox spacing="18" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 25; -fx-border-color: #e2e8f0; -fx-border-width: 1; -fx-border-radius: 14; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.06), 12, 0, 0, 3);">
+        <Label text="📝 IDENTITÉ DU JOUEUR" style="-fx-text-fill: #C1272D; -fx-font-size: 17px; -fx-font-weight: bold; -fx-letter-spacing: 0.3px;"/>
         
         <HBox spacing="18">
             <VBox spacing="10" HBox.hgrow="ALWAYS">
                 <Label text="Nom *" style="-fx-text-fill: #1e293b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
-                <TextField fx:id="nomField" promptText="Nom du joueur" prefHeight="44"
+                <TextField fx:id="nomField" promptText="Ex: Hakimi" prefHeight="44"
                            style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8; -fx-background-radius: 10; -fx-border-color: #cbd5e1; -fx-border-width: 2; -fx-border-radius: 10; -fx-font-size: 14px; -fx-padding: 12;"/>
             </VBox>
             <VBox spacing="10" HBox.hgrow="ALWAYS">
                 <Label text="Prénom *" style="-fx-text-fill: #1e293b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
-                <TextField fx:id="prenomField" promptText="Prénom du joueur" prefHeight="44"
+                <TextField fx:id="prenomField" promptText="Ex: Achraf" prefHeight="44"
                            style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8; -fx-background-radius: 10; -fx-border-color: #cbd5e1; -fx-border-width: 2; -fx-border-radius: 10; -fx-font-size: 14px; -fx-padding: 12;"/>
             </VBox>
         </HBox>
+        
+        <VBox spacing="10">
+            <Label text="Nationalité *" style="-fx-text-fill: #1e293b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
+            <TextField fx:id="nationaliteField" promptText="Ex: Marocaine" prefHeight="44"
+                       style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8; -fx-background-radius: 10; -fx-border-color: #cbd5e1; -fx-border-width: 2; -fx-border-radius: 10; -fx-font-size: 14px; -fx-padding: 12;"/>
+        </VBox>
+    </VBox>
 
+    <!-- SECTION INFORMATIONS SPORTIVES -->
+    <VBox spacing="18" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 25; -fx-border-color: #e2e8f0; -fx-border-width: 1; -fx-border-radius: 14; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.06), 12, 0, 0, 3);">
+        <Label text="⚽ INFORMATIONS SPORTIVES" style="-fx-text-fill: #C1272D; -fx-font-size: 17px; -fx-font-weight: bold; -fx-letter-spacing: 0.3px;"/>
+        
         <HBox spacing="18">
-            <VBox spacing="10" HBox.hgrow="ALWAYS">
+            <VBox spacing="10" style="-fx-pref-width: 150;">
                 <Label text="Numéro *" style="-fx-text-fill: #1e293b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
-                <TextField fx:id="numeroField" promptText="Ex: 7" prefHeight="44"
-                           style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8; -fx-background-radius: 10; -fx-border-color: #cbd5e1; -fx-border-width: 2; -fx-border-radius: 10; -fx-font-size: 14px; -fx-padding: 12;"/>
+                <TextField fx:id="numeroField" promptText="Ex: 2" prefHeight="44"
+                           style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8; -fx-background-radius: 10; -fx-border-color: #cbd5e1; -fx-border-width: 2; -fx-border-radius: 10; -fx-font-size: 14px; -fx-padding: 12; -fx-alignment: center;"/>
             </VBox>
             <VBox spacing="10" HBox.hgrow="ALWAYS">
                 <Label text="Poste *" style="-fx-text-fill: #1e293b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
-                <ComboBox fx:id="posteCombo" prefHeight="44" prefWidth="200"
+                <ComboBox fx:id="posteCombo" promptText="Sélectionner un poste" prefHeight="44" prefWidth="250"
                           style="-fx-background-color: white; -fx-border-color: #cbd5e1; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-radius: 10; -fx-font-size: 14px;"/>
             </VBox>
         </HBox>
 
         <VBox spacing="10">
             <Label text="Équipe *" style="-fx-text-fill: #1e293b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
-            <ComboBox fx:id="equipeCombo" prefHeight="44" prefWidth="400"
+            <ComboBox fx:id="equipeCombo" promptText="Sélectionner une équipe" prefHeight="44" prefWidth="500"
                       style="-fx-background-color: white; -fx-border-color: #cbd5e1; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-radius: 10; -fx-font-size: 14px;"/>
         </VBox>
+        
+        <!-- Info badge -->
+        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: #eff6ff; -fx-padding: 12 16; -fx-background-radius: 8; -fx-border-color: #bfdbfe; -fx-border-width: 1; -fx-border-radius: 8;">
+            <Label text="ℹ️" style="-fx-font-size: 16px;"/>
+            <Label text="Le numéro doit être unique dans l'équipe (1-99)" style="-fx-text-fill: #1e40af; -fx-font-size: 12px; -fx-font-weight: 500;" wrapText="true"/>
+        </HBox>
     </VBox>
 
-    <!-- Boutons -->
+    <!-- BOUTONS -->
     <HBox spacing="18" alignment="CENTER" style="-fx-padding: 15 0 0 0;">
-        <Button fx:id="btnSauvegarder" text="✓ SAUVEGARDER" onAction="#sauvegarder" prefWidth="200" prefHeight="48"
+        <Button fx:id="btnSauvegarder" text="✓ SAUVEGARDER" onAction="#sauvegarder" prefWidth="220" prefHeight="48"
                 style="-fx-background-color: linear-gradient(to right, #C1272D, #A01F24); -fx-text-fill: white; -fx-background-radius: 12; -fx-font-size: 15px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(193, 39, 45, 0.3), 12, 0, 0, 4);"/>
-        <Button fx:id="btnAnnuler" text="✗ ANNULER" onAction="#annuler" prefWidth="200" prefHeight="48"
+        <Button fx:id="btnAnnuler" text="✗ ANNULER" onAction="#annuler" prefWidth="220" prefHeight="48"
                 style="-fx-background-color: #64748b; -fx-text-fill: white; -fx-background-radius: 12; -fx-font-size: 15px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(100, 116, 139, 0.3), 12, 0, 0, 4);"/>
     </HBox>
 

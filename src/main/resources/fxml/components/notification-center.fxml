@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!-- CENTRE DE NOTIFICATIONS -->
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      spacing="12" style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 8); -fx-pref-width: 380;">
+    
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="12">
+        <Label text="🔔 Notifications" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="notifCount" text="3" style="-fx-background-color: #C1272D; -fx-text-fill: white; -fx-padding: 4 10; -fx-background-radius: 12; -fx-font-size: 11px; -fx-font-weight: bold;"/>
+    </HBox>
+    
+    <Separator/>
+    
+    <!-- Liste des notifications -->
+    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-border-width: 0;" maxHeight="400">
+        <VBox fx:id="notificationsList" spacing="8">
+            
+            <!-- Notification 1 - Match à venir -->
+            <HBox spacing="12" style="-fx-background-color: #fef2f2; -fx-padding: 12; -fx-background-radius: 10; -fx-cursor: hand;">
+                <Label text="⚽" style="-fx-font-size: 24px;"/>
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="Match à venir" style="-fx-font-weight: bold; -fx-font-size: 13px; -fx-text-fill: #0f172a;"/>
+                    <Label text="Maroc vs Brésil - Demain 20h00" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+                    <Label text="Il y a 2 heures" style="-fx-font-size: 10px; -fx-text-fill: #94a3b8;"/>
+                </VBox>
+            </HBox>
+            
+            <!-- Notification 2 - Nouveau joueur -->
+            <HBox spacing="12" style="-fx-background-color: #f0fdf4; -fx-padding: 12; -fx-background-radius: 10; -fx-cursor: hand;">
+                <Label text="👤" style="-fx-font-size: 24px;"/>
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="Nouveau joueur ajouté" style="-fx-font-weight: bold; -fx-font-size: 13px; -fx-text-fill: #0f172a;"/>
+                    <Label text="Cristiano Ronaldo - Portugal" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+                    <Label text="Il y a 5 heures" style="-fx-font-size: 10px; -fx-text-fill: #94a3b8;"/>
+                </VBox>
+            </HBox>
+            
+            <!-- Notification 3 - Mise à jour -->
+            <HBox spacing="12" style="-fx-background-color: #eff6ff; -fx-padding: 12; -fx-background-radius: 10; -fx-cursor: hand;">
+                <Label text="📊" style="-fx-font-size: 24px;"/>
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="Statistiques mises à jour" style="-fx-font-weight: bold; -fx-font-size: 13px; -fx-text-fill: #0f172a;"/>
+                    <Label text="Classement des groupes actualisé" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+                    <Label text="Hier" style="-fx-font-size: 10px; -fx-text-fill: #94a3b8;"/>
+                </VBox>
+            </HBox>
+            
+        </VBox>
+    </ScrollPane>
+    
+    <Separator/>
+    
+    <!-- Footer -->
+    <Button text="Tout marquer comme lu" style="-fx-background-color: transparent; -fx-text-fill: #C1272D; -fx-font-weight: bold; -fx-cursor: hand; -fx-font-size: 13px;"/>
+    
+</VBox>

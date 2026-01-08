@@ -8,7 +8,7 @@
 
 <BorderPane fx:id="rootPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
             fx:controller="com.example.gestionmatch.controller.AdminDashboardController"
-            stylesheets="@../styles/dashboard.css"
+            stylesheets="@../styles/dashboard.css, @../styles/enhanced-dashboard.css"
             style="-fx-background-color: #f8fafc;">
 
     <!-- SIDEBAR ROUGE AVEC BOUTONS NOIRS -->
@@ -46,6 +46,17 @@
                 
                 <Button fx:id="btnMatchs" text="⚽  Matchs" onAction="#afficherMatchs" styleClass="sidebar-button"
                         style="-fx-background-color: transparent; -fx-text-fill: rgba(255,255,255,0.85); -fx-font-size: 14px; -fx-pref-width: 220; -fx-pref-height: 48; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 24; -fx-font-weight: 500;"/>
+                
+                <Label text="ANALYSES" style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px; -fx-font-weight: bold; -fx-padding: 20 12 12 12; -fx-letter-spacing: 2px;"/>
+                
+                <Button fx:id="btnStatistiques" text="📊  Statistiques" onAction="#afficherStatistiques" styleClass="sidebar-button"
+                        style="-fx-background-color: transparent; -fx-text-fill: rgba(255,255,255,0.85); -fx-font-size: 14px; -fx-pref-width: 220; -fx-pref-height: 48; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 24; -fx-font-weight: 500;"/>
+                
+                <Button fx:id="btnCalendrier" text="📅  Calendrier" onAction="#afficherCalendrier" styleClass="sidebar-button"
+                        style="-fx-background-color: transparent; -fx-text-fill: rgba(255,255,255,0.85); -fx-font-size: 14px; -fx-pref-width: 220; -fx-pref-height: 48; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 24; -fx-font-weight: 500;"/>
+                
+                <Button fx:id="btnComparaison" text="⚖️  Comparaison" onAction="#afficherComparaison" styleClass="sidebar-button"
+                        style="-fx-background-color: transparent; -fx-text-fill: rgba(255,255,255,0.85); -fx-font-size: 14px; -fx-pref-width: 220; -fx-pref-height: 48; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 24; -fx-font-weight: 500;"/>
             </VBox>
 
             <Region VBox.vgrow="ALWAYS"/>
@@ -70,6 +81,38 @@
                     <Label text="Vue d'ensemble - Coupe du Monde 2030" styleClass="page-subtitle" style="-fx-font-size: 14px;"/>
                 </VBox>
                 <Region HBox.hgrow="ALWAYS"/>
+                
+                <!-- Barre de recherche globale -->
+                <HBox alignment="CENTER" spacing="10" styleClass="global-search" style="-fx-pref-width: 300;">
+                    <Label text="🔍" style="-fx-font-size: 16px;"/>
+                    <TextField fx:id="globalSearchField" promptText="Rechercher... (Ctrl+K)" styleClass="text-field" style="-fx-pref-width: 240;"/>
+                    <Label text="⌘K" styleClass="notification-badge" style="-fx-font-size: 10px; -fx-padding: 2 6;"/>
+                </HBox>
+                
+                <!-- Centre de notifications -->
+                <Button fx:id="btnNotifications" text="🔔" onAction="#afficherNotifications" 
+                        style="-fx-background-color: white; -fx-background-radius: 12; -fx-pref-width: 48; -fx-pref-height: 48; -fx-font-size: 20px; -fx-cursor: hand; -fx-border-color: #e2e8f0; -fx-border-width: 2; -fx-border-radius: 12;">
+                    <graphic>
+                        <StackPane>
+                            <Label text="🔔" style="-fx-font-size: 20px;"/>
+                            <Label fx:id="notificationBadge" text="3" styleClass="notification-badge" 
+                                   style="-fx-translate-x: 12; -fx-translate-y: -12; -fx-min-width: 20; -fx-min-height: 20; -fx-alignment: center;"/>
+                        </StackPane>
+                    </graphic>
+                </Button>
+                
+                <!-- Menu profil -->
+                <HBox alignment="CENTER" spacing="10" styleClass="user-profile-menu">
+                    <StackPane styleClass="user-avatar" alignment="CENTER">
+                        <Label text="A" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+                    </StackPane>
+                    <VBox spacing="2">
+                        <Label text="Admin" style="-fx-font-size: 13px; -fx-font-weight: 600; -fx-text-fill: #0f172a;"/>
+                        <Label text="Administrateur" style="-fx-font-size: 11px; -fx-text-fill: #64748b;"/>
+                    </VBox>
+                    <Label text="▼" style="-fx-font-size: 10px; -fx-text-fill: #94a3b8;"/>
+                </HBox>
+                
                 <VBox alignment="CENTER_RIGHT" spacing="4">
                     <Label fx:id="dateLabel" text="7 Janvier 2026" style="-fx-text-fill: #475569; -fx-font-size: 14px; -fx-font-weight: 600;"/>
                     <Label fx:id="timeLabel" text="23:15" style="-fx-text-fill: #94a3b8; -fx-font-size: 13px;"/>

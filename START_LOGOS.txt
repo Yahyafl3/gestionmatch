@@ -1,0 +1,116 @@
+╔═══════════════════════════════════════════════════════════════╗
+║                                                               ║
+║  🏴 CHARGER LES LOGOS DES ÉQUIPES                            ║
+║                                                               ║
+║  ✅ SCRIPTS PRÊTS!                                           ║
+║                                                               ║
+╚═══════════════════════════════════════════════════════════════╝
+
+
+🚀 LANCE CE SCRIPT:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Windows:
+  Double-clic sur: appliquer_logos_equipes.cmd
+
+macOS/Linux:
+  Terminal: ./appliquer_logos_equipes.sh
+
+
+📋 CE QUE LE SCRIPT VA FAIRE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[1/3] Télécharger 35 drapeaux
+      ↓ Depuis flagcdn.com (haute qualité)
+      ↓ Format PNG 320px
+      ↓ Sauvegarde dans src/main/resources/images/equipes/
+
+[2/3] Mettre à jour la base de données
+      ↓ Associer chaque équipe à son drapeau
+      ↓ Colonne image_path mise à jour
+      ↓ Vérification automatique
+
+[3/3] Compiler le projet
+      ↓ mvn clean compile
+      ↓ Prêt à lancer!
+
+
+🏴 DRAPEAUX TÉLÉCHARGÉS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+35 pays de la Coupe du Monde:
+
+  🇲🇦 Maroc          🇧🇷 Brésil         🇵🇹 Portugal
+  🇩🇿 Algérie        🇫🇷 France         🇪🇸 Espagne
+  🇩🇪 Allemagne      🏴󠁧󠁢󠁥󠁮󠁧󠁿 Angleterre      🇦🇷 Argentine
+  🇧🇪 Belgique       🇳🇱 Pays-Bas       🇮🇹 Italie
+  🇭🇷 Croatie        🇺🇾 Uruguay        🇨🇭 Suisse
+  🇸🇳 Sénégal        🇨🇲 Cameroun       🇬🇭 Ghana
+  🇳🇬 Nigeria        🇹🇳 Tunisie        🇯🇵 Japon
+  🇰🇷 Corée du Sud   🇦🇺 Australie      🇺🇸 États-Unis
+  🇲🇽 Mexique        🇨🇦 Canada         🇨🇷 Costa Rica
+  🇪🇨 Équateur       🇶🇦 Qatar          🇮🇷 Iran
+  🇸🇦 Arabie S.      🇩🇰 Danemark       🇵🇱 Pologne
+  🇷🇸 Serbie         🏴󠁧󠁢󠁷󠁬󠁳󠁿 Pays de Galles
+
+
+📊 RÉSULTAT DANS LE TABLEAU:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+AVANT:
+  ┃ Maroc    │ Maroc     │ Walid Regragui    ┃
+  ┃ Brésil   │ Brésil    │ Tite              ┃
+  ┃ Portugal │ Portugal  │ Fernando Santos   ┃
+
+APRÈS:
+  ┃ 🇲🇦 Maroc  │ Maroc     │ Walid Regragui    ┃
+  ┃ 🇧🇷 Brésil │ Brésil    │ Tite              ┃
+  ┃ 🇵🇹 Portugal│ Portugal  │ Fernando Santos   ┃
+
+
+⏱️ DURÉE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Téléchargement: ~30 secondes
+  Base de données: ~5 secondes
+  Compilation: ~10 secondes
+  
+  TOTAL: ~45 secondes
+
+
+✅ APRÈS L'EXÉCUTION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Lance l'application:
+   mvn javafx:run
+
+2. Va dans "Équipes"
+
+3. Profite des logos! 🎉
+
+
+📚 DOCUMENTATION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📄 LIRE_MOI_LOGOS.txt          ← Résumé rapide
+📄 README_LOGOS_EQUIPES.md     ← Guide complet
+📄 GUIDE_LOGOS_EQUIPES.md      ← Documentation technique
+
+
+🔧 EN CAS DE PROBLÈME:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Consulte: GUIDE_LOGOS_EQUIPES.md
+Section "Dépannage"
+
+
+╔═══════════════════════════════════════════════════════════════╗
+║                                                               ║
+║  🎯 PRÊT À LANCER!                                           ║
+║                                                               ║
+║  Windows:    appliquer_logos_equipes.cmd                     ║
+║  macOS/Linux: ./appliquer_logos_equipes.sh                   ║
+║                                                               ║
+║  Bon test! 🚀                                                ║
+║                                                               ║
+╚═══════════════════════════════════════════════════════════════╝

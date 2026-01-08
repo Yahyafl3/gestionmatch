@@ -6,6 +6,7 @@
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.gestionmatch.controller.FormGroupeController"
+      stylesheets="@../styles/modern-management.css"
       spacing="25" style="-fx-padding: 35; -fx-background-color: #f8fafc;">
 
     <!-- TITRE -->

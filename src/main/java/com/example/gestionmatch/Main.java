@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Classe principale de l'application
+ * Classe principale de l'applicationa
  * Coupe du Monde 2030 - Gestion des Équipes et Matchs
  */
 public class Main extends Application {

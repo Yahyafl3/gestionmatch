@@ -11,6 +11,7 @@ public class Joueur {
     private String poste;
     private int numero;
     private int equipeId;
+    private String nationalite;
 
     // Constructeur vide
     public Joueur() {
@@ -18,7 +19,7 @@ public class Joueur {
 
     // Constructeur complet
     public Joueur(int id, String nom, String prenom, LocalDate dateNaissance,
-                  String poste, int numero, int equipeId) {
+                  String poste, int numero, int equipeId, String nationalite) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -26,17 +27,19 @@ public class Joueur {
         this.poste = poste;
         this.numero = numero;
         this.equipeId = equipeId;
+        this.nationalite = nationalite;
     }
 
     // Constructeur sans ID
     public Joueur(String nom, String prenom, LocalDate dateNaissance,
-                  String poste, int numero, int equipeId) {
+                  String poste, int numero, int equipeId, String nationalite) {
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = dateNaissance;
         this.poste = poste;
         this.numero = numero;
         this.equipeId = equipeId;
+        this.nationalite = nationalite;
     }
 
     // Getters et Setters
@@ -60,6 +63,9 @@ public class Joueur {
 
     public int getEquipeId() { return equipeId; }
     public void setEquipeId(int equipeId) { this.equipeId = equipeId; }
+
+    public String getNationalite() { return nationalite; }
+    public void setNationalite(String nationalite) { this.nationalite = nationalite; }
 
     public String getNomComplet() {
         return prenom + " " + nom;
