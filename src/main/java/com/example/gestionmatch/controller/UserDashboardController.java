@@ -206,10 +206,10 @@ public class UserDashboardController {
     @SuppressWarnings("unchecked")
     private void initTableEquipes() {
         if (tableEquipes != null) {
-            // Colonne Équipe avec drapeau
-            TableColumn<Equipe, String> colEquipe = new TableColumn<>("Équipe");
-            colEquipe.setPrefWidth(250);
-            colEquipe.setCellFactory(param -> new TableCell<>() {
+            // Colonne Pays avec drapeau (remplace la colonne Équipe)
+            TableColumn<Equipe, String> colPays = new TableColumn<>("Pays");
+            colPays.setPrefWidth(280);
+            colPays.setCellFactory(param -> new TableCell<>() {
                 @Override
                 protected void updateItem(String item, boolean empty) {
                     super.updateItem(item, empty);
@@ -224,10 +224,10 @@ public class UserDashboardController {
                         // Utiliser l'image du drapeau
                         javafx.scene.Node drapeau = getDrapeauImage(equipe.getPays(), 32, 24);
                         
-                        Label nom = new Label(equipe.getNom());
-                        nom.setStyle("-fx-font-size: 14px; -fx-font-weight: 600;");
+                        Label pays = new Label(equipe.getPays());
+                        pays.setStyle("-fx-font-size: 14px; -fx-font-weight: 600;");
                         
-                        box.getChildren().addAll(drapeau, nom);
+                        box.getChildren().addAll(drapeau, pays);
                         setGraphic(box);
                         setText(null);
                     }
@@ -243,7 +243,7 @@ public class UserDashboardController {
             colPoints.setPrefWidth(80);
             colPoints.setStyle("-fx-alignment: CENTER;");
 
-            tableEquipes.getColumns().addAll(colEquipe, colEntraineur, colPoints);
+            tableEquipes.getColumns().addAll(colPays, colEntraineur, colPoints);
         }
     }
 
@@ -358,10 +358,10 @@ public class UserDashboardController {
     @SuppressWarnings("unchecked")
     private void initTableFavoris() {
         if (tableFavoris != null) {
-            // Colonne Équipe avec drapeau
-            TableColumn<Equipe, String> colEquipe = new TableColumn<>("Équipe");
-            colEquipe.setPrefWidth(300);
-            colEquipe.setCellFactory(param -> new TableCell<>() {
+            // Colonne Pays avec drapeau (remplace la colonne Équipe)
+            TableColumn<Equipe, String> colPays = new TableColumn<>("Pays");
+            colPays.setPrefWidth(300);
+            colPays.setCellFactory(param -> new TableCell<>() {
                 @Override
                 protected void updateItem(String item, boolean empty) {
                     super.updateItem(item, empty);
@@ -376,10 +376,10 @@ public class UserDashboardController {
                         // Utiliser l'image du drapeau
                         javafx.scene.Node drapeau = getDrapeauImage(equipe.getPays(), 32, 24);
                         
-                        Label nom = new Label(equipe.getNom());
-                        nom.setStyle("-fx-font-size: 14px; -fx-font-weight: 600;");
+                        Label pays = new Label(equipe.getPays());
+                        pays.setStyle("-fx-font-size: 14px; -fx-font-weight: 600;");
                         
-                        box.getChildren().addAll(drapeau, nom);
+                        box.getChildren().addAll(drapeau, pays);
                         setGraphic(box);
                         setText(null);
                     }
@@ -403,7 +403,7 @@ public class UserDashboardController {
                 }
             });
 
-            tableFavoris.getColumns().addAll(colEquipe, colActions);
+            tableFavoris.getColumns().addAll(colPays, colActions);
         }
     }
 
@@ -526,6 +526,40 @@ public class UserDashboardController {
         if (pageTitle != null) pageTitle.setText("Mes Favoris");
         setActiveButton(btnFavoris);
         chargerFavoris();
+    }
+    
+    // ========================================
+    // MÉTHODES D'ACTUALISATION
+    // ========================================
+    
+    @FXML
+    private void actualiserJoueurs() {
+        chargerJoueurs();
+        showAlert(Alert.AlertType.INFORMATION, "Actualisation", "Liste des joueurs actualisée !");
+    }
+    
+    @FXML
+    private void actualiserEquipes() {
+        chargerEquipes();
+        showAlert(Alert.AlertType.INFORMATION, "Actualisation", "Liste des équipes actualisée !");
+    }
+    
+    @FXML
+    private void actualiserStades() {
+        chargerStades();
+        showAlert(Alert.AlertType.INFORMATION, "Actualisation", "Liste des stades actualisée !");
+    }
+    
+    @FXML
+    private void actualiserGroupes() {
+        chargerGroupes();
+        showAlert(Alert.AlertType.INFORMATION, "Actualisation", "Liste des groupes actualisée !");
+    }
+    
+    @FXML
+    private void actualiserMatchs() {
+        chargerMatchs();
+        showAlert(Alert.AlertType.INFORMATION, "Actualisation", "Liste des matchs actualisée !");
     }
 
     @FXML
@@ -1091,31 +1125,38 @@ public class UserDashboardController {
             return fallback;
         }
         
-        // Normaliser le nom du pays pour le nom de fichier
-        String nomFichier = getNomFichierDrapeau(pays);
-        String cheminImage = "/images/flags/" + nomFichier + ".png";
-        
+        // Chercher l'équipe par pays pour obtenir le chemin de l'image
         try {
-            // Essayer de charger l'image
-            javafx.scene.image.Image image = new javafx.scene.image.Image(
-                getClass().getResourceAsStream(cheminImage),
-                width, height, true, true
-            );
-            
-            if (!image.isError()) {
-                javafx.scene.image.ImageView imageView = new javafx.scene.image.ImageView(image);
-                imageView.setFitWidth(width);
-                imageView.setFitHeight(height);
-                imageView.setPreserveRatio(true);
-                imageView.setSmooth(true);
-                
-                // Ajouter un effet d'ombre pour un meilleur rendu
-                imageView.setStyle("-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 0, 1);");
-                
-                return imageView;
+            List<Equipe> equipes = equipeDAO.getAllEquipes();
+            for (Equipe equipe : equipes) {
+                if (equipe.getPays() != null && equipe.getPays().equalsIgnoreCase(pays.trim())) {
+                    if (equipe.getImagePath() != null && !equipe.getImagePath().isEmpty()) {
+                        String cheminImage = "/images/equipes/" + equipe.getImagePath();
+                        
+                        try {
+                            java.io.InputStream stream = getClass().getResourceAsStream(cheminImage);
+                            if (stream != null) {
+                                javafx.scene.image.Image image = new javafx.scene.image.Image(stream);
+                                
+                                if (!image.isError()) {
+                                    javafx.scene.image.ImageView imageView = new javafx.scene.image.ImageView(image);
+                                    imageView.setFitWidth(width);
+                                    imageView.setFitHeight(height);
+                                    imageView.setPreserveRatio(true);
+                                    imageView.setSmooth(true);
+                                    imageView.setStyle("-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 0, 1);");
+                                    return imageView;
+                                }
+                            }
+                        } catch (Exception e) {
+                            // Continuer vers le fallback
+                        }
+                    }
+                    break;
+                }
             }
         } catch (Exception e) {
-            System.err.println("⚠️ Image drapeau non trouvée pour " + pays + " (" + cheminImage + "), utilisation emoji");
+            System.err.println("⚠️ Erreur chargement drapeau pour " + pays + ": " + e.getMessage());
         }
         
         // Fallback vers emoji si image non disponible

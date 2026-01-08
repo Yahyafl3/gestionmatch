@@ -1,11 +1,8 @@
 package com.example.gestionmatch.controller;
 
 import java.time.LocalDate;
-import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.example.gestionmatch.dao.EquipeDAO;
@@ -15,306 +12,349 @@ import com.example.gestionmatch.model.Match;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.Priority;
 
 public class CalendarPageController {
 
-    @FXML private Label monthYearLabel;
-    @FXML private GridPane calendarGrid;
-    @FXML private VBox matchListContainer;
-    @FXML private Button btnPrevious;
-    @FXML private Button btnNext;
     @FXML private ScrollPane scrollPane;
+    @FXML private HBox groupsContainer;
+    @FXML private VBox matchScheduleContainer;
+    @FXML private VBox knockoutContainer;
 
     private final MatchDAO matchDAO = new MatchDAO();
     private final EquipeDAO equipeDAO = new EquipeDAO();
-    private YearMonth currentMonth;
-    private LocalDate selectedDate;
     private List<Match> allMatches;
+    private List<Equipe> allEquipes;
+
+    // Group colors matching World Cup style
+    private final Map<String, String> groupColors = Map.of(
+        "A", "#8B1C1C",
+        "B", "#C1272D",
+        "C", "#00A8E8",
+        "D", "#D4AF37",
+        "E", "#E91E63",
+        "F", "#4CAF50",
+        "G", "#00BCD4",
+        "H", "#FF9800"
+    );
 
     @FXML
     public void initialize() {
-        currentMonth = YearMonth.now();
-        selectedDate = LocalDate.now();
-        loadMatches();
-        updateCalendar();
+        loadData();
+        buildGroupsSection();
+        buildMatchSchedule();
+        buildKnockoutStage();
     }
 
-    private void loadMatches() {
+    private void loadData() {
         allMatches = matchDAO.getAllMatchs();
-        System.out.println("✅ " + allMatches.size() + " matchs chargés pour le calendrier");
+        allEquipes = equipeDAO.getAllEquipes();
+        System.out.println("✅ " + allMatches.size() + " matchs et " + allEquipes.size() + " équipes chargés");
     }
 
-    @FXML
-    private void previousMonth() {
-        currentMonth = currentMonth.minusMonths(1);
-        updateCalendar();
+    private void buildGroupsSection() {
+        groupsContainer.getChildren().clear();
+        
+        // Get all groups (A-H)
+        Map<String, List<Equipe>> equipesByGroup = allEquipes.stream()
+            .filter(e -> e.getGroupeLettre() != null && !e.getGroupeLettre().isEmpty())
+            .collect(Collectors.groupingBy(Equipe::getGroupeLettre));
+
+        // Sort groups alphabetically
+        List<String> sortedGroups = new ArrayList<>(equipesByGroup.keySet());
+        Collections.sort(sortedGroups);
+
+        for (String groupe : sortedGroups) {
+            VBox groupBox = createGroupBox(groupe, equipesByGroup.get(groupe));
+            groupsContainer.getChildren().add(groupBox);
+        }
     }
 
-    @FXML
-    private void nextMonth() {
-        currentMonth = currentMonth.plusMonths(1);
-        updateCalendar();
+    private VBox createGroupBox(String groupe, List<Equipe> equipes) {
+        VBox box = new VBox(5);
+        box.setAlignment(Pos.TOP_CENTER);
+        box.setStyle("-fx-background-color: white; -fx-padding: 8; -fx-background-radius: 6; " +
+                     "-fx-border-color: " + groupColors.getOrDefault(groupe, "#666666") + "; " +
+                     "-fx-border-width: 2; -fx-border-radius: 6; -fx-min-width: 120; -fx-max-width: 120;");
+
+        // Group header
+        Label groupLabel = new Label("Groupe " + groupe);
+        groupLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: 700; -fx-text-fill: white; " +
+                           "-fx-background-color: " + groupColors.getOrDefault(groupe, "#666666") + "; " +
+                           "-fx-padding: 6 12; -fx-background-radius: 4;");
+        box.getChildren().add(groupLabel);
+
+        // Teams list
+        for (Equipe equipe : equipes) {
+            HBox teamRow = new HBox(5);
+            teamRow.setAlignment(Pos.CENTER_LEFT);
+            teamRow.setStyle("-fx-padding: 3; -fx-background-color: #f8f9fa; -fx-background-radius: 3;");
+
+            // Flag
+            if (equipe.getImagePath() != null && !equipe.getImagePath().isEmpty()) {
+                try {
+                    String imagePath = "/images/equipes/" + equipe.getImagePath();
+                    java.io.InputStream stream = getClass().getResourceAsStream(imagePath);
+                    if (stream != null) {
+                        ImageView flag = new ImageView(new Image(stream));
+                        flag.setFitWidth(20);
+                        flag.setFitHeight(15);
+                        flag.setPreserveRatio(true);
+                        teamRow.getChildren().add(flag);
+                    }
+                } catch (Exception e) {
+                    // Ignore
+                }
+            }
+
+            // Team name
+            Label teamName = new Label(equipe.getNom());
+            teamName.setStyle("-fx-font-size: 10px; -fx-font-weight: 600; -fx-text-fill: #1a1a1a;");
+            teamName.setMaxWidth(85);
+            teamName.setWrapText(false);
+            teamRow.getChildren().add(teamName);
+
+            box.getChildren().add(teamRow);
+        }
+
+        return box;
     }
 
-    private void updateCalendar() {
-        // Update month/year label
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy", Locale.FRENCH);
-        monthYearLabel.setText(currentMonth.format(formatter));
-
-        // Clear calendar grid (keep header row)
-        calendarGrid.getChildren().removeIf(node -> GridPane.getRowIndex(node) != null && GridPane.getRowIndex(node) > 0);
-
-        // Get first day of month and number of days
-        LocalDate firstDay = currentMonth.atDay(1);
-        int daysInMonth = currentMonth.lengthOfMonth();
-        int startDayOfWeek = firstDay.getDayOfWeek().getValue(); // 1=Monday, 7=Sunday
+    private void buildMatchSchedule() {
+        matchScheduleContainer.getChildren().clear();
 
         // Group matches by date
         Map<LocalDate, List<Match>> matchesByDate = allMatches.stream()
             .filter(m -> m.getDateMatch() != null)
-            .filter(m -> YearMonth.from(m.getDateMatch()).equals(currentMonth))
             .collect(Collectors.groupingBy(Match::getDateMatch));
 
-        // Fill calendar
-        int row = 1;
-        int col = startDayOfWeek - 1; // Start from correct day
+        // Sort dates
+        List<LocalDate> sortedDates = new ArrayList<>(matchesByDate.keySet());
+        Collections.sort(sortedDates);
 
-        for (int day = 1; day <= daysInMonth; day++) {
-            LocalDate date = currentMonth.atDay(day);
-            List<Match> dayMatches = matchesByDate.get(date);
-            int matchCount = dayMatches != null ? dayMatches.size() : 0;
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMMM", Locale.FRENCH);
 
-            VBox dayCell = createDayCell(day, date, matchCount);
-            calendarGrid.add(dayCell, col, row);
+        // Create a grid-like layout for matches
+        VBox scheduleGrid = new VBox(12);
+        scheduleGrid.setStyle("-fx-background-color: #8B1C1C; -fx-padding: 20; -fx-background-radius: 8;");
 
-            col++;
-            if (col > 6) {
-                col = 0;
-                row++;
+        for (LocalDate date : sortedDates) {
+            VBox dateColumn = new VBox(10);
+            dateColumn.setStyle("-fx-background-color: rgba(255,255,255,0.1); -fx-padding: 12; -fx-background-radius: 6;");
+
+            // Date header
+            Label dateLabel = new Label(date.format(dateFormatter));
+            dateLabel.setStyle("-fx-font-size: 15px; -fx-font-weight: 700; -fx-text-fill: white; " +
+                             "-fx-background-color: rgba(0,0,0,0.3); -fx-padding: 8 16; -fx-background-radius: 4;");
+            dateColumn.getChildren().add(dateLabel);
+
+            // Matches for this date in a horizontal flow
+            HBox matchesRow = new HBox(12);
+            matchesRow.setAlignment(Pos.CENTER_LEFT);
+
+            for (Match match : matchesByDate.get(date)) {
+                VBox matchBox = createScheduleMatchBox(match);
+                matchesRow.getChildren().add(matchBox);
             }
+
+            dateColumn.getChildren().add(matchesRow);
+            scheduleGrid.getChildren().add(dateColumn);
         }
 
-        // Update match list for selected date
-        updateMatchList(selectedDate);
+        matchScheduleContainer.getChildren().add(scheduleGrid);
     }
 
-    private VBox createDayCell(int day, LocalDate date, int matchCount) {
-        VBox cell = new VBox(6);
-        cell.setAlignment(Pos.CENTER);
-        cell.setPrefWidth(120);
-        cell.setPrefHeight(110);
-
-        // Determine cell style based on date
-        String style;
-        if (date.equals(LocalDate.now())) {
-            // Today - red background
-            style = "-fx-background-color: #C1272D; -fx-padding: 18; -fx-background-radius: 10; -fx-cursor: hand;";
-        } else if (matchCount > 0) {
-            // Has matches - colored based on status
-            LocalDate today = LocalDate.now();
-            if (date.isBefore(today)) {
-                // Past - green
-                style = "-fx-background-color: #f0fdf4; -fx-padding: 18; -fx-background-radius: 10; -fx-border-color: #10b981; -fx-border-width: 2; -fx-border-radius: 10; -fx-cursor: hand;";
-            } else {
-                // Future - blue
-                style = "-fx-background-color: #eff6ff; -fx-padding: 18; -fx-background-radius: 10; -fx-border-color: #3b82f6; -fx-border-width: 2; -fx-border-radius: 10; -fx-cursor: hand;";
-            }
-        } else {
-            // No matches - gray
-            style = "-fx-background-color: #f8f9fa; -fx-padding: 18; -fx-background-radius: 10; -fx-cursor: hand; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 10;";
-        }
-        cell.setStyle(style);
-
-        // Day number
-        Label dayLabel = new Label(String.valueOf(day));
-        if (date.equals(LocalDate.now())) {
-            dayLabel.setStyle("-fx-font-size: 26px; -fx-font-weight: 700; -fx-text-fill: white;");
-        } else {
-            dayLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: 700; -fx-text-fill: " + 
-                (matchCount > 0 ? "#1a1a1a" : "#666666") + ";");
-        }
-        cell.getChildren().add(dayLabel);
-
-        // Today indicator or match indicator
-        if (date.equals(LocalDate.now())) {
-            Label todayLabel = new Label("Aujourd'hui");
-            todayLabel.setStyle("-fx-font-size: 11px; -fx-text-fill: rgba(255,255,255,0.95); -fx-font-weight: 600;");
-            cell.getChildren().add(todayLabel);
-        } else if (matchCount > 0) {
-            Label indicator = new Label("●");
-            LocalDate today = LocalDate.now();
-            String color = date.isBefore(today) ? "#10b981" : "#3b82f6";
-            indicator.setStyle("-fx-text-fill: " + color + "; -fx-font-size: 14px;");
-            cell.getChildren().add(indicator);
-
-            Label matchLabel = new Label(matchCount + " match" + (matchCount > 1 ? "s" : ""));
-            matchLabel.setStyle("-fx-font-size: 11px; -fx-text-fill: #666666; -fx-font-weight: 600;");
-            cell.getChildren().add(matchLabel);
-        }
-
-        // Click handler
-        cell.setOnMouseClicked(e -> {
-            selectedDate = date;
-            updateMatchList(date);
-        });
-
-        return cell;
-    }
-
-    private void updateMatchList(LocalDate date) {
-        matchListContainer.getChildren().clear();
-
-        // Title
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.FRENCH);
-        Label title = new Label("Matchs du " + date.format(formatter));
-        title.setStyle("-fx-font-size: 20px; -fx-font-weight: 700; -fx-text-fill: #1a1a1a;");
-        matchListContainer.getChildren().add(title);
-
-        // Separator
-        javafx.scene.control.Separator separator = new javafx.scene.control.Separator();
-        separator.setStyle("-fx-background-color: #e0e0e0;");
-        matchListContainer.getChildren().add(separator);
-
-        // Get matches for this date
-        List<Match> dayMatches = allMatches.stream()
-            .filter(m -> m.getDateMatch() != null && m.getDateMatch().equals(date))
-            .collect(Collectors.toList());
-
-        if (dayMatches.isEmpty()) {
-            Label noMatch = new Label("Aucun match prévu ce jour");
-            noMatch.setStyle("-fx-font-size: 14px; -fx-text-fill: #666666; -fx-padding: 20;");
-            matchListContainer.getChildren().add(noMatch);
-        } else {
-            for (Match match : dayMatches) {
-                HBox matchBox = createMatchBox(match);
-                matchListContainer.getChildren().add(matchBox);
-            }
-        }
-    }
-
-    private HBox createMatchBox(Match match) {
-        HBox box = new HBox(30);
+    private VBox createScheduleMatchBox(Match match) {
+        VBox box = new VBox(8);
         box.setAlignment(Pos.CENTER);
-        box.setStyle("-fx-background-color: #f8f9fa; -fx-padding: 24; -fx-background-radius: 10;");
+        box.setStyle("-fx-background-color: white; -fx-padding: 16; -fx-background-radius: 6; -fx-min-width: 200; -fx-min-height: 140;");
 
-        // Parse team names
-        String nomMatch = match.getNom();
+        // Parse teams
         String equipeA = match.getEquipeA();
         String equipeB = match.getEquipeB();
 
-        // If equipeA/B are null, try to parse from match name
-        if ((equipeA == null || equipeA.isEmpty()) && nomMatch != null && nomMatch.contains(" vs ")) {
-            String[] teams = nomMatch.split(" vs ");
+        if ((equipeA == null || equipeA.isEmpty()) && match.getNom() != null && match.getNom().contains(" vs ")) {
+            String[] teams = match.getNom().split(" vs ");
             if (teams.length == 2) {
                 equipeA = teams[0].trim();
                 equipeB = teams[1].trim();
             }
         }
 
-        // Team A
-        VBox teamABox = new VBox(6);
-        teamABox.setAlignment(Pos.CENTER);
-        HBox.setHgrow(teamABox, javafx.scene.layout.Priority.ALWAYS);
+        // Get group color for this match
+        Equipe eq = equipeDAO.getEquipeByNom(equipeA);
+        String groupeLetter = (eq != null && eq.getGroupeLettre() != null) ? eq.getGroupeLettre() : "A";
+        String matchColor = groupColors.getOrDefault(groupeLetter, "#666666");
 
-        if (equipeA != null && !equipeA.isEmpty()) {
-            Equipe equipe = equipeDAO.getEquipeByNom(equipeA);
-            if (equipe != null && equipe.getImagePath() != null && !equipe.getImagePath().isEmpty()) {
-                try {
-                    String imagePath = "/images/equipes/" + equipe.getImagePath();
-                    java.io.InputStream stream = getClass().getResourceAsStream(imagePath);
-                    if (stream != null) {
-                        ImageView flag = new ImageView(new Image(stream));
-                        flag.setFitWidth(40);
-                        flag.setFitHeight(30);
-                        flag.setPreserveRatio(true);
-                        teamABox.getChildren().add(flag);
-                    }
-                } catch (Exception e) {
-                    // Ignore
-                }
-            }
+        // Team A with flag
+        HBox teamABox = createCompactTeamRow(equipeA, matchColor);
+        box.getChildren().add(teamABox);
 
-            Label nameA = new Label(equipeA);
-            nameA.setStyle("-fx-font-weight: 700; -fx-font-size: 18px; -fx-text-fill: #1a1a1a;");
-            teamABox.getChildren().add(nameA);
-
-            if (equipe != null) {
-                Label groupeA = new Label("Groupe " + (equipe.getGroupeLettre() != null ? equipe.getGroupeLettre() : "?"));
-                groupeA.setStyle("-fx-font-size: 13px; -fx-text-fill: #666666; -fx-font-weight: 500;");
-                teamABox.getChildren().add(groupeA);
-            }
-        }
-
-        // VS section
-        VBox vsBox = new VBox(6);
-        vsBox.setAlignment(Pos.CENTER);
-
+        // VS
         Label vsLabel = new Label("VS");
-        vsLabel.setStyle("-fx-font-size: 22px; -fx-font-weight: 700; -fx-text-fill: #C1272D;");
-        vsBox.getChildren().add(vsLabel);
+        vsLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: 700; -fx-text-fill: #C1272D;");
+        box.getChildren().add(vsLabel);
 
-        // Time (if available in score field or default)
+        // Team B with flag
+        HBox teamBBox = createCompactTeamRow(equipeB, matchColor);
+        box.getChildren().add(teamBBox);
+
+        // Time
         String time = match.getScore() != null && !match.getScore().equals("-") ? match.getScore() : "20:00";
         Label timeLabel = new Label(time);
-        timeLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #666666; -fx-font-weight: 600;");
-        vsBox.getChildren().add(timeLabel);
+        timeLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #1a1a1a; -fx-font-weight: 700;");
+        box.getChildren().add(timeLabel);
 
-        // Team B
-        VBox teamBBox = new VBox(6);
-        teamBBox.setAlignment(Pos.CENTER);
-        HBox.setHgrow(teamBBox, javafx.scene.layout.Priority.ALWAYS);
+        // Stadium
+        if (match.getLieu() != null && !match.getLieu().isEmpty()) {
+            String stadium = match.getLieu().length() > 20 ? match.getLieu().substring(0, 20) + "..." : match.getLieu();
+            Label stadiumLabel = new Label(stadium);
+            stadiumLabel.setStyle("-fx-font-size: 11px; -fx-text-fill: #666666; -fx-font-weight: 600;");
+            box.getChildren().add(stadiumLabel);
+        }
 
-        if (equipeB != null && !equipeB.isEmpty()) {
-            Equipe equipe = equipeDAO.getEquipeByNom(equipeB);
+        return box;
+    }
+
+    private HBox createCompactTeamRow(String teamName, String color) {
+        HBox row = new HBox(6);
+        row.setAlignment(Pos.CENTER);
+        row.setStyle("-fx-background-color: " + color + "; -fx-padding: 6 12; -fx-background-radius: 4;");
+
+        if (teamName != null && !teamName.isEmpty()) {
+            Equipe equipe = equipeDAO.getEquipeByNom(teamName);
+            
+            // Flag
             if (equipe != null && equipe.getImagePath() != null && !equipe.getImagePath().isEmpty()) {
                 try {
                     String imagePath = "/images/equipes/" + equipe.getImagePath();
                     java.io.InputStream stream = getClass().getResourceAsStream(imagePath);
                     if (stream != null) {
                         ImageView flag = new ImageView(new Image(stream));
-                        flag.setFitWidth(40);
-                        flag.setFitHeight(30);
+                        flag.setFitWidth(24);
+                        flag.setFitHeight(18);
                         flag.setPreserveRatio(true);
-                        teamBBox.getChildren().add(flag);
+                        row.getChildren().add(flag);
                     }
                 } catch (Exception e) {
                     // Ignore
                 }
             }
 
-            Label nameB = new Label(equipeB);
-            nameB.setStyle("-fx-font-weight: 700; -fx-font-size: 18px; -fx-text-fill: #1a1a1a;");
-            teamBBox.getChildren().add(nameB);
-
-            if (equipe != null) {
-                Label groupeB = new Label("Groupe " + (equipe.getGroupeLettre() != null ? equipe.getGroupeLettre() : "?"));
-                groupeB.setStyle("-fx-font-size: 13px; -fx-text-fill: #666666; -fx-font-weight: 500;");
-                teamBBox.getChildren().add(groupeB);
-            }
+            // Team name
+            String displayName = teamName.length() > 12 ? teamName.substring(0, 12) : teamName;
+            Label name = new Label(displayName);
+            name.setStyle("-fx-font-size: 12px; -fx-font-weight: 700; -fx-text-fill: white;");
+            row.getChildren().add(name);
         }
 
-        // Stadium info
-        VBox stadiumBox = new VBox(8);
-        stadiumBox.setAlignment(Pos.CENTER_RIGHT);
+        return row;
+    }
 
-        String stadium = match.getLieu() != null && !match.getLieu().isEmpty() ? match.getLieu() : "Stade à définir";
-        Label stadiumLabel = new Label(stadium);
-        stadiumLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #666666; -fx-font-weight: 500;");
-        stadiumBox.getChildren().add(stadiumLabel);
+    private void buildKnockoutStage() {
+        knockoutContainer.getChildren().clear();
+        knockoutContainer.setAlignment(Pos.CENTER);
 
-        Button detailsBtn = new Button("Voir Détails");
-        detailsBtn.setStyle("-fx-background-color: #C1272D; -fx-text-fill: white; -fx-padding: 10 24; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-size: 14px; -fx-font-weight: 700;");
-        stadiumBox.getChildren().add(detailsBtn);
+        // Create bracket layout
+        HBox bracketLayout = new HBox(40);
+        bracketLayout.setAlignment(Pos.CENTER);
+        bracketLayout.setStyle("-fx-padding: 30;");
 
-        box.getChildren().addAll(teamABox, vsBox, teamBBox, stadiumBox);
+        // Round of 16 (Left side)
+        VBox round16Left = createKnockoutRound("Huitièmes de finale", 4, true);
+        
+        // Quarter finals (Left side)
+        VBox quarterLeft = createKnockoutRound("Quarts de finale", 2, true);
+        
+        // Semi finals
+        VBox semiFinals = createKnockoutRound("Demi-finales", 2, false);
+        
+        // Final
+        VBox finalMatch = createFinalSection();
+        
+        // Quarter finals (Right side)
+        VBox quarterRight = createKnockoutRound("Quarts de finale", 2, true);
+        
+        // Round of 16 (Right side)
+        VBox round16Right = createKnockoutRound("Huitièmes de finale", 4, true);
+
+        bracketLayout.getChildren().addAll(round16Left, quarterLeft, semiFinals, finalMatch, quarterRight, round16Right);
+        knockoutContainer.getChildren().add(bracketLayout);
+    }
+
+    private VBox createKnockoutRound(String roundName, int matchCount, boolean showLabel) {
+        VBox round = new VBox(15);
+        round.setAlignment(Pos.CENTER);
+
+        if (showLabel) {
+            Label label = new Label(roundName);
+            label.setStyle("-fx-font-size: 12px; -fx-font-weight: 700; -fx-text-fill: #FFD700; -fx-padding: 5;");
+            round.getChildren().add(label);
+        }
+
+        for (int i = 0; i < matchCount; i++) {
+            VBox matchBox = createKnockoutMatchBox("1er Groupe ?", "2ème Groupe ?");
+            round.getChildren().add(matchBox);
+        }
+
+        return round;
+    }
+
+    private VBox createKnockoutMatchBox(String team1, String team2) {
+        VBox box = new VBox(3);
+        box.setStyle("-fx-background-color: white; -fx-padding: 8; -fx-background-radius: 4; -fx-min-width: 140;");
+
+        // Team 1
+        Label t1 = new Label(team1);
+        t1.setStyle("-fx-font-size: 10px; -fx-font-weight: 600; -fx-text-fill: #1a1a1a; " +
+                   "-fx-background-color: #f0f0f0; -fx-padding: 4 8; -fx-background-radius: 2;");
+        box.getChildren().add(t1);
+
+        // VS
+        Label vs = new Label("vs");
+        vs.setStyle("-fx-font-size: 9px; -fx-text-fill: #999999; -fx-alignment: center;");
+        box.getChildren().add(vs);
+
+        // Team 2
+        Label t2 = new Label(team2);
+        t2.setStyle("-fx-font-size: 10px; -fx-font-weight: 600; -fx-text-fill: #1a1a1a; " +
+                   "-fx-background-color: #f0f0f0; -fx-padding: 4 8; -fx-background-radius: 2;");
+        box.getChildren().add(t2);
+
         return box;
+    }
+
+    private VBox createFinalSection() {
+        VBox section = new VBox(15);
+        section.setAlignment(Pos.CENTER);
+        section.setStyle("-fx-padding: 20;");
+
+        // Trophy icon (using text)
+        Label trophy = new Label("🏆");
+        trophy.setStyle("-fx-font-size: 40px;");
+        section.getChildren().add(trophy);
+
+        // Final label
+        Label finalLabel = new Label("FINALE");
+        finalLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #FFD700; " +
+                          "-fx-background-color: rgba(0,0,0,0.3); -fx-padding: 8 20; -fx-background-radius: 6;");
+        section.getChildren().add(finalLabel);
+
+        // Final match
+        VBox finalMatch = createKnockoutMatchBox("Vainqueur DF1", "Vainqueur DF2");
+        section.getChildren().add(finalMatch);
+
+        // Date placeholder
+        Label dateLabel = new Label("Dimanche 21 décembre");
+        dateLabel.setStyle("-fx-font-size: 11px; -fx-text-fill: rgba(255,255,255,0.8); -fx-font-weight: 600;");
+        section.getChildren().add(dateLabel);
+
+        return section;
     }
 }

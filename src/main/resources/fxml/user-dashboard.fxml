@@ -53,13 +53,7 @@
                 
                 <Label text="ANALYSES" style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px; -fx-font-weight: bold; -fx-padding: 20 10 5 10;"/>
                 
-                <Button fx:id="btnStatistiques" text="📊  Statistiques" onAction="#afficherStatistiques" 
-                        style="-fx-background-color: #000000; -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 4);"/>
-                
                 <Button fx:id="btnCalendrier" text="📅  Calendrier" onAction="#afficherCalendrier" 
-                        style="-fx-background-color: #000000; -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 4);"/>
-                
-                <Button fx:id="btnComparaison" text="⚖️  Comparaison" onAction="#afficherComparaison" 
                         style="-fx-background-color: #000000; -fx-text-fill: white; -fx-font-size: 14px; -fx-pref-width: 190; -fx-pref-height: 45; -fx-background-radius: 12; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-padding: 0 0 0 15; -fx-font-weight: 600; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 4);"/>
             </VBox>
 
@@ -165,6 +159,9 @@
                             <TextField fx:id="searchJoueur" promptText="🔍 Rechercher un joueur..." style="-fx-pref-width: 300; -fx-pref-height: 40; -fx-font-size: 14px; -fx-background-radius: 8;"/>
                             <ComboBox fx:id="filterEquipeJoueur" promptText="Filtrer par équipe" style="-fx-pref-width: 200; -fx-cursor: hand;"/>
                             <ComboBox fx:id="filterPosteJoueur" promptText="Filtrer par poste" style="-fx-pref-width: 200; -fx-cursor: hand;"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button text="🔄 Actualiser" onAction="#actualiserJoueurs" 
+                                    style="-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-weight: 600;"/>
                         </HBox>
                         <TableView fx:id="tableJoueurs" VBox.vgrow="ALWAYS"/>
                     </VBox>
@@ -174,6 +171,9 @@
                         <HBox spacing="15" alignment="CENTER_LEFT">
                             <TextField fx:id="searchEquipe" promptText="🔍 Rechercher une équipe..." style="-fx-pref-width: 300; -fx-pref-height: 40; -fx-font-size: 14px;"/>
                             <ComboBox fx:id="filterGroupeEquipe" promptText="Filtrer par groupe" style="-fx-pref-width: 200; -fx-cursor: hand;"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button text="🔄 Actualiser" onAction="#actualiserEquipes" 
+                                    style="-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-weight: 600;"/>
                         </HBox>
                         <TableView fx:id="tableEquipes" VBox.vgrow="ALWAYS"/>
                     </VBox>
@@ -183,12 +183,19 @@
                         <HBox spacing="15" alignment="CENTER_LEFT">
                             <TextField fx:id="searchStade" promptText="🔍 Rechercher un stade..." style="-fx-pref-width: 300; -fx-pref-height: 40; -fx-font-size: 14px;"/>
                             <ComboBox fx:id="filterPaysStade" promptText="Filtrer par pays" style="-fx-pref-width: 200; -fx-cursor: hand;"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button text="🔄 Actualiser" onAction="#actualiserStades" 
+                                    style="-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-weight: 600;"/>
                         </HBox>
                         <TableView fx:id="tableStades" VBox.vgrow="ALWAYS"/>
                     </VBox>
 
                     <!-- VUE GROUPES -->
                     <VBox fx:id="groupesView" visible="false" spacing="25">
+                        <HBox spacing="15" alignment="CENTER_RIGHT">
+                            <Button text="🔄 Actualiser" onAction="#actualiserGroupes" 
+                                    style="-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-weight: 600;"/>
+                        </HBox>
                         <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
                             <VBox spacing="20" style="-fx-background-color: transparent;"/>
                         </ScrollPane>
@@ -200,6 +207,9 @@
                             <ComboBox fx:id="filterEquipeMatch" promptText="Filtrer par équipe" style="-fx-pref-width: 200; -fx-cursor: hand;"/>
                             <ComboBox fx:id="filterGroupeMatch" promptText="Filtrer par groupe" style="-fx-pref-width: 200; -fx-cursor: hand;"/>
                             <ComboBox fx:id="filterStadeMatch" promptText="Filtrer par stade" style="-fx-pref-width: 200; -fx-cursor: hand;"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button text="🔄 Actualiser" onAction="#actualiserMatchs" 
+                                    style="-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-weight: 600;"/>
                         </HBox>
                         <TableView fx:id="tableMatchs" VBox.vgrow="ALWAYS"/>
                     </VBox>

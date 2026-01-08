@@ -1,27 +1,23 @@
 package com.example.gestionmatch.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.example.gestionmatch.dao.EquipeDAO;
+import com.example.gestionmatch.dao.JoueurDAO;
 import com.example.gestionmatch.model.Equipe;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 @SuppressWarnings("unused")
 public class FormEquipeController {
 
-    @FXML private TextField nomField;
     @FXML private TextField paysField;
     @FXML private TextField entraineurField;
     @FXML private TextField nombreJoueursField;
@@ -32,26 +28,114 @@ public class FormEquipeController {
     @FXML private TextField butsMarquesField;
     @FXML private TextField butsEncaissesField;
     @FXML private TextField pointsField;
-    @FXML private TextField imagePathField;
     @FXML private ImageView imagePreview;
+    @FXML private Label drapeauInfoLabel;
+    @FXML private Label fichierSelectionneLabel;
 
     private final EquipeDAO equipeDAO = new EquipeDAO();
+    private final JoueurDAO joueurDAO = new JoueurDAO();
     private Equipe equipeModif;
     private Runnable onSaveCallback;
-    private File selectedImageFile;
+    private java.io.File fichierDrapeauSelectionne;
+    
+    // Mapping pays -> nom de fichier drapeau
+    private final Map<String, String> paysVersDrapeau = new HashMap<>();
     
     @FXML
     public void initialize() {
-        // Initialisation du contrôleur
+        // Initialiser le mapping pays -> drapeau
+        initializerPaysMapping();
+        
+        // Listener pour charger le drapeau automatiquement quand l'utilisateur tape
+        paysField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && !newValue.trim().isEmpty()) {
+                chargerDrapeauAutomatique(newValue.trim());
+            }
+        });
+    }
+    
+    private void initializerPaysMapping() {
+        paysVersDrapeau.put("Algérie", "algerie.png");
+        paysVersDrapeau.put("Allemagne", "allemagne.png");
+        paysVersDrapeau.put("Angleterre", "angleterre.png");
+        paysVersDrapeau.put("Arabie Saoudite", "arabie-saoudite.png");
+        paysVersDrapeau.put("Argentine", "argentine.png");
+        paysVersDrapeau.put("Australie", "australie.png");
+        paysVersDrapeau.put("Belgique", "belgique.png");
+        paysVersDrapeau.put("Brésil", "bresil.png");
+        paysVersDrapeau.put("Cameroun", "cameroun.png");
+        paysVersDrapeau.put("Canada", "canada.png");
+        paysVersDrapeau.put("Corée du Sud", "coree-sud.png");
+        paysVersDrapeau.put("Costa Rica", "costa-rica.png");
+        paysVersDrapeau.put("Croatie", "croatie.png");
+        paysVersDrapeau.put("Danemark", "danemark.png");
+        paysVersDrapeau.put("Équateur", "equateur.png");
+        paysVersDrapeau.put("Espagne", "espagne.png");
+        paysVersDrapeau.put("États-Unis", "etats-unis.png");
+        paysVersDrapeau.put("France", "france.png");
+        paysVersDrapeau.put("Ghana", "ghana.png");
+        paysVersDrapeau.put("Iran", "iran.png");
+        paysVersDrapeau.put("Italie", "italie.png");
+        paysVersDrapeau.put("Japon", "japon.png");
+        paysVersDrapeau.put("Maroc", "maroc.png");
+        paysVersDrapeau.put("Mexique", "mexique.png");
+        paysVersDrapeau.put("Nigeria", "nigeria.png");
+        paysVersDrapeau.put("Pays-Bas", "pays-bas.png");
+        paysVersDrapeau.put("Pérou", "perou.png");
+        paysVersDrapeau.put("Pologne", "pologne.png");
+        paysVersDrapeau.put("Portugal", "portugal.png");
+        paysVersDrapeau.put("Qatar", "qatar.png");
+        paysVersDrapeau.put("Sénégal", "senegal.png");
+        paysVersDrapeau.put("Serbie", "serbie.png");
+        paysVersDrapeau.put("Suisse", "suisse.png");
+        paysVersDrapeau.put("Tunisie", "tunisie.png");
+        paysVersDrapeau.put("Uruguay", "uruguay.png");
+    }
+    
+    private void chargerDrapeauAutomatique(String pays) {
+        String nomFichierDrapeau = paysVersDrapeau.get(pays);
+        if (nomFichierDrapeau != null) {
+            try {
+                String cheminComplet = "/images/equipes/" + nomFichierDrapeau;
+                java.io.InputStream stream = getClass().getResourceAsStream(cheminComplet);
+                if (stream != null) {
+                    Image image = new Image(stream);
+                    if (!image.isError()) {
+                        imagePreview.setImage(image);
+                        drapeauInfoLabel.setText("✅ Drapeau chargé: " + nomFichierDrapeau);
+                        drapeauInfoLabel.setStyle("-fx-text-fill: #10b981; -fx-font-size: 13px; -fx-font-weight: 600;");
+                        System.out.println("✅ Drapeau chargé: " + nomFichierDrapeau);
+                    } else {
+                        drapeauInfoLabel.setText("❌ Erreur de chargement du drapeau");
+                        drapeauInfoLabel.setStyle("-fx-text-fill: #ef4444; -fx-font-size: 13px;");
+                    }
+                } else {
+                    drapeauInfoLabel.setText("⚠️ Drapeau non trouvé pour: " + pays);
+                    drapeauInfoLabel.setStyle("-fx-text-fill: #f59e0b; -fx-font-size: 13px;");
+                    imagePreview.setImage(null);
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur chargement drapeau: " + e.getMessage());
+                drapeauInfoLabel.setText("❌ Erreur: " + e.getMessage());
+                drapeauInfoLabel.setStyle("-fx-text-fill: #ef4444; -fx-font-size: 13px;");
+            }
+        } else {
+            drapeauInfoLabel.setText("ℹ️ Tapez le nom exact du pays (ex: Maroc, France, Brésil)");
+            drapeauInfoLabel.setStyle("-fx-text-fill: #64748b; -fx-font-size: 13px;");
+            imagePreview.setImage(null);
+        }
     }
 
     public void setEquipe(Equipe equipe) {
         this.equipeModif = equipe;
         if (equipe != null) {
-            nomField.setText(equipe.getNom());
             paysField.setText(equipe.getPays());
             entraineurField.setText(equipe.getEntraineur());
-            nombreJoueursField.setText(String.valueOf(equipe.getNombreJoueurs()));
+            
+            // Compter le nombre réel de joueurs dans l'équipe
+            int nombreJoueursReel = joueurDAO.compterJoueursParEquipe(equipe.getId());
+            nombreJoueursField.setText(String.valueOf(nombreJoueursReel));
+            
             matchsJouesField.setText(String.valueOf(equipe.getMatchsJoues()));
             victoiresField.setText(String.valueOf(equipe.getVictoires()));
             nulsField.setText(String.valueOf(equipe.getNuls()));
@@ -60,48 +144,13 @@ public class FormEquipeController {
             butsEncaissesField.setText(String.valueOf(equipe.getButsEncaisses()));
             pointsField.setText(String.valueOf(equipe.getPoints()));
             
-            // Charger l'image si elle existe
-            if (equipe.getImagePath() != null && !equipe.getImagePath().isEmpty()) {
-                imagePathField.setText(equipe.getImagePath());
-                chargerApercu(equipe.getImagePath());
+            // Charger le drapeau si disponible
+            if (equipe.getPays() != null && !equipe.getPays().isEmpty()) {
+                chargerDrapeauAutomatique(equipe.getPays());
             }
-        }
-    }
-    
-    @FXML
-    private void choisirImage() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Sélectionner une image");
-        fileChooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif")
-        );
-        
-        Stage stage = (Stage) nomField.getScene().getWindow();
-        File file = fileChooser.showOpenDialog(stage);
-        
-        if (file != null) {
-            selectedImageFile = file;
-            imagePathField.setText(file.getName());
-            
-            // Afficher l'aperçu
-            try {
-                Image image = new Image(file.toURI().toString());
-                imagePreview.setImage(image);
-            } catch (Exception e) {
-                System.err.println("Erreur chargement aperçu: " + e.getMessage());
-            }
-        }
-    }
-    
-    private void chargerApercu(String imagePath) {
-        try {
-            String cheminComplet = "/images/equipes/" + imagePath;
-            Image image = new Image(getClass().getResourceAsStream(cheminComplet));
-            if (!image.isError()) {
-                imagePreview.setImage(image);
-            }
-        } catch (Exception e) {
-            System.err.println("Erreur chargement image: " + e.getMessage());
+        } else {
+            // Nouvelle équipe : 0 joueurs
+            nombreJoueursField.setText("0");
         }
     }
 
@@ -111,17 +160,30 @@ public class FormEquipeController {
 
     @FXML
     private void sauvegarder() {
-        String nom = nomField.getText().trim();
         String pays = paysField.getText().trim();
         String entraineur = entraineurField.getText().trim();
 
-        if (nom.isEmpty() || pays.isEmpty()) {
-            showAlert("Erreur", "Le nom et le pays sont obligatoires", Alert.AlertType.ERROR);
+        if (pays.isEmpty()) {
+            showAlert("Erreur", "Le pays est obligatoire", Alert.AlertType.ERROR);
             return;
         }
 
+        // Le nom de l'équipe est le même que le pays
+        String nom = pays;
+
         // Récupérer les valeurs numériques avec valeurs par défaut
         int nombreJoueurs = parseIntOrDefault(nombreJoueursField.getText(), 0);
+        
+        // VALIDATION: Vérifier que le nombre de joueurs ne dépasse pas 26
+        if (nombreJoueurs > 26) {
+            showAlert("Erreur", 
+                "❌ Le nombre de joueurs ne peut pas dépasser 26.\n\n" +
+                "⚠️ Une équipe nationale peut avoir maximum 26 joueurs.\n\n" +
+                "Veuillez entrer un nombre entre 0 et 26.", 
+                Alert.AlertType.ERROR);
+            return;
+        }
+        
         int matchsJoues = parseIntOrDefault(matchsJouesField.getText(), 0);
         int victoires = parseIntOrDefault(victoiresField.getText(), 0);
         int nuls = parseIntOrDefault(nulsField.getText(), 0);
@@ -133,8 +195,42 @@ public class FormEquipeController {
         boolean success;
         String imagePath = null;
         
+        // Si un fichier a été sélectionné manuellement, le copier
+        if (fichierDrapeauSelectionne != null) {
+            try {
+                // Créer le nom de fichier basé sur le pays
+                String extension = fichierDrapeauSelectionne.getName().substring(
+                    fichierDrapeauSelectionne.getName().lastIndexOf("."));
+                String nomFichier = pays.toLowerCase().replace(" ", "-").replace("é", "e")
+                    .replace("è", "e").replace("ê", "e").replace("à", "a") + extension;
+                
+                // Copier le fichier dans resources/images/equipes/
+                java.nio.file.Path source = fichierDrapeauSelectionne.toPath();
+                java.nio.file.Path destination = java.nio.file.Paths.get(
+                    "src/main/resources/images/equipes/" + nomFichier);
+                
+                // Créer le dossier si nécessaire
+                java.nio.file.Files.createDirectories(destination.getParent());
+                
+                // Copier le fichier
+                java.nio.file.Files.copy(source, destination, 
+                    java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                
+                imagePath = nomFichier;
+                System.out.println("✅ Drapeau copié: " + nomFichier);
+                
+            } catch (Exception e) {
+                System.err.println("❌ Erreur copie drapeau: " + e.getMessage());
+                showAlert("Avertissement", "Le drapeau n'a pas pu être copié: " + e.getMessage(), 
+                    Alert.AlertType.WARNING);
+            }
+        } else {
+            // Utiliser le drapeau automatique
+            imagePath = paysVersDrapeau.get(pays);
+        }
+        
         if (equipeModif == null) {
-            // Créer l'équipe sans l'image d'abord
+            // Créer nouvelle équipe
             Equipe nouvelleEquipe = new Equipe(nom, pays, entraineur);
             nouvelleEquipe.setNombreJoueurs(nombreJoueurs);
             nouvelleEquipe.setMatchsJoues(matchsJoues);
@@ -144,21 +240,11 @@ public class FormEquipeController {
             nouvelleEquipe.setButsMarques(butsMarques);
             nouvelleEquipe.setButsEncaisses(butsEncaisses);
             nouvelleEquipe.setPoints(points);
+            nouvelleEquipe.setImagePath(imagePath);
             
-            // Sauvegarder l'image SEULEMENT si on a sélectionné un fichier
-            if (selectedImageFile != null) {
-                imagePath = sauvegarderImage(selectedImageFile, nom);
-                nouvelleEquipe.setImagePath(imagePath);
-            }
-            
-            // Essayer d'ajouter l'équipe dans la BD
             success = equipeDAO.ajouterEquipe(nouvelleEquipe);
-            
-            // Si échec et qu'on a sauvegardé une image, la supprimer
-            if (!success && imagePath != null) {
-                supprimerImage(imagePath);
-            }
         } else {
+            // Modifier équipe existante
             equipeModif.setNom(nom);
             equipeModif.setPays(pays);
             equipeModif.setEntraineur(entraineur);
@@ -170,12 +256,7 @@ public class FormEquipeController {
             equipeModif.setButsMarques(butsMarques);
             equipeModif.setButsEncaisses(butsEncaisses);
             equipeModif.setPoints(points);
-            
-            // Sauvegarder l'image si sélectionnée
-            if (selectedImageFile != null) {
-                imagePath = sauvegarderImage(selectedImageFile, nom);
-                equipeModif.setImagePath(imagePath);
-            }
+            equipeModif.setImagePath(imagePath);
             
             success = equipeDAO.modifierEquipe(equipeModif);
         }
@@ -196,74 +277,41 @@ public class FormEquipeController {
             return defaultValue;
         }
     }
-    
-    private String sauvegarderImage(File imageFile, String nomEquipe) {
-        try {
-            // Normaliser le nom de l'équipe pour le nom de fichier
-            String nomFichier = nomEquipe.toLowerCase()
-                .replace(" ", "_")
-                .replace("é", "e")
-                .replace("è", "e")
-                .replace("ê", "e")
-                .replace("à", "a")
-                .replace("ô", "o")
-                .replace("ù", "u")
-                .replace("ç", "c");
-            
-            // Obtenir l'extension du fichier
-            String extension = "";
-            String fileName = imageFile.getName();
-            int dotIndex = fileName.lastIndexOf('.');
-            if (dotIndex > 0) {
-                extension = fileName.substring(dotIndex);
-            }
-            
-            String nomFichierFinal = nomFichier + extension;
-            
-            // Sauvegarder dans src/main/resources/images/equipes (pour le développement)
-            Path destinationSrc = Paths.get("src/main/resources/images/equipes");
-            if (!Files.exists(destinationSrc)) {
-                Files.createDirectories(destinationSrc);
-            }
-            Path fichierSrc = destinationSrc.resolve(nomFichierFinal);
-            Files.copy(imageFile.toPath(), fichierSrc, StandardCopyOption.REPLACE_EXISTING);
-            System.out.println("✅ Image sauvegardée (src): " + nomFichierFinal);
-            
-            // Sauvegarder aussi dans target/classes/images/equipes (pour l'exécution)
-            Path destinationTarget = Paths.get("target/classes/images/equipes");
-            if (!Files.exists(destinationTarget)) {
-                Files.createDirectories(destinationTarget);
-            }
-            Path fichierTarget = destinationTarget.resolve(nomFichierFinal);
-            Files.copy(imageFile.toPath(), fichierTarget, StandardCopyOption.REPLACE_EXISTING);
-            System.out.println("✅ Image sauvegardée (target): " + nomFichierFinal);
-            
-            return nomFichierFinal;
-            
-        } catch (IOException e) {
-            System.err.println("❌ Erreur sauvegarde image: " + e.getMessage());
-            e.printStackTrace();
-            return null;
+
+    @FXML
+    private void parcourirDrapeau() {
+        javafx.stage.FileChooser fileChooser = new javafx.stage.FileChooser();
+        fileChooser.setTitle("Sélectionner un drapeau");
+        fileChooser.getExtensionFilters().addAll(
+            new javafx.stage.FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif"),
+            new javafx.stage.FileChooser.ExtensionFilter("Tous les fichiers", "*.*")
+        );
+        
+        // Ouvrir le dossier Images par défaut
+        String userHome = System.getProperty("user.home");
+        java.io.File initialDir = new java.io.File(userHome, "Pictures");
+        if (!initialDir.exists()) {
+            initialDir = new java.io.File(userHome);
         }
-    }
-    
-    private void supprimerImage(String imagePath) {
-        try {
-            // Supprimer de src/main/resources/images/equipes
-            Path cheminImageSrc = Paths.get("src/main/resources/images/equipes", imagePath);
-            if (Files.exists(cheminImageSrc)) {
-                Files.delete(cheminImageSrc);
-                System.out.println("🗑️ Image supprimée (src): " + imagePath);
-            }
+        fileChooser.setInitialDirectory(initialDir);
+        
+        Stage stage = (Stage) paysField.getScene().getWindow();
+        java.io.File fichier = fileChooser.showOpenDialog(stage);
+        
+        if (fichier != null) {
+            fichierDrapeauSelectionne = fichier;
+            fichierSelectionneLabel.setText("✅ " + fichier.getName());
+            fichierSelectionneLabel.setStyle("-fx-text-fill: #10b981; -fx-font-size: 12px; -fx-font-weight: 600;");
             
-            // Supprimer de target/classes/images/equipes
-            Path cheminImageTarget = Paths.get("target/classes/images/equipes", imagePath);
-            if (Files.exists(cheminImageTarget)) {
-                Files.delete(cheminImageTarget);
-                System.out.println("🗑️ Image supprimée (target): " + imagePath);
+            // Afficher l'aperçu
+            try {
+                Image image = new Image(fichier.toURI().toString());
+                imagePreview.setImage(image);
+                drapeauInfoLabel.setText("✅ Drapeau personnalisé chargé");
+                drapeauInfoLabel.setStyle("-fx-text-fill: #10b981; -fx-font-size: 13px; -fx-font-weight: 600;");
+            } catch (Exception e) {
+                showAlert("Erreur", "Impossible de charger l'image: " + e.getMessage(), Alert.AlertType.ERROR);
             }
-        } catch (IOException e) {
-            System.err.println("❌ Erreur suppression image: " + e.getMessage());
         }
     }
 
@@ -273,7 +321,7 @@ public class FormEquipeController {
     }
 
     private void fermer() {
-        Stage stage = (Stage) nomField.getScene().getWindow();
+        Stage stage = (Stage) paysField.getScene().getWindow();
         stage.close();
     }
 

@@ -7,50 +7,42 @@
 <ScrollPane fx:id="scrollPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.gestionmatch.controller.CalendarPageController"
             fitToWidth="true" style="-fx-background: #ffffff; -fx-background-color: #ffffff;">
-    <VBox spacing="28" style="-fx-padding: 35; -fx-background-color: #ffffff;">
+    <VBox spacing="20" style="-fx-padding: 20; -fx-background-color: #ffffff;">
         
-        <HBox alignment="CENTER_LEFT" spacing="25" style="-fx-background-color: #ffffff; -fx-padding: 25 0;">
-            <VBox spacing="10">
-                <Label text="Calendrier des Matchs" style="-fx-font-size: 32px; -fx-font-weight: 700; -fx-text-fill: #1a1a1a;"/>
-                <Label text="Coupe du Monde 2030" style="-fx-font-size: 16px; -fx-text-fill: #666666; -fx-font-weight: 500;"/>
-            </VBox>
-            <Region HBox.hgrow="ALWAYS"/>
-            <HBox spacing="16" alignment="CENTER">
-                <Button fx:id="btnPrevious" text="Précédent" onAction="#previousMonth" style="-fx-background-color: #f5f5f5; -fx-text-fill: #1a1a1a; -fx-padding: 12 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-weight: 700; -fx-font-size: 14px; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 8;"/>
-                <Label fx:id="monthYearLabel" text="Janvier 2026" style="-fx-font-size: 18px; -fx-font-weight: 700; -fx-text-fill: #1a1a1a; -fx-min-width: 160; -fx-alignment: center;"/>
-                <Button fx:id="btnNext" text="Suivant" onAction="#nextMonth" style="-fx-background-color: #f5f5f5; -fx-text-fill: #1a1a1a; -fx-padding: 12 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-weight: 700; -fx-font-size: 14px; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 8;"/>
-            </HBox>
+        <!-- Header -->
+        <VBox alignment="CENTER" spacing="8" style="-fx-background-color: linear-gradient(to right, #C1272D, #8B1C1C); -fx-padding: 20; -fx-background-radius: 10;">
+            <Label text="COUPE DU MONDE 2030" style="-fx-font-size: 28px; -fx-font-weight: 700; -fx-text-fill: white;"/>
+            <Label text="Calendrier Complet - Phase de Poules et Phase Finale" style="-fx-font-size: 14px; -fx-text-fill: rgba(255,255,255,0.9); -fx-font-weight: 600;"/>
+        </VBox>
+        
+        <!-- Phase de Poules Title -->
+        <HBox alignment="CENTER" style="-fx-background-color: #FFD700; -fx-padding: 12; -fx-background-radius: 8;">
+            <Label text="PHASE DE POULES" style="-fx-font-size: 22px; -fx-font-weight: 700; -fx-text-fill: #8B1C1C;"/>
         </HBox>
         
-        <HBox spacing="30" alignment="CENTER_LEFT" style="-fx-background-color: #f8f9fa; -fx-padding: 18 28; -fx-background-radius: 10;">
-            <HBox spacing="12" alignment="CENTER">
-                <Label text="●" style="-fx-text-fill: #ef4444; -fx-font-size: 20px;"/>
-                <Label text="En cours" style="-fx-font-size: 15px; -fx-text-fill: #1a1a1a; -fx-font-weight: 600;"/>
-            </HBox>
-            <HBox spacing="12" alignment="CENTER">
-                <Label text="●" style="-fx-text-fill: #3b82f6; -fx-font-size: 20px;"/>
-                <Label text="À venir" style="-fx-font-size: 15px; -fx-text-fill: #1a1a1a; -fx-font-weight: 600;"/>
-            </HBox>
-            <HBox spacing="12" alignment="CENTER">
-                <Label text="●" style="-fx-text-fill: #10b981; -fx-font-size: 20px;"/>
-                <Label text="Terminé" style="-fx-font-size: 15px; -fx-text-fill: #1a1a1a; -fx-font-weight: 600;"/>
-            </HBox>
+        <!-- Groups Container -->
+        <HBox fx:id="groupsContainer" spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+            <!-- Groups will be populated dynamically -->
         </HBox>
         
-        <GridPane fx:id="calendarGrid" hgap="16" vgap="16" style="-fx-background-color: #ffffff; -fx-padding: 30; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 12; -fx-background-radius: 12;">
-            
-            <Label text="Lun" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: 700; -fx-text-fill: #666666; -fx-font-size: 14px;"/>
-            <Label text="Mar" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-font-weight: 700; -fx-text-fill: #666666; -fx-font-size: 14px;"/>
-            <Label text="Mer" GridPane.columnIndex="2" GridPane.rowIndex="0" style="-fx-font-weight: 700; -fx-text-fill: #666666; -fx-font-size: 14px;"/>
-            <Label text="Jeu" GridPane.columnIndex="3" GridPane.rowIndex="0" style="-fx-font-weight: 700; -fx-text-fill: #666666; -fx-font-size: 14px;"/>
-            <Label text="Ven" GridPane.columnIndex="4" GridPane.rowIndex="0" style="-fx-font-weight: 700; -fx-text-fill: #666666; -fx-font-size: 14px;"/>
-            <Label text="Sam" GridPane.columnIndex="5" GridPane.rowIndex="0" style="-fx-font-weight: 700; -fx-text-fill: #666666; -fx-font-size: 14px;"/>
-            <Label text="Dim" GridPane.columnIndex="6" GridPane.rowIndex="0" style="-fx-font-weight: 700; -fx-text-fill: #666666; -fx-font-size: 14px;"/>
-            
-        </GridPane>
+        <!-- Match Schedule Title -->
+        <HBox alignment="CENTER" style="-fx-background-color: #C1272D; -fx-padding: 12; -fx-background-radius: 8;">
+            <Label text="CALENDRIER DES MATCHS" style="-fx-font-size: 20px; -fx-font-weight: 700; -fx-text-fill: white;"/>
+        </HBox>
         
-        <VBox fx:id="matchListContainer" spacing="18" style="-fx-background-color: #ffffff; -fx-padding: 30; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 12; -fx-background-radius: 12;">
-            <!-- Match list will be populated dynamically by controller -->
+        <!-- Match Schedule by Date -->
+        <VBox fx:id="matchScheduleContainer" spacing="15" style="-fx-padding: 10;">
+            <!-- Match schedule will be populated dynamically -->
+        </VBox>
+        
+        <!-- Phase Finale Title -->
+        <HBox alignment="CENTER" style="-fx-background-color: #FFD700; -fx-padding: 12; -fx-background-radius: 8;">
+            <Label text="PHASE FINALE" style="-fx-font-size: 22px; -fx-font-weight: 700; -fx-text-fill: #8B1C1C;"/>
+        </HBox>
+        
+        <!-- Knockout Stage Container -->
+        <VBox fx:id="knockoutContainer" spacing="20" style="-fx-padding: 20; -fx-background-color: #8B1C1C; -fx-background-radius: 10;">
+            <!-- Knockout bracket will be populated dynamically -->
         </VBox>
         
     </VBox>

@@ -26,18 +26,11 @@
     <VBox spacing="18" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 25; -fx-border-color: #e2e8f0; -fx-border-width: 1; -fx-border-radius: 14; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.06), 12, 0, 0, 3);">
         <Label text="📋 INFORMATIONS GÉNÉRALES" style="-fx-text-fill: #C1272D; -fx-font-size: 17px; -fx-font-weight: bold; -fx-letter-spacing: 0.3px;"/>
         
-        <HBox spacing="18">
-            <VBox spacing="10" HBox.hgrow="ALWAYS">
-                <Label text="Nom de l'équipe *" style="-fx-text-fill: #1e293b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
-                <TextField fx:id="nomField" promptText="Ex: Maroc" prefHeight="44"
-                           style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8; -fx-background-radius: 10; -fx-border-color: #cbd5e1; -fx-border-width: 2; -fx-border-radius: 10; -fx-font-size: 14px; -fx-padding: 12;"/>
-            </VBox>
-            <VBox spacing="10" HBox.hgrow="ALWAYS">
-                <Label text="Pays *" style="-fx-text-fill: #1e293b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
-                <TextField fx:id="paysField" promptText="Ex: Maroc" prefHeight="44"
-                           style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8; -fx-background-radius: 10; -fx-border-color: #cbd5e1; -fx-border-width: 2; -fx-border-radius: 10; -fx-font-size: 14px; -fx-padding: 12;"/>
-            </VBox>
-        </HBox>
+        <VBox spacing="10">
+            <Label text="Pays (Équipe Nationale) *" style="-fx-text-fill: #1e293b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
+            <TextField fx:id="paysField" promptText="Ex: Maroc, France, Brésil..." prefHeight="44"
+                       style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8; -fx-background-radius: 10; -fx-border-color: #cbd5e1; -fx-border-width: 2; -fx-border-radius: 10; -fx-font-size: 14px; -fx-padding: 12;"/>
+        </VBox>
 
         <HBox spacing="18">
             <VBox spacing="10" HBox.hgrow="ALWAYS">
@@ -46,32 +39,32 @@
                            style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8; -fx-background-radius: 10; -fx-border-color: #cbd5e1; -fx-border-width: 2; -fx-border-radius: 10; -fx-font-size: 14px; -fx-padding: 12;"/>
             </VBox>
             <VBox spacing="10" HBox.hgrow="ALWAYS">
-                <Label text="Nombre de joueurs" style="-fx-text-fill: #1e293b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
+                <Label text="Nombre de joueurs (Max: 26)" style="-fx-text-fill: #1e293b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
                 <TextField fx:id="nombreJoueursField" promptText="0" prefHeight="44"
                            style="-fx-background-color: white; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8; -fx-background-radius: 10; -fx-border-color: #cbd5e1; -fx-border-width: 2; -fx-border-radius: 10; -fx-font-size: 14px; -fx-padding: 12;"/>
+                <Label text="⚠️ Maximum 26 joueurs par équipe nationale" style="-fx-text-fill: #f59e0b; -fx-font-size: 11px; -fx-font-weight: 600; -fx-font-style: italic;"/>
             </VBox>
         </HBox>
     </VBox>
 
-    <!-- SECTION IMAGE DE L'ÉQUIPE -->
+    <!-- SECTION DRAPEAU DE L'ÉQUIPE -->
     <VBox spacing="18" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 25; -fx-border-color: #e2e8f0; -fx-border-width: 1; -fx-border-radius: 14; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.06), 12, 0, 0, 3);">
-        <Label text="🖼️ IMAGE DE L'ÉQUIPE" style="-fx-text-fill: #C1272D; -fx-font-size: 17px; -fx-font-weight: bold; -fx-letter-spacing: 0.3px;"/>
+        <Label text="🏴 DRAPEAU DE L'ÉQUIPE" style="-fx-text-fill: #C1272D; -fx-font-size: 17px; -fx-font-weight: bold; -fx-letter-spacing: 0.3px;"/>
         
-        <HBox spacing="18" alignment="CENTER_LEFT">
-            <VBox spacing="10" HBox.hgrow="ALWAYS">
-                <Label text="Sélectionner une image" style="-fx-text-fill: #1e293b; -fx-font-size: 13px; -fx-font-weight: 600;"/>
-                <HBox spacing="12" alignment="CENTER_LEFT">
-                    <TextField fx:id="imagePathField" promptText="Aucune image sélectionnée" editable="false" prefHeight="44" HBox.hgrow="ALWAYS"
-                               style="-fx-background-color: #f8fafc; -fx-text-fill: #1e293b; -fx-prompt-text-fill: #94a3b8; -fx-background-radius: 10; -fx-border-color: #cbd5e1; -fx-border-width: 2; -fx-border-radius: 10; -fx-font-size: 14px; -fx-padding: 12;"/>
-                    <Button fx:id="btnChoisirImage" text="📁 Parcourir" onAction="#choisirImage" prefWidth="150" prefHeight="44"
-                            style="-fx-background-color: #1e293b; -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 13px; -fx-font-weight: 600; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(30, 41, 59, 0.2), 8, 0, 0, 2);"/>
-                </HBox>
-            </VBox>
+        <Label fx:id="drapeauInfoLabel" text="Le drapeau sera automatiquement recherché selon le nom du pays" 
+               style="-fx-text-fill: #64748b; -fx-font-size: 13px; -fx-font-style: italic;"/>
+        
+        <!-- Bouton pour parcourir le PC -->
+        <HBox spacing="12" alignment="CENTER_LEFT">
+            <Button fx:id="btnParcourirDrapeau" text="📁 Parcourir mon PC" onAction="#parcourirDrapeau" prefHeight="42"
+                    style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 10 20;"/>
+            <Label fx:id="fichierSelectionneLabel" text="Aucun fichier sélectionné" 
+                   style="-fx-text-fill: #64748b; -fx-font-size: 12px; -fx-font-style: italic;"/>
         </HBox>
         
-        <!-- Aperçu de l'image -->
+        <!-- Aperçu du drapeau -->
         <VBox spacing="10" alignment="CENTER">
-            <Label text="Aperçu" style="-fx-text-fill: #64748b; -fx-font-size: 12px; -fx-font-weight: 600;"/>
+            <Label text="Aperçu du Drapeau" style="-fx-text-fill: #64748b; -fx-font-size: 12px; -fx-font-weight: 600;"/>
             <javafx.scene.image.ImageView fx:id="imagePreview" fitWidth="220" fitHeight="165" preserveRatio="true"
                                           style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 12, 0, 0, 3);"/>
         </VBox>

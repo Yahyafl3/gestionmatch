@@ -137,6 +137,53 @@ public class FormGroupeController implements Initializable {
             showAlert("Erreur", "Les 4 équipes doivent être différentes", Alert.AlertType.ERROR);
             return;
         }
+        
+        // VALIDATION 1: Vérifier qu'une équipe n'est pas déjà dans un autre groupe
+        java.util.List<Equipe> equipesAVerifier = java.util.Arrays.asList(eq1, eq2, eq3, eq4);
+        for (Equipe equipe : equipesAVerifier) {
+            // Si on modifie un groupe, ignorer les équipes déjà dans ce groupe
+            if (groupeModif != null && equipe.getGroupeId() == groupeModif.getId()) {
+                continue;
+            }
+            
+            // Vérifier si l'équipe est déjà dans un groupe
+            if (equipe.getGroupeId() > 0) {
+                showAlert("Erreur", 
+                    "❌ L'équipe " + equipe.getNom() + " est déjà assignée à un autre groupe.\n\n" +
+                    "⚠️ Une équipe ne peut être que dans un seul groupe.\n\n" +
+                    "Veuillez retirer cette équipe de son groupe actuel avant de l'assigner ici.", 
+                    Alert.AlertType.ERROR);
+                return;
+            }
+        }
+        
+        // VALIDATION 2: Maximum 2 équipes européennes par groupe
+        java.util.List<String> paysEuropeens = java.util.Arrays.asList(
+            "Allemagne", "Angleterre", "Belgique", "Croatie", "Danemark", 
+            "Espagne", "France", "Italie", "Pays-Bas", "Pologne", 
+            "Portugal", "Serbie", "Suisse"
+        );
+        
+        int nombreEquipesEuropeennes = 0;
+        java.util.List<String> equipesEuropeennesTrouvees = new java.util.ArrayList<>();
+        
+        for (Equipe equipe : equipesAVerifier) {
+            if (paysEuropeens.contains(equipe.getPays())) {
+                nombreEquipesEuropeennes++;
+                equipesEuropeennesTrouvees.add(equipe.getNom());
+            }
+        }
+        
+        if (nombreEquipesEuropeennes > 2) {
+            showAlert("Erreur", 
+                "❌ Trop d'équipes européennes dans ce groupe !\n\n" +
+                "Équipes européennes sélectionnées (" + nombreEquipesEuropeennes + ") :\n" +
+                String.join(", ", equipesEuropeennesTrouvees) + "\n\n" +
+                "⚠️ Règle FIFA : Maximum 2 équipes européennes par groupe.\n\n" +
+                "Veuillez retirer au moins " + (nombreEquipesEuropeennes - 2) + " équipe(s) européenne(s).", 
+                Alert.AlertType.ERROR);
+            return;
+        }
 
         boolean success;
         if (groupeModif == null) {

@@ -35,13 +35,15 @@ public class Main extends Application {
             root.setDepthTest(DepthTest.ENABLE);
 
 
-            // Créer la scène avec une taille moyenne
-            Scene scene = new Scene(root, 1200, 800);
+            // Créer la scène avec une grande taille pour éviter le redimensionnement
+            Scene scene = new Scene(root, 1400, 900);
 
             // Configuration de la fenêtre
             primaryStage.setTitle("🏆 Coupe du Monde 2030 - Connexion");
             primaryStage.setScene(scene);
             primaryStage.setResizable(true);
+            primaryStage.setMinWidth(1200);  // Taille minimale
+            primaryStage.setMinHeight(800);
             primaryStage.centerOnScreen();
 
             // Afficher la fenêtre

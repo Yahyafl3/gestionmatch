@@ -92,6 +92,10 @@ public class AdminDashboardController implements Initializable {
     private final GroupeDAO groupeDAO = new GroupeDAO();
     private final MatchDAO matchDAO = new MatchDAO();
     private final GroupeEquipeDAO groupeEquipeDAO = new GroupeEquipeDAO();
+    
+    // Variables pour la sélection
+    private Groupe groupeSelectionne;
+    private Equipe equipeSelectionnee;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -609,12 +613,12 @@ public class AdminDashboardController implements Initializable {
 
     @SuppressWarnings("unchecked")
     private void initialiserTablesEquipes() {
-        // Colonne Nom avec drapeau
-        TableColumn<Equipe, String> colNom = new TableColumn<>("Équipe");
-        colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        colNom.setPrefWidth(250);
-        colNom.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
-        colNom.setCellFactory(column -> new TableCell<Equipe, String>() {
+        // Colonne Pays avec drapeau (remplace la colonne Équipe)
+        TableColumn<Equipe, String> colPays = new TableColumn<>("Pays");
+        colPays.setCellValueFactory(new PropertyValueFactory<>("pays"));
+        colPays.setPrefWidth(280);
+        colPays.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+        colPays.setCellFactory(column -> new TableCell<Equipe, String>() {
             private final ImageView imageView = new ImageView();
             private final Label label = new Label();
             private final HBox hbox = new HBox(10);
@@ -628,14 +632,14 @@ public class AdminDashboardController implements Initializable {
             }
 
             @Override
-            protected void updateItem(String nom, boolean empty) {
-                super.updateItem(nom, empty);
+            protected void updateItem(String pays, boolean empty) {
+                super.updateItem(pays, empty);
 
-                if (empty || nom == null) {
+                if (empty || pays == null) {
                     setGraphic(null);
                 } else {
                     Equipe equipe = getTableView().getItems().get(getIndex());
-                    label.setText(nom);
+                    label.setText(pays);
 
                     // Charger l'image du drapeau
                     if (equipe.getImagePath() != null && !equipe.getImagePath().isEmpty()) {
@@ -683,11 +687,6 @@ public class AdminDashboardController implements Initializable {
             }
         });
 
-        TableColumn<Equipe, String> colPays = new TableColumn<>("Pays");
-        colPays.setCellValueFactory(new PropertyValueFactory<>("pays"));
-        colPays.setPrefWidth(150);
-        colPays.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
-
         TableColumn<Equipe, String> colEntraineur = new TableColumn<>("Entraîneur");
         colEntraineur.setCellValueFactory(new PropertyValueFactory<>("entraineur"));
         colEntraineur.setPrefWidth(180);
@@ -729,7 +728,7 @@ public class AdminDashboardController implements Initializable {
         colButsEncaisses.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-alignment: CENTER;");
 
         tableEquipes.getColumns().clear();
-        tableEquipes.getColumns().addAll(colNom, colPays, colEntraineur, colNombreJoueurs,
+        tableEquipes.getColumns().addAll(colPays, colEntraineur, colNombreJoueurs,
                 colMatchsJoues, colVictoires, colNuls, colDefaites, 
                 colButsMarques, colButsEncaisses);
         
@@ -923,7 +922,7 @@ public class AdminDashboardController implements Initializable {
                      "-fx-border-width: 2; " +
                      "-fx-border-radius: 16;");
         card.setPrefWidth(280);
-        card.setMinHeight(400);
+        card.setMinHeight(350);
         
         // En-tête rouge
         HBox header = new HBox();
@@ -967,31 +966,13 @@ public class AdminDashboardController implements Initializable {
         Label compteur = new Label(equipes.size() + " / 4 équipes");
         compteur.setStyle("-fx-text-fill: #64748b; -fx-font-size: 13px; -fx-font-weight: 600;");
         
-        // Boutons d'action
-        HBox actions = new HBox(10);
-        actions.setAlignment(Pos.CENTER);
+        // Rendre la carte cliquable pour sélectionner le groupe
+        card.setOnMouseClicked(e -> {
+            groupeSelectionne = groupe;
+            System.out.println("✅ Groupe sélectionné: " + groupe.getNom());
+        });
         
-        Button btnAjouter = new Button("➕ Ajouter");
-        btnAjouter.setStyle("-fx-background-color: #C1272D; -fx-text-fill: white; " +
-                           "-fx-font-size: 13px; -fx-padding: 12 20; -fx-background-radius: 8; " +
-                           "-fx-cursor: hand; -fx-font-weight: 600;");
-        btnAjouter.setOnAction(e -> ajouterEquipeAuGroupe(groupe));
-        
-        Button btnModifier = new Button("✏️");
-        btnModifier.setStyle("-fx-background-color: #1e293b; -fx-text-fill: white; " +
-                            "-fx-font-size: 13px; -fx-padding: 12 16; -fx-background-radius: 8; " +
-                            "-fx-cursor: hand;");
-        btnModifier.setOnAction(e -> modifierGroupe(groupe));
-        
-        Button btnSupprimer = new Button("🗑️");
-        btnSupprimer.setStyle("-fx-background-color: #ef4444; -fx-text-fill: white; " +
-                             "-fx-font-size: 13px; -fx-padding: 12 16; -fx-background-radius: 8; " +
-                             "-fx-cursor: hand;");
-        btnSupprimer.setOnAction(e -> supprimerGroupe(groupe));
-        
-        actions.getChildren().addAll(btnAjouter, btnModifier, btnSupprimer);
-        
-        card.getChildren().addAll(header, scrollPane, compteur, actions);
+        card.getChildren().addAll(header, scrollPane, compteur);
         
         return card;
     }
@@ -1055,18 +1036,17 @@ public class AdminDashboardController implements Initializable {
         nomEquipe.setStyle("-fx-text-fill: #1e293b; -fx-font-size: 14px; -fx-font-weight: 600;");
         row.getChildren().add(nomEquipe);
         
-        // Spacer
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-        row.getChildren().add(spacer);
+        // Rendre la ligne cliquable pour sélection
+        row.setOnMouseClicked(e -> {
+            // Stocker l'équipe et le groupe sélectionnés
+            equipeSelectionnee = equipe;
+            groupeSelectionne = groupe;
+            System.out.println("✅ Équipe sélectionnée: " + equipe.getNom() + " du groupe " + groupe.getNom());
+        });
         
-        // Bouton retirer
-        Button btnRetirer = new Button("✖");
-        btnRetirer.setStyle("-fx-background-color: #C1272D; -fx-text-fill: white; " +
-                           "-fx-font-size: 11px; -fx-padding: 6 10; -fx-background-radius: 6; " +
-                           "-fx-cursor: hand; -fx-font-weight: bold;");
-        btnRetirer.setOnAction(e -> retirerEquipeDuGroupe(equipe, groupe));
-        row.getChildren().add(btnRetirer);
+        // Effet hover
+        row.setOnMouseEntered(e -> row.setStyle("-fx-background-color: #e5e7eb; -fx-background-radius: 8; -fx-padding: 10; -fx-cursor: hand;"));
+        row.setOnMouseExited(e -> row.setStyle("-fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-padding: 10;"));
         
         return row;
     }
@@ -1109,13 +1089,18 @@ public class AdminDashboardController implements Initializable {
         List<Equipe> equipesDisponibles = new ArrayList<>();
         
         for (Equipe equipe : toutesEquipes) {
-            if (!groupeEquipeDAO.equipeEstDansGroupe(groupe.getId(), equipe.getId())) {
+            // Vérifier que l'équipe n'est dans AUCUN groupe
+            if (equipe.getGroupeId() == 0 || equipe.getGroupeId() == -1) {
                 equipesDisponibles.add(equipe);
             }
         }
         
         if (equipesDisponibles.isEmpty()) {
-            showAlert("Aucune équipe disponible", "Toutes les équipes sont déjà assignées", Alert.AlertType.INFORMATION);
+            showAlert("Aucune équipe disponible", 
+                "❌ Toutes les équipes sont déjà assignées à des groupes.\n\n" +
+                "⚠️ Une équipe ne peut être que dans un seul groupe.\n\n" +
+                "Veuillez retirer une équipe d'un autre groupe pour la rendre disponible.", 
+                Alert.AlertType.INFORMATION);
             return;
         }
         
@@ -1126,6 +1111,16 @@ public class AdminDashboardController implements Initializable {
         
         Optional<Equipe> result = dialog.showAndWait();
         result.ifPresent(equipe -> {
+            // Double vérification : l'équipe ne doit pas être dans un autre groupe
+            if (equipe.getGroupeId() > 0) {
+                showAlert("Erreur", 
+                    "❌ L'équipe " + equipe.getNom() + " est déjà dans un autre groupe.\n\n" +
+                    "⚠️ Une équipe ne peut être que dans un seul groupe.\n\n" +
+                    "Veuillez la retirer de son groupe actuel d'abord.", 
+                    Alert.AlertType.ERROR);
+                return;
+            }
+            
             if (groupeEquipeDAO.ajouterEquipeAuGroupe(groupe.getId(), equipe.getId())) {
                 showAlert("Succès", equipe.getNom() + " ajoutée au " + groupe.getNom(), Alert.AlertType.INFORMATION);
                 chargerGroupes();
@@ -1207,6 +1202,42 @@ public class AdminDashboardController implements Initializable {
     @FXML
     private void supprimerGroupe() {
         showAlert("Information", "Cliquez sur le bouton 🗑️ d'une carte de groupe pour le supprimer", Alert.AlertType.INFORMATION);
+    }
+    
+    @FXML
+    private void modifierGroupeSelectionne() {
+        if (groupeSelectionne == null) {
+            showAlert("Aucune sélection", "Veuillez cliquer sur un groupe pour le sélectionner", Alert.AlertType.WARNING);
+            return;
+        }
+        modifierGroupe(groupeSelectionne);
+    }
+    
+    @FXML
+    private void supprimerGroupeSelectionne() {
+        if (groupeSelectionne == null) {
+            showAlert("Aucune sélection", "Veuillez cliquer sur un groupe pour le sélectionner", Alert.AlertType.WARNING);
+            return;
+        }
+        supprimerGroupe(groupeSelectionne);
+    }
+    
+    @FXML
+    private void ajouterEquipeSelectionne() {
+        if (groupeSelectionne == null) {
+            showAlert("Aucune sélection", "Veuillez cliquer sur un groupe pour le sélectionner", Alert.AlertType.WARNING);
+            return;
+        }
+        ajouterEquipeAuGroupe(groupeSelectionne);
+    }
+    
+    @FXML
+    private void retirerEquipeSelectionne() {
+        if (equipeSelectionnee == null || groupeSelectionne == null) {
+            showAlert("Aucune sélection", "Veuillez cliquer sur une équipe dans un groupe pour la sélectionner", Alert.AlertType.WARNING);
+            return;
+        }
+        retirerEquipeDuGroupe(equipeSelectionnee, groupeSelectionne);
     }
 
     @SuppressWarnings("unchecked")

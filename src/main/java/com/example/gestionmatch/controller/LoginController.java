@@ -206,9 +206,16 @@ public class LoginController {
         }
         
         Stage stage = (Stage) loginButton.getScene().getWindow();
-        Scene scene = new Scene(root);
+        
+        // Conserver EXACTEMENT la taille actuelle de la fenêtre
+        double currentWidth = stage.getWidth();
+        double currentHeight = stage.getHeight();
+        
+        Scene scene = new Scene(root, currentWidth, currentHeight);
         stage.setScene(scene);
         stage.setTitle(title);
-        stage.centerOnScreen();
+        
+        // Ne pas changer la position ni la taille
+        // La fenêtre garde sa taille actuelle
     }
 }

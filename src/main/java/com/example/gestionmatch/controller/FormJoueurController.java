@@ -123,6 +123,21 @@ public class FormJoueurController implements Initializable {
             showAlert("Erreur", "Le numéro doit être un nombre", Alert.AlertType.ERROR);
             return;
         }
+        
+        // VALIDATION: Vérifier que l'équipe n'a pas déjà 26 joueurs (sauf si modification)
+        if (joueurModif == null) {
+            // Compter le nombre de joueurs dans l'équipe
+            int nombreJoueursEquipe = joueurDAO.compterJoueursParEquipe(equipe.getId());
+            
+            if (nombreJoueursEquipe >= 26) {
+                showAlert("Limite atteinte", 
+                    "❌ L'équipe " + equipe.getNom() + " a déjà 26 joueurs.\n\n" +
+                    "⚠️ Une équipe nationale ne peut pas avoir plus de 26 joueurs.\n\n" +
+                    "Veuillez supprimer un joueur existant avant d'en ajouter un nouveau.", 
+                    Alert.AlertType.ERROR);
+                return;
+            }
+        }
 
         boolean success;
         if (joueurModif == null) {

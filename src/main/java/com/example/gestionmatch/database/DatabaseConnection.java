@@ -15,7 +15,7 @@ public class DatabaseConnection {
     // ========================================
 
     private static final String HOST = "localhost";
-    private static final String PORT = "3306";
+    private static final String PORT = "8889";
     private static final String DATABASE = "gestionmatch";
     private static final String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE
             + "?useSSL=false"
@@ -25,7 +25,7 @@ public class DatabaseConnection {
             + "&characterEncoding=UTF-8";
 
     private static final String USER = "root";
-    private static final String PASSWORD = "";  // ⚠️ Changez si vous avez un mot de passe MySQL
+    private static final String PASSWORD = "root";  // ⚠️ Changez si vous avez un mot de passe MySQL
 
     // ========================================
     // SINGLETON
