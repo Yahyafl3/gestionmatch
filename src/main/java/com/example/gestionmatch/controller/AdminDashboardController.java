@@ -76,7 +76,7 @@ public class AdminDashboardController implements Initializable {
     @FXML private Button btnDashboard, btnJoueurs, btnEquipes, btnStades, btnGroupes, btnMatchs;
     @FXML private Button btnStatistiques, btnCalendrier, btnComparaison, btnNotifications;
     
-    @FXML private TextField searchFieldJoueurs, globalSearchField;
+    @FXML private TextField searchFieldJoueurs;
     @FXML private Label notificationBadge;
     
     @FXML private TableView<Joueur> tableJoueurs;

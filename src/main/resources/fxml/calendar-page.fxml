@@ -4,117 +4,54 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<!-- PAGE CALENDRIER DES MATCHS -->
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-      spacing="24" style="-fx-padding: 20; -fx-background-color: #f8fafc;">
-    
-    <!-- Header -->
-    <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);">
-        <Label text="📅 Calendrier des Matchs" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
-        <Region HBox.hgrow="ALWAYS"/>
-        <Button text="◀ Mois précédent" style="-fx-background-color: #f1f5f9; -fx-text-fill: #475569; -fx-padding: 10 20; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: bold;"/>
-        <Label text="Janvier 2026" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #C1272D;"/>
-        <Button text="Mois suivant ▶" style="-fx-background-color: #f1f5f9; -fx-text-fill: #475569; -fx-padding: 10 20; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: bold;"/>
-    </HBox>
-    
-    <!-- Légende -->
-    <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-padding: 16; -fx-background-radius: 12;">
-        <HBox spacing="8" alignment="CENTER">
-            <Label text="●" style="-fx-text-fill: #ef4444; -fx-font-size: 20px;"/>
-            <Label text="Match en cours" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
-        </HBox>
-        <HBox spacing="8" alignment="CENTER">
-            <Label text="●" style="-fx-text-fill: #3b82f6; -fx-font-size: 20px;"/>
-            <Label text="Match à venir" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
-        </HBox>
-        <HBox spacing="8" alignment="CENTER">
-            <Label text="●" style="-fx-text-fill: #10b981; -fx-font-size: 20px;"/>
-            <Label text="Match terminé" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
-        </HBox>
-    </HBox>
-    
-    <!-- Calendrier -->
-    <GridPane hgap="12" vgap="12" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);">
+<ScrollPane fx:id="scrollPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.gestionmatch.controller.CalendarPageController"
+            fitToWidth="true" style="-fx-background: #ffffff; -fx-background-color: #ffffff;">
+    <VBox spacing="28" style="-fx-padding: 35; -fx-background-color: #ffffff;">
         
-        <!-- En-têtes jours -->
-        <Label text="Lun" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #64748b; -fx-font-size: 12px;"/>
-        <Label text="Mar" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #64748b; -fx-font-size: 12px;"/>
-        <Label text="Mer" GridPane.columnIndex="2" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #64748b; -fx-font-size: 12px;"/>
-        <Label text="Jeu" GridPane.columnIndex="3" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #64748b; -fx-font-size: 12px;"/>
-        <Label text="Ven" GridPane.columnIndex="4" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #64748b; -fx-font-size: 12px;"/>
-        <Label text="Sam" GridPane.columnIndex="5" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #64748b; -fx-font-size: 12px;"/>
-        <Label text="Dim" GridPane.columnIndex="6" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #64748b; -fx-font-size: 12px;"/>
+        <HBox alignment="CENTER_LEFT" spacing="25" style="-fx-background-color: #ffffff; -fx-padding: 25 0;">
+            <VBox spacing="10">
+                <Label text="Calendrier des Matchs" style="-fx-font-size: 32px; -fx-font-weight: 700; -fx-text-fill: #1a1a1a;"/>
+                <Label text="Coupe du Monde 2030" style="-fx-font-size: 16px; -fx-text-fill: #666666; -fx-font-weight: 500;"/>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <HBox spacing="16" alignment="CENTER">
+                <Button fx:id="btnPrevious" text="Précédent" onAction="#previousMonth" style="-fx-background-color: #f5f5f5; -fx-text-fill: #1a1a1a; -fx-padding: 12 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-weight: 700; -fx-font-size: 14px; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 8;"/>
+                <Label fx:id="monthYearLabel" text="Janvier 2026" style="-fx-font-size: 18px; -fx-font-weight: 700; -fx-text-fill: #1a1a1a; -fx-min-width: 160; -fx-alignment: center;"/>
+                <Button fx:id="btnNext" text="Suivant" onAction="#nextMonth" style="-fx-background-color: #f5f5f5; -fx-text-fill: #1a1a1a; -fx-padding: 12 20; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-weight: 700; -fx-font-size: 14px; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 8;"/>
+            </HBox>
+        </HBox>
         
-        <!-- Jour avec match -->
-        <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="4" 
-              style="-fx-background-color: #fee2e2; -fx-padding: 12; -fx-background-radius: 10; -fx-border-color: #C1272D; -fx-border-width: 2; -fx-border-radius: 10; -fx-cursor: hand; -fx-pref-width: 120; -fx-pref-height: 100;">
-            <Label text="8" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
-            <Label text="●" style="-fx-text-fill: #3b82f6; -fx-font-size: 12px;"/>
-            <Label text="2 matchs" style="-fx-font-size: 10px; -fx-text-fill: #64748b;"/>
+        <HBox spacing="30" alignment="CENTER_LEFT" style="-fx-background-color: #f8f9fa; -fx-padding: 18 28; -fx-background-radius: 10;">
+            <HBox spacing="12" alignment="CENTER">
+                <Label text="●" style="-fx-text-fill: #ef4444; -fx-font-size: 20px;"/>
+                <Label text="En cours" style="-fx-font-size: 15px; -fx-text-fill: #1a1a1a; -fx-font-weight: 600;"/>
+            </HBox>
+            <HBox spacing="12" alignment="CENTER">
+                <Label text="●" style="-fx-text-fill: #3b82f6; -fx-font-size: 20px;"/>
+                <Label text="À venir" style="-fx-font-size: 15px; -fx-text-fill: #1a1a1a; -fx-font-weight: 600;"/>
+            </HBox>
+            <HBox spacing="12" alignment="CENTER">
+                <Label text="●" style="-fx-text-fill: #10b981; -fx-font-size: 20px;"/>
+                <Label text="Terminé" style="-fx-font-size: 15px; -fx-text-fill: #1a1a1a; -fx-font-weight: 600;"/>
+            </HBox>
+        </HBox>
+        
+        <GridPane fx:id="calendarGrid" hgap="16" vgap="16" style="-fx-background-color: #ffffff; -fx-padding: 30; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 12; -fx-background-radius: 12;">
+            
+            <Label text="Lun" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: 700; -fx-text-fill: #666666; -fx-font-size: 14px;"/>
+            <Label text="Mar" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-font-weight: 700; -fx-text-fill: #666666; -fx-font-size: 14px;"/>
+            <Label text="Mer" GridPane.columnIndex="2" GridPane.rowIndex="0" style="-fx-font-weight: 700; -fx-text-fill: #666666; -fx-font-size: 14px;"/>
+            <Label text="Jeu" GridPane.columnIndex="3" GridPane.rowIndex="0" style="-fx-font-weight: 700; -fx-text-fill: #666666; -fx-font-size: 14px;"/>
+            <Label text="Ven" GridPane.columnIndex="4" GridPane.rowIndex="0" style="-fx-font-weight: 700; -fx-text-fill: #666666; -fx-font-size: 14px;"/>
+            <Label text="Sam" GridPane.columnIndex="5" GridPane.rowIndex="0" style="-fx-font-weight: 700; -fx-text-fill: #666666; -fx-font-size: 14px;"/>
+            <Label text="Dim" GridPane.columnIndex="6" GridPane.rowIndex="0" style="-fx-font-weight: 700; -fx-text-fill: #666666; -fx-font-size: 14px;"/>
+            
+        </GridPane>
+        
+        <VBox fx:id="matchListContainer" spacing="18" style="-fx-background-color: #ffffff; -fx-padding: 30; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 12; -fx-background-radius: 12;">
+            <!-- Match list will be populated dynamically by controller -->
         </VBox>
-        
-        <!-- Jour aujourd'hui -->
-        <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" spacing="4" 
-              style="-fx-background-color: #C1272D; -fx-padding: 12; -fx-background-radius: 10; -fx-cursor: hand; -fx-pref-width: 120; -fx-pref-height: 100;">
-            <Label text="9" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;"/>
-            <Label text="Aujourd'hui" style="-fx-font-size: 10px; -fx-text-fill: rgba(255,255,255,0.9);"/>
-        </VBox>
-        
-        <!-- Jour normal -->
-        <VBox GridPane.columnIndex="2" GridPane.rowIndex="1" spacing="4" 
-              style="-fx-background-color: #f8fafc; -fx-padding: 12; -fx-background-radius: 10; -fx-cursor: hand; -fx-pref-width: 120; -fx-pref-height: 100;">
-            <Label text="10" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
-        </VBox>
-        
-    </GridPane>
-    
-    <!-- Liste des matchs du jour sélectionné -->
-    <VBox spacing="12" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);">
-        <Label text="Matchs du 8 Janvier 2026" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
-        <Separator/>
-        
-        <!-- Match 1 -->
-        <HBox spacing="20" alignment="CENTER" style="-fx-background-color: #f8fafc; -fx-padding: 16; -fx-background-radius: 12;">
-            <VBox alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS">
-                <Label text="🇲🇦" style="-fx-font-size: 32px;"/>
-                <Label text="Maroc" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
-            </VBox>
-            <VBox alignment="CENTER" spacing="4">
-                <Label text="VS" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #C1272D;"/>
-                <Label text="20:00" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
-                <Label text="●" style="-fx-text-fill: #3b82f6; -fx-font-size: 16px;"/>
-            </VBox>
-            <VBox alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS">
-                <Label text="🇧🇷" style="-fx-font-size: 32px;"/>
-                <Label text="Brésil" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
-            </VBox>
-            <VBox alignment="CENTER_RIGHT" spacing="4">
-                <Label text="Stade de Casablanca" style="-fx-font-size: 11px; -fx-text-fill: #64748b;"/>
-                <Button text="Voir détails" style="-fx-background-color: #C1272D; -fx-text-fill: white; -fx-padding: 6 16; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-size: 11px; -fx-font-weight: bold;"/>
-            </VBox>
-        </HBox>
-        
-        <!-- Match 2 -->
-        <HBox spacing="20" alignment="CENTER" style="-fx-background-color: #f8fafc; -fx-padding: 16; -fx-background-radius: 12;">
-            <VBox alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS">
-                <Label text="🇵🇹" style="-fx-font-size: 32px;"/>
-                <Label text="Portugal" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
-            </VBox>
-            <VBox alignment="CENTER" spacing="4">
-                <Label text="VS" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #C1272D;"/>
-                <Label text="17:00" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
-                <Label text="●" style="-fx-text-fill: #3b82f6; -fx-font-size: 16px;"/>
-            </VBox>
-            <VBox alignment="CENTER" spacing="4" HBox.hgrow="ALWAYS">
-                <Label text="🇫🇷" style="-fx-font-size: 32px;"/>
-                <Label text="France" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
-            </VBox>
-            <VBox alignment="CENTER_RIGHT" spacing="4">
-                <Label text="Stade de Lisbonne" style="-fx-font-size: 11px; -fx-text-fill: #64748b;"/>
-                <Button text="Voir détails" style="-fx-background-color: #C1272D; -fx-text-fill: white; -fx-padding: 6 16; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-size: 11px; -fx-font-weight: bold;"/>
-            </VBox>
-        </HBox>
         
     </VBox>
-    
-</VBox>
+</ScrollPane>

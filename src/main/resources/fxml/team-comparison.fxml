@@ -4,135 +4,137 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<!-- PAGE COMPARAISON D'ÉQUIPES -->
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-      spacing="24" style="-fx-padding: 20; -fx-background-color: #f8fafc;">
-    
-    <!-- Header -->
-    <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);">
-        <Label text="⚖️ Comparaison d'Équipes" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
-        <Region HBox.hgrow="ALWAYS"/>
-        <ComboBox fx:id="team1Selector" promptText="Sélectionner équipe 1" style="-fx-pref-width: 200;"/>
-        <Label text="VS" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #C1272D;"/>
-        <ComboBox fx:id="team2Selector" promptText="Sélectionner équipe 2" style="-fx-pref-width: 200;"/>
-        <Button text="Comparer" style="-fx-background-color: #C1272D; -fx-text-fill: white; -fx-padding: 12 24; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: bold;"/>
-    </HBox>
-    
-    <!-- Comparaison visuelle -->
-    <HBox spacing="20" alignment="CENTER">
+<!-- PAGE COMPARAISON D'ÉQUIPES - DESIGN PROFESSIONNEL -->
+<ScrollPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fitToWidth="true" style="-fx-background: #f8fafc; -fx-background-color: #f8fafc;">
+    <VBox spacing="20" style="-fx-padding: 25; -fx-background-color: #f8fafc;">
         
-        <!-- Équipe 1 -->
-        <VBox spacing="16" HBox.hgrow="ALWAYS" alignment="CENTER" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);">
-            <Label text="🇲🇦" style="-fx-font-size: 64px;"/>
-            <Label text="Maroc" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
-            <Label text="Groupe A" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
-            <Separator prefWidth="200"/>
-            <VBox spacing="8" alignment="CENTER">
-                <Label text="Classement" style="-fx-font-size: 11px; -fx-text-fill: #64748b;"/>
-                <Label text="#1" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #C1272D;"/>
-            </VBox>
-        </VBox>
-        
-        <!-- Badge VS -->
-        <StackPane style="-fx-background-color: #C1272D; -fx-background-radius: 50%; -fx-pref-width: 80; -fx-pref-height: 80; -fx-effect: dropshadow(gaussian, rgba(193, 39, 45, 0.4), 15, 0, 0, 5);">
-            <Label text="VS" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;"/>
-        </StackPane>
-        
-        <!-- Équipe 2 -->
-        <VBox spacing="16" HBox.hgrow="ALWAYS" alignment="CENTER" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);">
-            <Label text="🇧🇷" style="-fx-font-size: 64px;"/>
-            <Label text="Brésil" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
-            <Label text="Groupe B" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
-            <Separator prefWidth="200"/>
-            <VBox spacing="8" alignment="CENTER">
-                <Label text="Classement" style="-fx-font-size: 11px; -fx-text-fill: #64748b;"/>
-                <Label text="#2" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #C1272D;"/>
-            </VBox>
-        </VBox>
-        
-    </HBox>
-    
-    <!-- Statistiques comparatives -->
-    <VBox spacing="16" style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);">
-        <Label text="📊 Statistiques Comparatives" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
-        <Separator/>
-        
-        <!-- Victoires -->
-        <VBox spacing="8">
-            <HBox alignment="CENTER_LEFT" spacing="12">
-                <Label text="Victoires" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #0f172a; -fx-pref-width: 150;"/>
-                <Label text="8" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #C1272D; -fx-pref-width: 50;"/>
-                <ProgressBar progress="0.8" prefWidth="400" prefHeight="12" style="-fx-accent: #C1272D;"/>
-                <ProgressBar progress="0.6" prefWidth="400" prefHeight="12" style="-fx-accent: #3b82f6;"/>
-                <Label text="6" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #3b82f6; -fx-pref-width: 50;"/>
-            </HBox>
-        </VBox>
-        
-        <!-- Buts marqués -->
-        <VBox spacing="8">
-            <HBox alignment="CENTER_LEFT" spacing="12">
-                <Label text="Buts marqués" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #0f172a; -fx-pref-width: 150;"/>
-                <Label text="24" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #C1272D; -fx-pref-width: 50;"/>
-                <ProgressBar progress="0.75" prefWidth="400" prefHeight="12" style="-fx-accent: #C1272D;"/>
-                <ProgressBar progress="0.9" prefWidth="400" prefHeight="12" style="-fx-accent: #3b82f6;"/>
-                <Label text="28" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #3b82f6; -fx-pref-width: 50;"/>
-            </HBox>
-        </VBox>
-        
-        <!-- Buts encaissés -->
-        <VBox spacing="8">
-            <HBox alignment="CENTER_LEFT" spacing="12">
-                <Label text="Buts encaissés" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #0f172a; -fx-pref-width: 150;"/>
-                <Label text="8" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #C1272D; -fx-pref-width: 50;"/>
-                <ProgressBar progress="0.4" prefWidth="400" prefHeight="12" style="-fx-accent: #10b981;"/>
-                <ProgressBar progress="0.5" prefWidth="400" prefHeight="12" style="-fx-accent: #ef4444;"/>
-                <Label text="10" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #3b82f6; -fx-pref-width: 50;"/>
-            </HBox>
-        </VBox>
-        
-        <!-- Possession -->
-        <VBox spacing="8">
-            <HBox alignment="CENTER_LEFT" spacing="12">
-                <Label text="Possession moy." style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #0f172a; -fx-pref-width: 150;"/>
-                <Label text="58%" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #C1272D; -fx-pref-width: 50;"/>
-                <ProgressBar progress="0.58" prefWidth="400" prefHeight="12" style="-fx-accent: #C1272D;"/>
-                <ProgressBar progress="0.62" prefWidth="400" prefHeight="12" style="-fx-accent: #3b82f6;"/>
-                <Label text="62%" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #3b82f6; -fx-pref-width: 50;"/>
-            </HBox>
-        </VBox>
-        
-        <!-- Tirs cadrés -->
-        <VBox spacing="8">
-            <HBox alignment="CENTER_LEFT" spacing="12">
-                <Label text="Tirs cadrés" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #0f172a; -fx-pref-width: 150;"/>
-                <Label text="45" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #C1272D; -fx-pref-width: 50;"/>
-                <ProgressBar progress="0.7" prefWidth="400" prefHeight="12" style="-fx-accent: #C1272D;"/>
-                <ProgressBar progress="0.85" prefWidth="400" prefHeight="12" style="-fx-accent: #3b82f6;"/>
-                <Label text="52" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #3b82f6; -fx-pref-width: 50;"/>
-            </HBox>
-        </VBox>
-        
-    </VBox>
-    
-    <!-- Confrontations directes -->
-    <VBox spacing="12" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 15, 0, 0, 4);">
-        <Label text="🏆 Confrontations Directes" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
-        <Separator/>
-        
-        <HBox spacing="40" alignment="CENTER">
-            <VBox alignment="CENTER" spacing="8">
-                <Label text="5" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #C1272D;"/>
-                <Label text="Victoires Maroc" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
-            </VBox>
-            <VBox alignment="CENTER" spacing="8">
-                <Label text="3" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #64748b;"/>
-                <Label text="Matchs nuls" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
-            </VBox>
-            <VBox alignment="CENTER" spacing="8">
-                <Label text="7" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #3b82f6;"/>
-                <Label text="Victoires Brésil" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
-            </VBox>
+        <!-- Header Compact -->
+        <HBox alignment="CENTER_LEFT" spacing="16" style="-fx-background-color: white; -fx-padding: 20 28; -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 12, 0, 0, 3);">
+            <Label text="⚖️ Comparaison d'Équipes" style="-fx-font-size: 22px; -fx-font-weight: 700; -fx-text-fill: #0f172a;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <ComboBox fx:id="team1Selector" promptText="Équipe 1" style="-fx-pref-width: 170; -fx-pref-height: 36;"/>
+            <Label text="VS" style="-fx-font-size: 18px; -fx-font-weight: 700; -fx-text-fill: #C1272D;"/>
+            <ComboBox fx:id="team2Selector" promptText="Équipe 2" style="-fx-pref-width: 170; -fx-pref-height: 36;"/>
+            <Button text="Comparer" style="-fx-background-color: #C1272D; -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: 700; -fx-font-size: 13px;"/>
         </HBox>
+        
+        <!-- Comparaison visuelle Compact -->
+        <HBox spacing="16" alignment="CENTER">
+            
+            <!-- Équipe 1 -->
+            <VBox spacing="14" HBox.hgrow="ALWAYS" alignment="CENTER" style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 12, 0, 0, 3);">
+                <Label text="🇲🇦" style="-fx-font-size: 56px;"/>
+                <Label text="Maroc" style="-fx-font-size: 20px; -fx-font-weight: 700; -fx-text-fill: #0f172a;"/>
+                <Label text="Groupe A" style="-fx-font-size: 11px; -fx-text-fill: #64748b; -fx-font-weight: 600;"/>
+                <Separator prefWidth="180"/>
+                <VBox spacing="6" alignment="CENTER">
+                    <Label text="Classement" style="-fx-font-size: 10px; -fx-text-fill: #64748b; -fx-font-weight: 600;"/>
+                    <Label text="#1" style="-fx-font-size: 28px; -fx-font-weight: 700; -fx-text-fill: #C1272D;"/>
+                </VBox>
+            </VBox>
+            
+            <!-- Badge VS -->
+            <StackPane style="-fx-background-color: #C1272D; -fx-background-radius: 50%; -fx-pref-width: 70; -fx-pref-height: 70; -fx-effect: dropshadow(gaussian, rgba(193, 39, 45, 0.4), 15, 0, 0, 5);">
+                <Label text="VS" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: 700;"/>
+            </StackPane>
+            
+            <!-- Équipe 2 -->
+            <VBox spacing="14" HBox.hgrow="ALWAYS" alignment="CENTER" style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 12, 0, 0, 3);">
+                <Label text="🇧🇷" style="-fx-font-size: 56px;"/>
+                <Label text="Brésil" style="-fx-font-size: 20px; -fx-font-weight: 700; -fx-text-fill: #0f172a;"/>
+                <Label text="Groupe B" style="-fx-font-size: 11px; -fx-text-fill: #64748b; -fx-font-weight: 600;"/>
+                <Separator prefWidth="180"/>
+                <VBox spacing="6" alignment="CENTER">
+                    <Label text="Classement" style="-fx-font-size: 10px; -fx-text-fill: #64748b; -fx-font-weight: 600;"/>
+                    <Label text="#2" style="-fx-font-size: 28px; -fx-font-weight: 700; -fx-text-fill: #C1272D;"/>
+                </VBox>
+            </VBox>
+            
+        </HBox>
+        
+        <!-- Statistiques comparatives Compact -->
+        <VBox spacing="14" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 12, 0, 0, 3);">
+            <Label text="📊 Statistiques Comparatives" style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #0f172a;"/>
+            <Separator/>
+            
+            <!-- Victoires -->
+            <VBox spacing="6">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Victoires" style="-fx-font-size: 13px; -fx-font-weight: 700; -fx-text-fill: #0f172a; -fx-pref-width: 130;"/>
+                    <Label text="8" style="-fx-font-size: 13px; -fx-font-weight: 700; -fx-text-fill: #C1272D; -fx-pref-width: 40;"/>
+                    <ProgressBar progress="0.8" prefWidth="350" prefHeight="10" style="-fx-accent: #C1272D;"/>
+                    <ProgressBar progress="0.6" prefWidth="350" prefHeight="10" style="-fx-accent: #3b82f6;"/>
+                    <Label text="6" style="-fx-font-size: 13px; -fx-font-weight: 700; -fx-text-fill: #3b82f6; -fx-pref-width: 40;"/>
+                </HBox>
+            </VBox>
+            
+            <!-- Buts marqués -->
+            <VBox spacing="6">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Buts marqués" style="-fx-font-size: 13px; -fx-font-weight: 700; -fx-text-fill: #0f172a; -fx-pref-width: 130;"/>
+                    <Label text="24" style="-fx-font-size: 13px; -fx-font-weight: 700; -fx-text-fill: #C1272D; -fx-pref-width: 40;"/>
+                    <ProgressBar progress="0.75" prefWidth="350" prefHeight="10" style="-fx-accent: #C1272D;"/>
+                    <ProgressBar progress="0.9" prefWidth="350" prefHeight="10" style="-fx-accent: #3b82f6;"/>
+                    <Label text="28" style="-fx-font-size: 13px; -fx-font-weight: 700; -fx-text-fill: #3b82f6; -fx-pref-width: 40;"/>
+                </HBox>
+            </VBox>
+            
+            <!-- Buts encaissés -->
+            <VBox spacing="6">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Buts encaissés" style="-fx-font-size: 13px; -fx-font-weight: 700; -fx-text-fill: #0f172a; -fx-pref-width: 130;"/>
+                    <Label text="8" style="-fx-font-size: 13px; -fx-font-weight: 700; -fx-text-fill: #C1272D; -fx-pref-width: 40;"/>
+                    <ProgressBar progress="0.4" prefWidth="350" prefHeight="10" style="-fx-accent: #10b981;"/>
+                    <ProgressBar progress="0.5" prefWidth="350" prefHeight="10" style="-fx-accent: #ef4444;"/>
+                    <Label text="10" style="-fx-font-size: 13px; -fx-font-weight: 700; -fx-text-fill: #3b82f6; -fx-pref-width: 40;"/>
+                </HBox>
+            </VBox>
+            
+            <!-- Possession -->
+            <VBox spacing="6">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Possession moy." style="-fx-font-size: 13px; -fx-font-weight: 700; -fx-text-fill: #0f172a; -fx-pref-width: 130;"/>
+                    <Label text="58%" style="-fx-font-size: 13px; -fx-font-weight: 700; -fx-text-fill: #C1272D; -fx-pref-width: 40;"/>
+                    <ProgressBar progress="0.58" prefWidth="350" prefHeight="10" style="-fx-accent: #C1272D;"/>
+                    <ProgressBar progress="0.62" prefWidth="350" prefHeight="10" style="-fx-accent: #3b82f6;"/>
+                    <Label text="62%" style="-fx-font-size: 13px; -fx-font-weight: 700; -fx-text-fill: #3b82f6; -fx-pref-width: 40;"/>
+                </HBox>
+            </VBox>
+            
+            <!-- Tirs cadrés -->
+            <VBox spacing="6">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Tirs cadrés" style="-fx-font-size: 13px; -fx-font-weight: 700; -fx-text-fill: #0f172a; -fx-pref-width: 130;"/>
+                    <Label text="45" style="-fx-font-size: 13px; -fx-font-weight: 700; -fx-text-fill: #C1272D; -fx-pref-width: 40;"/>
+                    <ProgressBar progress="0.7" prefWidth="350" prefHeight="10" style="-fx-accent: #C1272D;"/>
+                    <ProgressBar progress="0.85" prefWidth="350" prefHeight="10" style="-fx-accent: #3b82f6;"/>
+                    <Label text="52" style="-fx-font-size: 13px; -fx-font-weight: 700; -fx-text-fill: #3b82f6; -fx-pref-width: 40;"/>
+                </HBox>
+            </VBox>
+            
+        </VBox>
+        
+        <!-- Confrontations directes Compact -->
+        <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 18; -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 12, 0, 0, 3);">
+            <Label text="🏆 Confrontations Directes" style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #0f172a;"/>
+            <Separator/>
+            
+            <HBox spacing="32" alignment="CENTER">
+                <VBox alignment="CENTER" spacing="6">
+                    <Label text="5" style="-fx-font-size: 28px; -fx-font-weight: 700; -fx-text-fill: #C1272D;"/>
+                    <Label text="Victoires Maroc" style="-fx-font-size: 11px; -fx-text-fill: #64748b; -fx-font-weight: 600;"/>
+                </VBox>
+                <VBox alignment="CENTER" spacing="6">
+                    <Label text="3" style="-fx-font-size: 28px; -fx-font-weight: 700; -fx-text-fill: #64748b;"/>
+                    <Label text="Matchs nuls" style="-fx-font-size: 11px; -fx-text-fill: #64748b; -fx-font-weight: 600;"/>
+                </VBox>
+                <VBox alignment="CENTER" spacing="6">
+                    <Label text="7" style="-fx-font-size: 28px; -fx-font-weight: 700; -fx-text-fill: #3b82f6;"/>
+                    <Label text="Victoires Brésil" style="-fx-font-size: 11px; -fx-text-fill: #64748b; -fx-font-weight: 600;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+        
     </VBox>
-    
-</VBox>
+</ScrollPane>

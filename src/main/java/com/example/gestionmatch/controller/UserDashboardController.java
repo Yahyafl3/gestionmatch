@@ -122,7 +122,6 @@ public class UserDashboardController {
     @FXML private Button btnComparaison;
     @FXML private Button btnNotifications;
     
-    @FXML private TextField globalSearchField;
     @FXML private Label notificationBadge;
 
     // Données
