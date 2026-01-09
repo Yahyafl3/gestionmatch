@@ -123,7 +123,7 @@
                                     </VBox>
                                     <VBox spacing="5">
                                         <Label text="JOUEURS" style="-fx-text-fill: rgba(255,255,255,0.8); -fx-font-size: 12px; -fx-font-weight: 700; -fx-letter-spacing: 1px;"/>
-                                        <Label fx:id="statJoueurs" text="0" style="-fx-text-fill: white; -fx-font-size: 38px; -fx-font-weight: bold;"/>
+                                        <Label fx:id="statJoueurs" text="0" style="-fx-text-fill: #000000; -fx-font-size: 38px; -fx-font-weight: bold;"/>
                                     </VBox>
                                 </HBox>
                             </VBox>
@@ -136,7 +136,7 @@
                                     </VBox>
                                     <VBox spacing="5">
                                         <Label text="ÉQUIPES" style="-fx-text-fill: rgba(255,255,255,0.8); -fx-font-size: 12px; -fx-font-weight: 700; -fx-letter-spacing: 1px;"/>
-                                        <Label fx:id="statEquipes" text="0" style="-fx-text-fill: white; -fx-font-size: 38px; -fx-font-weight: bold;"/>
+                                        <Label fx:id="statEquipes" text="0" style="-fx-text-fill: #000000; -fx-font-size: 38px; -fx-font-weight: bold;"/>
                                     </VBox>
                                 </HBox>
                             </VBox>
@@ -149,7 +149,7 @@
                                     </VBox>
                                     <VBox spacing="5">
                                         <Label text="MATCHS" style="-fx-text-fill: rgba(255,255,255,0.8); -fx-font-size: 12px; -fx-font-weight: 700; -fx-letter-spacing: 1px;"/>
-                                        <Label fx:id="statMatchs" text="0" style="-fx-text-fill: white; -fx-font-size: 38px; -fx-font-weight: bold;"/>
+                                        <Label fx:id="statMatchs" text="0" style="-fx-text-fill: #000000; -fx-font-size: 38px; -fx-font-weight: bold;"/>
                                     </VBox>
                                 </HBox>
                             </VBox>
@@ -162,7 +162,7 @@
                                     </VBox>
                                     <VBox spacing="5">
                                         <Label text="STADES" style="-fx-text-fill: rgba(255,255,255,0.8); -fx-font-size: 12px; -fx-font-weight: 700; -fx-letter-spacing: 1px;"/>
-                                        <Label fx:id="statStades" text="0" style="-fx-text-fill: white; -fx-font-size: 38px; -fx-font-weight: bold;"/>
+                                        <Label fx:id="statStades" text="0" style="-fx-text-fill: #000000; -fx-font-size: 38px; -fx-font-weight: bold;"/>
                                     </VBox>
                                 </HBox>
                             </VBox>

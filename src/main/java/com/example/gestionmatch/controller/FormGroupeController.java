@@ -142,12 +142,13 @@ public class FormGroupeController implements Initializable {
         java.util.List<Equipe> equipesAVerifier = java.util.Arrays.asList(eq1, eq2, eq3, eq4);
         for (Equipe equipe : equipesAVerifier) {
             // Si on modifie un groupe, ignorer les équipes déjà dans ce groupe
-            if (groupeModif != null && equipe.getGroupeId() == groupeModif.getId()) {
+            Integer equipeGroupeId = equipe.getGroupeId();
+            if (groupeModif != null && equipeGroupeId != null && equipeGroupeId == groupeModif.getId()) {
                 continue;
             }
             
             // Vérifier si l'équipe est déjà dans un groupe
-            if (equipe.getGroupeId() > 0) {
+            if (equipeGroupeId != null && equipeGroupeId > 0) {
                 showAlert("Erreur", 
                     "❌ L'équipe " + equipe.getNom() + " est déjà assignée à un autre groupe.\n\n" +
                     "⚠️ Une équipe ne peut être que dans un seul groupe.\n\n" +

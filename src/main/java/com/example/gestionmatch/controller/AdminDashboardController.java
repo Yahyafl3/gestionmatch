@@ -1090,7 +1090,8 @@ public class AdminDashboardController implements Initializable {
         
         for (Equipe equipe : toutesEquipes) {
             // Vérifier que l'équipe n'est dans AUCUN groupe
-            if (equipe.getGroupeId() == 0 || equipe.getGroupeId() == -1) {
+            Integer groupeId = equipe.getGroupeId();
+            if (groupeId == null || groupeId == 0 || groupeId == -1) {
                 equipesDisponibles.add(equipe);
             }
         }
@@ -1112,7 +1113,8 @@ public class AdminDashboardController implements Initializable {
         Optional<Equipe> result = dialog.showAndWait();
         result.ifPresent(equipe -> {
             // Double vérification : l'équipe ne doit pas être dans un autre groupe
-            if (equipe.getGroupeId() > 0) {
+            Integer groupeId = equipe.getGroupeId();
+            if (groupeId != null && groupeId > 0) {
                 showAlert("Erreur", 
                     "❌ L'équipe " + equipe.getNom() + " est déjà dans un autre groupe.\n\n" +
                     "⚠️ Une équipe ne peut être que dans un seul groupe.\n\n" +
